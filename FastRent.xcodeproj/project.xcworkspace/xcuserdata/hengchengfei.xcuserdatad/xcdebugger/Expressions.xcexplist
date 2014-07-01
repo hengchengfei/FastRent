@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "GLOBAL">
+         <PersistentStrings>
+            <PersistentString
+               value = "[indexPath row]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[AppDelegate lead]:AppDelegate.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[HouseDetailViewController tableView:cellForRowAtIndexPath:]:HouseDetailViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "cell.publishContent.bounds.origin.x">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[RentsViewController tableView:cellForRowAtIndexPath:]:RentsViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[RentDetailViewController numberOfPages]:RentDetailViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[[rent rentImages] count]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[RentsViewController loadMore]:RentsViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[RentsViewController tableView:numberOfRowsInSection:]:RentsViewController.m">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

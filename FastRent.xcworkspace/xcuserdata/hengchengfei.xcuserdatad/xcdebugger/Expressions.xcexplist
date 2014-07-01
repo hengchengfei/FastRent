@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "__36-[NearbyViewController checkNetWork]_block_invoke_4:NearbyViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "server">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[MBProgressHUD layoutSubviews]:MBProgressHUD.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "label.font">
+            </PersistentString>
+            <PersistentString
+               value = "label.text">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SelectionViewController tableView:numberOfRowsInSection:]:SelectionViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.idDatasource">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "+[WebRequest feedback:content:device:complete:]:WebRequest.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "response">
+            </PersistentString>
+            <PersistentString
+               value = "statusCode">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "__33-[FeedbackViewController commit:]_block_invoke197:FeedbackViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MoreViewController willPresentAlertView:]:MoreViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[[alertView subviews] objectAtIndex:0]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[NearbyViewController loadPullDownDatas:]:NearbyViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "__59-[NearbyViewController locationManager:didUpdateLocations:]_block_invoke:NearbyViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "__43-[FavoriteViewController loadFavoriteDatas]_block_invoke:FavoriteViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[NearbyViewController loadPullDownDatas:titleDatasource:idDatasource:]:NearbyViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "button.tag">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[AppDelegate application:didFinishLaunchingWithOptions:]:AppDelegate.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "ISOS7">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[NearbyViewController addPullButton:font:frame:titleDatasource:idDatasource:]:NearbyViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "titleDatasource">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "__43-[FavoriteViewController loadFavoriteDatas]_block_invoke167:FavoriteViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[CityViewController tableView:numberOfRowsInSection:]:CityViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[_allCitys objectAtIndex:0]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[CityViewController loadData]:CityViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "+[WebRequest request:]:WebRequest.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "statusCode">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "+[WebRequest getUrlByKey:]:WebRequest.m">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

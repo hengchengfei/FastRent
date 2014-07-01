@@ -1,0 +1,36 @@
+PODS:
+  - EGOTableViewPullRefresh (0.1.0)
+  - FPPopover (1.4.1)
+  - jastor (0.2.1)
+  - LTUpdate (0.0.2)
+  - MBProgressHUD (0.8)
+  - Reachability (3.1.1)
+  - SDWebImage (3.6):
+    - SDWebImage/Core
+  - SDWebImage/Core (3.6)
+  - Toast (2.2)
+  - WYPopoverController (0.2.2)
+
+DEPENDENCIES:
+  - EGOTableViewPullRefresh (~> 0.1.0)
+  - FPPopover (~> 1.4.1)
+  - jastor (~> 0.2.1)
+  - LTUpdate (~> 0.0.2)
+  - MBProgressHUD (~> 0.8)
+  - Reachability (~> 3.1.1)
+  - SDWebImage (~> 3.6)
+  - Toast (~> 2.2)
+  - WYPopoverController (~> 0.2.2)
+
+SPEC CHECKSUMS:
+  EGOTableViewPullRefresh: 04bb7d115f660c91a036ebade5e6678c7ef26c59
+  FPPopover: bbfc452ec8949a2c2f555cf2d8c7236e621811f0
+  jastor: 38c8cd3670b362123d824ee48a3056dca2037857
+  LTUpdate: 2b565ebcec2be846c89c94072301696dc93b8074
+  MBProgressHUD: c356980b0cd097f19acec959b49dca5eb8ec31be
+  Reachability: 8e9635e3cb4f98e7f825e51147f677ecc694d0e7
+  SDWebImage: c6989652c1cdf27cbdf3f56957e2030f825af5bc
+  Toast: dcf6e9f10369291f9c22feae1bed93c9ed3d84a2
+  WYPopoverController: c233d69fdfd5c7e316b481df1060624d7a9e629d
+
+COCOAPODS: 0.32.1

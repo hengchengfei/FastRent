@@ -1,0 +1,93 @@
+//
+//  Prefix header
+//
+//  The contents of this file are implicitly included at the beginning of every source file.
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_3_0
+#warning "This project uses features only available in iOS SDK 3.0 and later."
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+#endif
+
+//...##__VA_ARGS__可变参数，一定要加上else，否则在release和发布时会找不到方法而奔溃
+#ifdef DEBUG
+#define DLog(fmt,...) NSLog((@"%s [Line %d] " fmt),__PRETTY_FUNCTION__,__LINE__,##__VA_ARGS__);
+#else
+#define DLog(...)
+#endif
+
+
+
+
+#pragma mark 第三方app参数
+#define __TencentAppId__ @"101127138"
+#define __WeiboAppKey__ @"3591795453"
+#define __UmAppKey__ @"5396d7ab56240bc86b007e6e"
+
+#pragma mark 导航栏图片
+#define kPNG_BACK @"barButtonBack.png"
+#define kPNG_Share @"barButtonShare.png"
+#define kPNG_Edit @"barButtonEdit.png"
+
+#pragma mark 加载默认画面
+#define kPNG_Loading_100 @"loading100&100.png"
+#define kPNG_Loading_300 @"loading300&150.png"
+#define kPNG_Loading_250 @"loading250&187.png"
+
+#pragma mark 详细页面图片
+#define kPNG_Favorite @"barButtonFavorite.png"
+#define kPNG_Favorited @"barButtonFavorited.png"
+#define kPNG_Phone @"barButtonPhone.png"
+#define kPNG_Message @"barButtonMessage.png"
+
+#pragma mark 系统参数
+#define ISOS7 [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0
+#define iPhone4Or5oriPad ([[UIScreen mainScreen] bounds].size.height == 568 ? 5 : ([[UIScreen mainScreen] bounds].size.height == 480 ? 4 : 999))
+
+#define IOS7_Nav_Color [UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1]
+#define ToolButton_Width self.view.frame.size.width/2.0-20.0
+#define kNav_TitleSize 18
+#define FavoriteIdKey @"FavoriteIdKey"
+#define kLocation_City @"LocationCityName"
+#define kLastSearch_City @"LastSearchCity"
+#define kIsAutoLoadMore @"ISAutoLoadMore"
+
+
+#define WebErrorDomain @"rent-web"
+typedef enum {
+    FWConnectFailed=-1000,
+    FWTimeoutFailed
+}WebErrorFailed;
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 60000
+#define MBLabelAlignmentCenter NSTextAlignmentCenter
+#else
+#define MBLabelAlignmentCenter UITextAlignmentCenter
+#endif
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
+#define MB_TEXTSIZE(text, font) [text length] > 0 ? [text \
+sizeWithAttributes:@{NSFontAttributeName:font}] : CGSizeZero;
+#else
+#define MB_TEXTSIZE(text, font) [text length] > 0 ? [text sizeWithFont:font] : CGSizeZero;
+#endif
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
+#define MB_MULTILINE_TEXTSIZE(text, font, maxSize, mode) [text length] > 0 ? [text \
+boundingRectWithSize:maxSize options:(NSStringDrawingUsesLineFragmentOrigin) \
+attributes:@{NSFontAttributeName:font} context:nil].size : CGSizeZero;
+#else
+#define MB_MULTILINE_TEXTSIZE(text, font, maxSize, mode) [text length] > 0 ? [text \
+sizeWithFont:font constrainedToSize:maxSize lineBreakMode:mode] : CGSizeZero;
+#endif
+
+
+
+//Log是否已关闭
+//第三方Debug模式是否已关闭

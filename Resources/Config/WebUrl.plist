@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>chkupdate</key>
+	<string>/chkupdate.json?version={version}</string>
+	<key>feedback</key>
+	<string>/feedback.json?contacter={contacter}&amp;content={content}&amp;device={device}</string>
+	<key>findSearchString</key>
+	<string>/findSearchString.json?city={city}&amp;searchString={searchString}&amp;id={id}&amp;typeId={typeId}&amp;priceId={priceId}&amp;sourceId={sourceId}&amp;id={id}</string>
+	<key>findAddress</key>
+	<string>/findAddress.json?latitude={latitude}&amp;longitude={longitude}</string>
+	<key>findNearby</key>
+	<string>/findNearby.json?&amp;latitude={latitude}&amp;longitude={longitude}&amp;city={city}&amp;distanceId={distanceId}&amp;priceId={priceId}&amp;typeId={typeId}&amp;sourceId={sourceId}&amp;id={id}</string>
+	<key>findByIds</key>
+	<string>/findByIds.json?ids={ids}</string>
+	<key>findRent</key>
+	<string>/findRent.json?id={id}</string>
+	<key>findComboxs</key>
+	<string>/findComboxs.json</string>
+</dict>
+</plist>
