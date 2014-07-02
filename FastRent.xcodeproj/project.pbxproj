@@ -330,6 +330,7 @@
 		45D2317B19507C03007E67DC /* homeSettings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = homeSettings.png; sourceTree = "<group>"; };
 		45D2317C19507C03007E67DC /* homeSetttings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "homeSetttings@2x.png"; sourceTree = "<group>"; };
 		45D2318419508B56007E67DC /* house.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = house.png; sourceTree = "<group>"; };
+		45E01F7E196453E900503D8D /* CLLocationConvert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLLocationConvert.h; sourceTree = "<group>"; };
 		45E207C7191A6FDF00C49A94 /* btn_close_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_close_normal.png; sourceTree = "<group>"; };
 		45E207C8191A6FDF00C49A94 /* btn_close_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_close_normal@2x.png"; sourceTree = "<group>"; };
 		45E207C9191A6FDF00C49A94 /* btn_close_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_close_selected.png; sourceTree = "<group>"; };
@@ -467,6 +468,7 @@
 				451D2A5E190238C000CA311F /* AppDelegate.m */,
 				4523F11F192EC30E00B422FA /* RentSearchBar.h */,
 				4523F120192EC30E00B422FA /* RentSearchBar.m */,
+				45E01F7E196453E900503D8D /* CLLocationConvert.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";

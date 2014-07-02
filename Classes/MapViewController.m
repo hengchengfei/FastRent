@@ -8,29 +8,7 @@
 
 #import "MapViewController.h"
 #import "MobClick.h"
-
-//@interface POI : NSObject<MKAnnotation>
-//{
-//    CLLocationCoordinate2D coordinate;
-//}
-//@property(nonatomic,readonly)CLLocationCoordinate2D coordinate;
-//
-//-(id)initWithCoords:(CLLocationCoordinate2D)coords;
-//
-//@end
-//
-//@implementation POI
-//
-//@synthesize coordinate;
-//-(id)initWithCoords:(CLLocationCoordinate2D)coords{
-//    self    =[super init];
-//    if(self){
-//        coordinate=coords;
-//    }
-//    return self;
-//}
-//
-//@end
+#import "CLLocationConvert.h"
 
 @interface MapViewController ()
 {
@@ -57,6 +35,7 @@
 {
     [super viewDidLoad];
     
+
     [self setTitle:@"地址"];
     [self setNavLeftButton];
     [self setNavRightButton];
@@ -127,14 +106,14 @@
 #pragma mark -
 -(void)initMapView
 {
+   
     self.mapView.delegate=self;
     self.mapView.mapType=MKMapTypeStandard;
     //self.mapView.showsUserLocation=YES;
     //[self.mapView setUserTrackingMode:MKUserTrackingModeFollow animated:YES];//用户跟踪模式
     
-    //转换为火星坐标
-   // transform_baidu_from_mars(self.lat.doubleValue, self.lng.doubleValue, &starLat, &starLng);
-    
+    //百度坐标转换为火星坐标
+    transform_baidu_from_mars(self.lat.doubleValue, self.lng.doubleValue, &starLat, &starLng);
     CLLocationCoordinate2D coordinate=CLLocationCoordinate2DMake(starLat , starLng);
     MKCoordinateRegion viewRegion=MKCoordinateRegionMakeWithDistance(coordinate, 200, 200);
     MKCoordinateRegion adjustRegion=[self.mapView regionThatFits:viewRegion];
@@ -144,10 +123,11 @@
     MKPointAnnotation *annotation=[[MKPointAnnotation alloc]init];
     annotation.coordinate=CLLocationCoordinate2DMake(starLat,starLng);
     annotation.title=self.address;
-    annotation.subtitle=[ [self.contacter stringByAppendingString:@"："]stringByAppendingString:self.tel] ;
+    annotation.subtitle=[NSString stringWithFormat:@"%@：%@",self.contacter,self.tel];
     
     [self.mapView addAnnotation:annotation];
     [self.mapView selectAnnotation:annotation animated:YES];//如果不选择，则不会弹出显示
+    
 }
 
 #pragma mark
@@ -160,9 +140,9 @@
     //canShowCallout: to display the callout view by touch the pin
     newAnnotation.canShowCallout=YES;
     
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-    [button addTarget:self action:@selector(checkButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    newAnnotation.rightCalloutAccessoryView=button;
+//    UIButton *button = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+//    [button addTarget:self action:@selector(checkButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+//    newAnnotation.rightCalloutAccessoryView=button;
     
     return newAnnotation;
     
