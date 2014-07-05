@@ -35,8 +35,18 @@
 
 -(void)setAttribute:(Rent *)rent
 {
-    self.lblResident.text=[@"小区：" stringByAppendingString:rent.resident];
-    self.lblAddress.text=[@"地址：" stringByAppendingString:rent.houseAddress];
+    if(rent.resident==nil || [rent.resident length]<=0){
+        self.lblResident.text=@"小区：无";
+    }else{
+        self.lblResident.text=[NSString stringWithFormat:@"小区：%@",rent.resident];
+    }
+    
+    if (rent.houseAddress ==nil || [rent.houseAddress length]<=0) {
+        self.lblAddress.text=@"地址：无";
+    }else{
+         self.lblAddress.text=[NSString stringWithFormat:@"地址：%@",rent.houseAddress];
+    }
+   
     //self.imageViewMap =[[UIImageView alloc]initWithFrame:CGRectMake(13, 72, 300, 105.0)];
     NSURL *url=[NSURL URLWithString:rent.mapImage];
     [self.imageViewMap setImageWithURL:url placeholderImage:[UIImage imageNamed:kPNG_Loading_300]];

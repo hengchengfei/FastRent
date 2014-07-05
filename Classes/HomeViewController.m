@@ -50,6 +50,8 @@
     //不显示底部的cell
     self.tableView.tableFooterView=[[UIView alloc] initWithFrame:CGRectZero];
     
+    //设置为自动加载
+    [self setDefaultLoadMore];
   
 }
 

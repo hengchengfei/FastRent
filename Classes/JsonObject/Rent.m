@@ -11,7 +11,7 @@
 
 @implementation Rent
 
-@synthesize rentImages,agencyType,city,contacterName,contacterPhone,deposit,gatherTime,houseAddress,houseArea,houseDecoration,houseFacility,houseFloor,houseType,infoSource,infoChannel,publishContent,publishTime,publishTitle,region1,region2,rentMoney,rentType,resident,residentType,roomDirection,sex,updateTime,latitude,longitude,distance,mapImage;
+@synthesize rentImages,agencyType,city,contacterName,contacterPhone,contacterPhoneDisplay,deposit,gatherTime,houseAddress,houseArea,houseDecoration,houseFacility,houseFloor,houseType,infoSource,infoChannel,publishContent,publishTime,publishTitle,region1,region2,rentMoney,rentType,resident,residentType,roomDirection,sex,updateTime,latitude,longitude,distance,mapImage;
 
 
 +(Class)rentImages_class{

@@ -169,7 +169,12 @@
     
     UIFont *systemFont =[UIFont systemFontOfSize:13];
     //联系人
-    NSString *contacter=_rent.contacterName;
+    NSString *contacter;
+    if (_rent.contacterName==nil) {
+        contacter=@"联系人";
+    }else{
+        contacter=_rent.contacterName;
+    }
     CGSize contacterSize = MB_TEXTSIZE(contacter, systemFont);
     UILabel *contacterLabel=[[UILabel alloc]init];
     contacterLabel.frame=CGRectMake(0, 5, contacterSize.width, contacterSize.height);
@@ -180,7 +185,7 @@
     contacterLabel.textColor=[UIColor blackColor];
     
     //联系人电话
-    NSString *tel=_rent.contacterPhone;
+    NSString *tel=_rent.contacterPhoneDisplay;
     CGSize telSize = MB_TEXTSIZE(tel, [UIFont systemFontOfSize:12]);
     UILabel *telLabel=[[UILabel alloc]init];
     telLabel.frame=CGRectMake(0, contacterSize.height+10, telSize.width, telSize.height);
@@ -456,7 +461,7 @@
         default:
             break;
     }
- 
+    
     //记录事件
     NSDictionary *dict = @{@"app":app};
     [MobClick event:@"ShareEvent" attributes:dict];
@@ -503,7 +508,7 @@
     
     QQApiSendResultCode sent = [QQApiInterface sendReq:req];
     [self handleSendResult:sent];
- 
+    
 }
 
 - (void)shareQzone
@@ -527,15 +532,15 @@
     else
     {
         NSMutableDictionary *data = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                              shareText, @"description",
-                              feeds, @"summary",
-                              imageurl, @"pics",
-                              shareTitle, @"title",
-                              source, @"source",
-                              act, @"act",
-                              url, @"url",
-                              shareurl, @"shareurl",
-                              nil];
+                                     shareText, @"description",
+                                     feeds, @"summary",
+                                     imageurl, @"pics",
+                                     shareTitle, @"title",
+                                     source, @"source",
+                                     act, @"act",
+                                     url, @"url",
+                                     shareurl, @"shareurl",
+                                     nil];
         if(NO==[_tencentOAuth sendStory:data friendList:nil]){
             [self showInvalidTokenOrOpenIDMessage];
         }
@@ -548,7 +553,7 @@
     WBMessageObject *message = [WBMessageObject message];
     message.text = @"我在闪租上找了一个好房子哦";
     
-
+    
     NSString *path = [[NSBundle mainBundle] pathForResource:@"AppIcon57x57@2x" ofType:@"png"];
     NSData *data=[NSData dataWithContentsOfFile:path];
     
@@ -556,7 +561,7 @@
     if (houseImage) {
         data=[NSData dataWithContentsOfURL:[NSURL URLWithString:houseImage]];
     }
- 
+    
     WBWebpageObject *webpage = [WBWebpageObject object];
     webpage.objectID = _rent.publishTitle;
     webpage.title = _rent.publishTitle;
@@ -564,7 +569,7 @@
     webpage.thumbnailData = data;
     webpage.webpageUrl = _rent.infoUrl;
     message.mediaObject = webpage;
- 
+    
     WBSendMessageToWeiboRequest *request = [WBSendMessageToWeiboRequest requestWithMessage:message];
     request.userInfo = @{@"ShareMessageFrom": @"SendMessageToWeiboViewController",
                          @"Other_Info_1": [NSNumber numberWithInt:123],
@@ -651,10 +656,10 @@
         msg = @"登录不成功 没有获取accesstoken";
     }
     [self.view makeToast:msg];
-
-//    NSString *_accessToken=[_tencentOAuth accessToken];
-//    NSString *_openId =[_tencentOAuth openId];
-//   NSDate *_expirationDate= [_tencentOAuth expirationDate];
+    
+    //    NSString *_accessToken=[_tencentOAuth accessToken];
+    //    NSString *_openId =[_tencentOAuth openId];
+    //   NSDate *_expirationDate= [_tencentOAuth expirationDate];
 }
 
 
@@ -668,7 +673,7 @@
 - (void)onResp:(QQBaseResp *)resp
 {
     DLog(@"%s",__FUNCTION__);
-
+    
 }
 
 -(void)tencentDidNotLogin:(BOOL)cancelled
@@ -680,7 +685,7 @@
     }else{
         msg=@"登录失败";
     }
-     [self.view makeToast:msg];
+    [self.view makeToast:msg];
 }
 
 -(void)tencentDidNotNetWork
@@ -946,8 +951,18 @@
         MapViewController *controller = segue.destinationViewController;
         controller.lat=_rent.latitude;
         controller.lng=_rent.longitude;
-        controller.address=_rent.houseAddress;
-        controller.contacter=_rent.contacterName;
+        if (_rent.houseAddress==nil || [_rent.houseAddress length]<=0) {
+            controller.address=_rent.resident;
+        }else{
+            controller.address=_rent.houseAddress;
+        }
+        
+        if (_rent.contacterName==nil || [_rent.contacterName length]<=0) {
+            controller.contacter=@"联系人";
+        }else{
+            controller.contacter=_rent.contacterName;
+        }
+        
         controller.tel=_rent.contacterPhone;
     }
 }

@@ -39,7 +39,7 @@
     WYPopoverController *popoverController;
     
     
- 
+    
     Rents *allRents;
     
     CLGeocoder *_geocoder;
@@ -178,7 +178,7 @@
         locationManager=[CLLocationManager new];
         locationManager.delegate=self;
         locationManager.desiredAccuracy=kCLLocationAccuracyBest;
-        locationManager.distanceFilter=100.0f;//当位置超过多少米时更新
+        locationManager.distanceFilter=500.0f;//当位置超过多少米时更新
         [locationManager startUpdatingLocation];
     }
 }
@@ -196,17 +196,17 @@
     [button setBackgroundImage:image forState:UIControlStateNormal];
     button.frame=rect;
     [button addTarget:self action:@selector(didClickRefresh:) forControlEvents:UIControlEventTouchUpInside];
-
-    [self.view insertSubview:button aboveSubview:self.tableView];
-//    UIImageView *view=[[UIImageView alloc]initWithImage:image];
-//    view.frame=rect;
     
-//    UITapGestureRecognizer *gesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didClickRefresh:)];
-//    view.userInteractionEnabled=YES;
-//    [view addGestureRecognizer:gesture];
-//    
-//    
-//    [self.view insertSubview:view belowSubview:self.tableView];
+    [self.view insertSubview:button aboveSubview:self.tableView];
+    //    UIImageView *view=[[UIImageView alloc]initWithImage:image];
+    //    view.frame=rect;
+    
+    //    UITapGestureRecognizer *gesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didClickRefresh:)];
+    //    view.userInteractionEnabled=YES;
+    //    [view addGestureRecognizer:gesture];
+    //
+    //
+    //    [self.view insertSubview:view belowSubview:self.tableView];
     
 }
 
@@ -222,20 +222,20 @@
 //    [btnRefresh setBackgroundImage:[UIImage imageWithColor:[UIColor purpleColor]] forState:UIControlStateHighlighted];
 //    [btnRefresh setTitle:@"刷新重试" forState:UIControlStateNormal];
 //    btnRefresh.center=self.view.center;
-//    
+//
 //    CGRect frame=self.view.frame;
 //    btnRefresh.frame=CGRectMake(frame.size.width/2-40, frame.size.height/2-50, 80, 30);
-//    
+//
 //    //设置边框
 //    [btnRefresh.layer setMasksToBounds:YES];
 //    [btnRefresh.layer setCornerRadius:2.0];
 //    [btnRefresh.layer setBorderWidth:1.0];
 //    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
 //    CGColorRef colorref = CGColorCreate(colorSpace,(CGFloat[]){ 192/255.0, 192/255.0, 192/255.0, 1 });
-//    
-//    
+//
+//
 //    [btnRefresh.layer setBorderColor:colorref];
-//    
+//
 //    [self.view addSubview:btnRefresh];
 //}
 
@@ -307,11 +307,12 @@
         return;
     }
     
-    [hudLoading show:YES];
-    
+    //[locationManager startUpdatingLocation];
+  //   [hudLoading show:YES];
+//    
     _reloading=YES;
-    
-    
+//    
+//    
     __block BOOL isSuccess;
     __block NSString *errMsg;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0) ,^{
@@ -329,7 +330,7 @@
             //完成加载时，将下拉刷新隐藏
             _reloading=NO;
             [_refreshTableView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
-             [hudLoading hide:YES];
+            //[hudLoading hide:YES];
             if (!isSuccess) {
                 [self.view makeToast:@"无法连接到服务器，请检测网络连接" duration:1.0 position:@"bottom"];
                 self.tableView.hidden=YES;
@@ -401,15 +402,20 @@
         //取得所有下拉框的值
         __block BOOL isSuccess=NO;
         __block NSString *errMsg;
-        [WebRequest findComboxs:^(RentComboxs *bo, NSError *error) {
-            if (error!=nil) {
-                isSuccess=NO;
-                errMsg=[error.userInfo objectForKey:NSLocalizedDescriptionKey];
-            }else{
-                isSuccess=YES;
-                _comboxsData=bo;
-            }
-        }];
+        if(_comboxsData==nil){
+            [WebRequest findComboxs:^(RentComboxs *bo, NSError *error) {
+                if (error!=nil) {
+                    isSuccess=NO;
+                    errMsg=[error.userInfo objectForKey:NSLocalizedDescriptionKey];
+                }else{
+                    isSuccess=YES;
+                    _comboxsData=bo;
+                }
+            }];
+        }else{
+            isSuccess=true;
+        }
+        
         if (isSuccess) {
             [WebRequest findAddress:_latitude longitude:_longitude onCompletion:^(Address * address, NSError *error) {
                 if (error!=nil) {
@@ -424,7 +430,7 @@
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
-             [hudLoading hide:NO];
+            [hudLoading hide:NO];
             if (!isSuccess) {
                 [self.view makeToast:@"无法连接到服务器，请检测网络连接" duration:2.0 position:@"bottom"];
                 self.tableView.hidden=YES;
@@ -432,7 +438,7 @@
             }
             
             if (_address.formattedAddress==nil) {
-                                [self.view makeToast:@"定位失败(不在中国)" duration:1.0 position:@"bottom"];
+                [self.view makeToast:@"定位失败(不在中国)" duration:1.0 position:@"bottom"];
                 return;
             }
             
@@ -446,6 +452,9 @@
             [self addComboxBox];
             [self setDefaultCity:_address.city];
             [self reloadData];
+            
+            //正确定位后，则停止
+            [locationManager stopUpdatingLocation];
         });
         
     });

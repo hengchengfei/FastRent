@@ -65,7 +65,7 @@
 +(NSDictionary *)request:(NSString *)url
 {
     url=[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-   // DLog(@"%@",url);
+    DLog(@"%@",url);
     
     NSMutableURLRequest *request=[[NSMutableURLRequest alloc]init];
     [request setURL:[NSURL URLWithString:url]];
@@ -78,7 +78,7 @@
     NSHTTPURLResponse *response;
     
     NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error1];
-     //  NSInteger statusCode= response.statusCode;
+    // NSInteger statusCode= response.statusCode;
     if (error1!=nil) {
         DLog(@"%@",error1);
         return error1.userInfo;
@@ -111,6 +111,7 @@
 {
     
     NSString *url= [self getUrlByKey:@"findNearby"];
+    url=[url stringByReplacingOccurrencesOfString:@"{version}" withString:[self getVersion]];
     url = [url stringByReplacingOccurrencesOfString:@"{latitude}" withString:[NSString stringWithFormat:@"%f",latitude]];
     url = [url stringByReplacingOccurrencesOfString:@"{longitude}" withString:[NSString stringWithFormat:@"%f",longitude]];
     url = [url stringByReplacingOccurrencesOfString:@"{city}" withString:[NSString stringWithFormat:@"%@",city]];
@@ -155,6 +156,7 @@
 +(void)findRent:(NSNumber *)id  onCompletion:(void (^)(Rent *,NSError *))onCompletion
 {
     NSString *url=[self getUrlByKey:@"findRent"];
+        url=[url stringByReplacingOccurrencesOfString:@"{version}" withString:[self getVersion]];
     url=[url stringByReplacingOccurrencesOfString:@"{id}" withString:id.stringValue];
 
     NSDictionary *dict= [self request:url ];
@@ -170,7 +172,7 @@
 +(void)findComboxs:(void (^)(RentComboxs *, NSError *))onCompletion
 {
     NSString *url= [self getUrlByKey:@"findComboxs"];
-    
+        url=[url stringByReplacingOccurrencesOfString:@"{version}" withString:[self getVersion]];
     NSDictionary *dict= [self request:url];
     
     if ([dict objectForKey:NSLocalizedDescriptionKey]!=nil) {
@@ -185,6 +187,7 @@
 +(void)findByIds:(NSString *)ids onCompletion:(void (^)(Rents *, NSError *))onCompletion
 {
     NSString *url =[self getUrlByKey:@"findByIds"];
+        url=[url stringByReplacingOccurrencesOfString:@"{version}" withString:[self getVersion]];
     url=[url stringByReplacingOccurrencesOfString:@"{ids}" withString:ids];
     NSDictionary *dict =[self request:url];
     if ([dict objectForKey:NSLocalizedDescriptionKey]!=nil) {
@@ -199,6 +202,7 @@
 +(void)findAddress:(float)latitude longitude:(float)longitude onCompletion:(void (^)(Address *,NSError *))onCompletion
 {
     NSString *url=[self getUrlByKey:@"findAddress"];
+        url=[url stringByReplacingOccurrencesOfString:@"{version}" withString:[self getVersion]];
     url=[url stringByReplacingOccurrencesOfString:@"{latitude}" withString:[NSString stringWithFormat:@"%f",latitude]];
     url=[url stringByReplacingOccurrencesOfString:@"{longitude}" withString:[NSString stringWithFormat:@"%f",longitude]];
     
@@ -234,6 +238,7 @@
            onCompletion:(void (^)(Rents *, NSError *))onCompletion
 {
     NSString *url=[self getUrlByKey:@"findSearchString"];
+        url=[url stringByReplacingOccurrencesOfString:@"{version}" withString:[self getVersion]];
     url=[url stringByReplacingOccurrencesOfString:@"{city}" withString:city];
     url=[url stringByReplacingOccurrencesOfString:@"{searchString}" withString:searchString];
     if(id==nil){
@@ -271,6 +276,7 @@
 +(void)feedback:(NSString *)contacter content:(NSString *)content device:(NSString *)device complete:(void (^)(NSData *,NSError *))complete
 {
     NSString *url=[self getUrlByKey:@"feedback"];
+        url=[url stringByReplacingOccurrencesOfString:@"{version}" withString:[self getVersion]];
     url=[url stringByReplacingOccurrencesOfString:@"{contacter}" withString:contacter];
     url=[url stringByReplacingOccurrencesOfString:@"{content}" withString:content];
     url=[url stringByReplacingOccurrencesOfString:@"{device}" withString:device];

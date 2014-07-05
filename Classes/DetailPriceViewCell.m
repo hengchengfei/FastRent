@@ -39,17 +39,28 @@
     self.rentMoney.text=[rent.rentMoney.stringValue stringByAppendingString:@"元"];
     
     self.rentType.text=rent.rentType;
-    self.houseType.text=rent.houseType;
-    self.agencyType.text=rent.agencyType;
-    if (rent.houseArea==nil) {
-        self.houseArea.text =@"面积未知";
+        self.agencyType.text=rent.agencyType;
+    
+    if (rent.houseType==nil) {
+            self.houseType.text=@"无";
     }else{
-        NSString *area=[NSString  stringWithFormat:@"%d",rent.houseArea.intValue];
-        self.houseArea.text=[area stringByAppendingString:rent.houseAreaUnit];
+            self.houseType.text=rent.houseType;
+    }
+
+
+    if (rent.houseArea==nil) {
+        self.houseArea.text =@"无";
+    }else{
+        
+        self.houseArea.text=[NSString  stringWithFormat:@"%d%@",rent.houseArea.intValue,rent.houseAreaUnit];
     }
  
-    
-    self.houseDecoration.text=rent.houseDecoration;
+    if(rent.houseDecoration==nil){
+         self.houseDecoration.text=@"无";
+    }else{
+         self.houseDecoration.text=rent.houseDecoration;
+    }
+   
     
 }
 @end

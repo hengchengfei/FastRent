@@ -14,6 +14,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //显示状态栏，因为在plist中启动时，隐藏了状态栏
+    [[UIApplication sharedApplication]setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     
     //友盟
     [MobClick setCrashReportEnabled:YES];

@@ -17,6 +17,8 @@
 @property(nonatomic,retain)NSString *city;
 @property(nonatomic,retain)NSString *contacterName;
 @property(nonatomic,retain)NSString *contacterPhone;
+@property(nonatomic,retain)NSString *contacterPhoneDisplay;
+
 @property(nonatomic,retain)NSString *deposit;
 @property(nonatomic,retain)NSString *gatherTime;
 @property(nonatomic,retain)NSString *houseAddress;
@@ -46,5 +48,6 @@
 @property(nonatomic,retain)NSNumber *longitude;
 @property(nonatomic,retain)NSNumber *distance;
 @property(nonatomic,retain)NSString *mapImage;
+
 
 @end
