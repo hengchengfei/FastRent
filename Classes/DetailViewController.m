@@ -515,37 +515,17 @@
 {
     NSString *imageurl = _rent.houseImg;
     NSString *shareText = _rent.publishContent;
-    NSString *feeds = _rent.publishContent;
     NSString *shareTitle = _rent.publishTitle;
-    NSString *source = @"shanzu";
-    NSString *act = @"进入应用";
-    NSString *url = @"www.qq.com";
     NSString *shareurl = _rent.infoUrl;
-    
-    if (nil == shareTitle
-        || 0 == [shareTitle length])
-    {
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享失败" message:[NSString stringWithFormat:@"标题不能为空"]
-													   delegate:self cancelButtonTitle:@"我知道啦" otherButtonTitles: nil];
-        [alert show];
-    }
-    else
-    {
-        NSMutableDictionary *data = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                     shareText, @"description",
-                                     feeds, @"summary",
-                                     imageurl, @"pics",
-                                     shareTitle, @"title",
-                                     source, @"source",
-                                     act, @"act",
-                                     url, @"url",
-                                     shareurl, @"shareurl",
-                                     nil];
-        if(NO==[_tencentOAuth sendStory:data friendList:nil]){
-            [self showInvalidTokenOrOpenIDMessage];
-        }
-        
-    }
+
+    QQApiNewsObject *_qqApiObject = [QQApiNewsObject objectWithURL:[NSURL URLWithString:shareurl ? : @""]
+                                                        title:shareTitle ? : @""
+                                                  description:shareText ? : @""
+                                              previewImageURL:[NSURL URLWithString:imageurl ? : @""]];
+
+    SendMessageToQQReq *req = [SendMessageToQQReq reqWithContent:_qqApiObject];
+    QQApiSendResultCode sent =   [QQApiInterface SendReqToQZone:req];
+    [self handleSendResult:sent];
 }
 
 -(void)shareWeibo
