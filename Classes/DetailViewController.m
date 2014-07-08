@@ -289,9 +289,12 @@
 #pragma mark 加载数据
 -(void)loadData{
     
+    [UIApplication sharedApplication].networkActivityIndicatorVisible=YES;
+    
     BOOL isConnected =[WebRequest isConnectionAvailable];
     if (!isConnected) {
         [self warnMessage:@"网络连接失败"];
+        [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
         return;
     }
     
@@ -310,6 +313,7 @@
             }
         }];
         dispatch_async(dispatch_get_main_queue(), ^{
+            [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
             [hudLoading hide:YES];
             if (!isSuccess) {
                 [self warnMessage:@"加载失败"];

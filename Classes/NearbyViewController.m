@@ -111,7 +111,7 @@
         self.tabBarController.tabBar.translucent=NO;
         self.automaticallyAdjustsScrollViewInsets=NO;
     }
-    self.tableView.hidden=YES;
+    //self.tableView.hidden=YES;
     self.tableView.tableFooterView=[[UIView alloc]initWithFrame:CGRectZero];
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
@@ -333,7 +333,7 @@
             //[hudLoading hide:YES];
             if (!isSuccess) {
                 [self.view makeToast:@"无法连接到服务器，请检测网络连接" duration:1.0 position:@"bottom"];
-                self.tableView.hidden=YES;
+                //self.tableView.hidden=YES;
                 return;
             }
             self.tableView.hidden=NO;
@@ -388,6 +388,8 @@
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     
+    [UIApplication sharedApplication].networkActivityIndicatorVisible=YES;
+    
     CLLocation  *_currentLocation=[locations lastObject];
     CLLocationCoordinate2D coor = _currentLocation.coordinate;//手机GPS
     
@@ -433,12 +435,14 @@
             [hudLoading hide:NO];
             if (!isSuccess) {
                 [self.view makeToast:@"无法连接到服务器，请检测网络连接" duration:2.0 position:@"bottom"];
-                self.tableView.hidden=YES;
+                        [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
+                //self.tableView.hidden=YES;
                 return;
             }
             
             if (_address.formattedAddress==nil) {
                 [self.view makeToast:@"定位失败(不在中国)" duration:1.0 position:@"bottom"];
+                        [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
                 return;
             }
             
@@ -453,6 +457,7 @@
             [self setDefaultCity:_address.city];
             [self reloadData];
             
+
             //正确定位后，则停止
             [locationManager stopUpdatingLocation];
         });
@@ -654,16 +659,17 @@
 
 -(void)reloadData
 {
-    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible=YES;
     BOOL isConnected =[WebRequest isConnectionAvailable];
     if (!isConnected) {
         [hudLoading hide:NO];
         [self warnMessage:@"网络连接失败"];
+        [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
         return;
     }
     
     [hudLoading show:YES];
-    self.tableView.hidden=YES;
+    //self.tableView.hidden=YES;
     
     __block BOOL isSuccess;
     __block NSString *errMsg;
@@ -678,16 +684,18 @@
                 allRents=rents;
             }
         }] ;
+
         dispatch_async(dispatch_get_main_queue(), ^{
+            [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
             if (!isSuccess) {
                 [hudLoading hide:YES];
                 [self warnMessage:@"加载失败"];
-                self.tableView.hidden=YES;
+                //self.tableView.hidden=YES;
                 return;
             }
             
             [hudLoading hide:YES];
-            self.tableView.hidden=NO;
+           // self.tableView.hidden=NO;
             [self.tableView reloadData];
             
             //定位到第一行
@@ -836,6 +844,7 @@
 
 -(void)loadedMoreDatas
 {
+            [UIApplication sharedApplication].networkActivityIndicatorVisible=YES;
     BOOL isConnected = [WebRequest isConnectionAvailable];
     if (!isConnected) {
         MBProgressHUD *hd =[MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -844,6 +853,8 @@
         [hd show:YES];
         
         [hd hide:YES afterDelay:2.0];
+        
+                [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
         return;
     }
     
@@ -877,6 +888,7 @@
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
+                    [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
             if (moreIndexpath.count>0) {
                 //插入数据
                 [self.tableView insertRowsAtIndexPaths:moreIndexpath withRowAnimation:UITableViewRowAnimationFade];

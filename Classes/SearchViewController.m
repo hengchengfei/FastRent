@@ -390,6 +390,8 @@
 
 -(void)reloadData:(NSString *)searchText{
  
+    [UIApplication sharedApplication].networkActivityIndicatorVisible=YES;
+    
     __block Rents *_allSearchRents;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -400,6 +402,7 @@
         } ];
         
        dispatch_async(dispatch_get_main_queue(), ^{
+           [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
            [hud hide:YES];
            if (_allSearchRents.rents.count<=0) {
                MBProgressHUD *hudMsg=[MBProgressHUD showHUDAddedTo:self.view animated:YES];

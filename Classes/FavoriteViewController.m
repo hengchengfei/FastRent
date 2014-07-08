@@ -72,14 +72,14 @@
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
     //loading..
-//    loadingIndicator =[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-//    //    loadingIndicator.color=[UIColor grayColor];
-//    [loadingIndicator setFrame:CGRectMake(0, 0, 32.0f, 32.0f)];
-//    [loadingIndicator setCenter:CGPointMake(160.0f, 208.0f)];
-//    [loadingIndicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
-//    
-//    [self.view insertSubview:loadingIndicator aboveSubview:self.tableView];
-
+    //    loadingIndicator =[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    //    //    loadingIndicator.color=[UIColor grayColor];
+    //    [loadingIndicator setFrame:CGRectMake(0, 0, 32.0f, 32.0f)];
+    //    [loadingIndicator setCenter:CGPointMake(160.0f, 208.0f)];
+    //    [loadingIndicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
+    //
+    //    [self.view insertSubview:loadingIndicator aboveSubview:self.tableView];
+    
     
     //
     [self loadFavoriteDatas];
@@ -134,16 +134,16 @@
     NSArray *arr=[[NSArray alloc]initWithObjects:item, nil];
     self.navigationItem.rightBarButtonItems=arr;
     
-//    UIButton *button=[[UIButton alloc]init];
-//    button.frame = CGRectMake(0, 0, 50, 22);
-//    //[button setBackgroundImage:back forState:UIControlStateNormal];
-//    [button addTarget:self action:@selector(edit:) forControlEvents:UIControlEventTouchUpInside];
-//    [button setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-//    [button setTitle:@"编辑" forState:UIControlStateNormal];
-//    button.titleLabel.textAlignment=NSTextAlignmentRight;
-//    
-//    UIBarButtonItem *item=[[UIBarButtonItem alloc]initWithCustomView:button];
-//    self.navigationItem.rightBarButtonItem=item;
+    //    UIButton *button=[[UIButton alloc]init];
+    //    button.frame = CGRectMake(0, 0, 50, 22);
+    //    //[button setBackgroundImage:back forState:UIControlStateNormal];
+    //    [button addTarget:self action:@selector(edit:) forControlEvents:UIControlEventTouchUpInside];
+    //    [button setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+    //    [button setTitle:@"编辑" forState:UIControlStateNormal];
+    //    button.titleLabel.textAlignment=NSTextAlignmentRight;
+    //
+    //    UIBarButtonItem *item=[[UIBarButtonItem alloc]initWithCustomView:button];
+    //    self.navigationItem.rightBarButtonItem=item;
 }
 
 -(void)setNavRightButtonTitle:(NSString *)title
@@ -156,7 +156,7 @@
     [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     
     UIFont *font=[UIFont systemFontOfSize:15.0];
-   CGSize size= MB_TEXTSIZE(title, font);
+    CGSize size= MB_TEXTSIZE(title, font);
     button.titleLabel.font=font;
     button.frame = CGRectMake(0, 0, size.width, size.height);
     //button.titleLabel.textAlignment=NSTextAlignmentRight;
@@ -170,9 +170,11 @@
 #pragma mark 加载数据
 -(void)loadFavoriteDatas
 {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible=YES;
     BOOL isConnected =[WebRequest isConnectionAvailable];
     if (!isConnected) {
-  [self.view makeToast:@"无法连接到服务器，请检测网络连接" duration:1.0 position:@"bottom"];
+        [self.view makeToast:@"无法连接到服务器，请检测网络连接" duration:1.0 position:@"bottom"];
+        [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
         return;
     }
     
@@ -181,10 +183,11 @@
     if (array.count<=0) {
         self.navigationItem.rightBarButtonItem.enabled=NO;
         [self.view makeToast:@"无收藏信息" duration:1.0 position:@"bottom"];
+        [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
         return;
     }
     
-   MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText=@"加载中";
     hud.dimBackground=YES;
     [hud show:YES];
@@ -203,9 +206,10 @@
         }];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-                            [hud hide:YES];
+            [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
+            [hud hide:YES];
             if (!isSuccess) {
-                 [self.view makeToast:@"无法连接到服务器，请检测网络连接" duration:1.0 position:@"bottom"];
+                [self.view makeToast:@"无法连接到服务器，请检测网络连接" duration:1.0 position:@"bottom"];
                 //[loadingIndicator stopAnimating];
                 return;
             }
@@ -213,7 +217,7 @@
             if (_allRents!=nil && _allRents.rents.count<=0) {
                 self.navigationItem.rightBarButtonItem.enabled=NO;
                 [self.view makeToast:@"无收藏信息" duration:1.0 position:@"bottom"];
-               [userDefaults removeObjectForKey:FavoriteIdKey];
+                [userDefaults removeObjectForKey:FavoriteIdKey];
             }else{
                 NSMutableArray *newArray=[[NSMutableArray alloc]init];
                 for (int i=0; i<_allRents.rents.count; i++) {
@@ -276,9 +280,9 @@
 -(void)deleteBottomToolbar
 {
     //减少tableview的偏移
-//    self.tableView.tableFooterView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 44)];
-//    CGSize size =CGSizeMake(self.tableView.contentSize.width, self.tableView.contentSize.height+44);
-//    [self.tableView setContentSize:size];
+    //    self.tableView.tableFooterView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 44)];
+    //    CGSize size =CGSizeMake(self.tableView.contentSize.width, self.tableView.contentSize.height+44);
+    //    [self.tableView setContentSize:size];
     
     [toolbar removeFromSuperview];
 }
@@ -302,7 +306,7 @@
         _detailViewController.id =[NSNumber numberWithInt:[cell.id.text intValue]];
         _detailViewController.delegate =self;
         _detailViewController.isFavorited=YES;//默认是收藏的
-
+        
         [self.navigationController pushViewController:_detailViewController animated:YES];
     }
     
