@@ -432,6 +432,7 @@
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
     [MobClick endLogPageView:@"搜索页面"];
 }
 

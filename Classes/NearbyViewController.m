@@ -178,6 +178,9 @@
         locationManager=[CLLocationManager new];
         locationManager.delegate=self;
         locationManager.desiredAccuracy=kCLLocationAccuracyBest;
+        [locationManager setPausesLocationUpdatesAutomatically:YES];
+        locationManager.activityType=cla
+        
         locationManager.distanceFilter=500.0f;//当位置超过多少米时更新
         [locationManager startUpdatingLocation];
     }
@@ -928,6 +931,8 @@
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
     [MobClick endLogPageView:@"附近列表页面"];
+    
 }
 @end

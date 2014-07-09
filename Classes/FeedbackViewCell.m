@@ -69,10 +69,11 @@
     content=[content stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     device=[device stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible=YES;
     BOOL isConnect=[WebRequest isConnectionAvailable];
     if (!isConnect) {
         [self warnMsg:@"网络连接失败"];
+        [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
         return;
     }
     
@@ -94,6 +95,7 @@
             }
         }];
         dispatch_async(dispatch_get_main_queue(), ^{
+            [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
             [hudLoading hide:NO];
             if (isSuccess) {
                 [self warnMsg:@"提交成功"];
@@ -114,4 +116,5 @@
     [hud show:YES];
     [hud hide:YES afterDelay:2.0];
 }
+
 @end

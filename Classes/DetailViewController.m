@@ -960,6 +960,7 @@
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
     [MobClick endLogPageView:@"详细页面(附近)"];
 }
 @end

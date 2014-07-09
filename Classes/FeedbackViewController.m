@@ -251,6 +251,7 @@
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
     [MobClick endLogPageView:@"反馈页面"];
 }
 
