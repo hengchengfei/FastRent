@@ -179,8 +179,7 @@
         locationManager.delegate=self;
         locationManager.desiredAccuracy=kCLLocationAccuracyBest;
         [locationManager setPausesLocationUpdatesAutomatically:YES];
-        locationManager.activityType=cla
-        
+ 
         locationManager.distanceFilter=500.0f;//当位置超过多少米时更新
         [locationManager startUpdatingLocation];
     }
