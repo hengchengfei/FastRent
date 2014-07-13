@@ -38,10 +38,7 @@
 {
     [super viewDidLoad];
     
-
-    //自动升级
     [self chkUpdate];
-
     
     BOOL isLocation = [CLLocationManager locationServicesEnabled];
     if (isLocation) {
@@ -65,7 +62,11 @@
     //检测版本
     [[LTUpdate shared] update:LTUpdateNow
                      complete:^(BOOL isNewVersionAvailable, LTUpdateVersionDetails *versionDetails) {
+                         //*// [TIP] Remove the first slash to toggle block comments if you'd like to use MBAlertView.
                          if (isNewVersionAvailable) {
+                             //                             DLog(@"New version %@ released on %@.", versionDetails.version, versionDetails.releaseDate);
+                             //                             DLog(@"The app is about %@", humanReadableFileSize(versionDetails.fileSizeBytes));
+                             //                             DLog(@"Release notes:\n%@", versionDetails.releaseNotes);
                              [[LTUpdate shared] alertLatestVersion:LTUpdateOption | LTUpdateSkip];
                          }
                      }];

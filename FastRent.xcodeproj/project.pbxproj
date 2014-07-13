@@ -124,7 +124,6 @@
 		459DF15D1956ADAC00F30511 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 459DF15A1956ADAC00F30511 /* libWeChatSDK.a */; };
 		45AAA57818DEFCAA00C2529B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45AAA57718DEFCAA00C2529B /* CoreLocation.framework */; };
 		45ABA4E6194A974800445EBB /* AboutVersionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 45ABA4E5194A974800445EBB /* AboutVersionViewCell.m */; };
-		45B1FC7C19058517007EBB02 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 45B1FC7E19058517007EBB02 /* Localizable.strings */; };
 		45BED46B195CF15B00EFC07F /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45BED469195CF15B00EFC07F /* TencentOpenAPI.framework */; };
 		45BED46C195CF15B00EFC07F /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 45BED46A195CF15B00EFC07F /* TencentOpenApi_IOS_Bundle.bundle */; };
 		45BED46E195CF24E00EFC07F /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45BED46D195CF24E00EFC07F /* TencentOpenAPI.framework */; };
@@ -192,7 +191,6 @@
 		451D2B751902B80600CA311F /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		451D2B7C1902B80600CA311F /* WebUrl.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = WebUrl.plist; sourceTree = "<group>"; };
 		451D2B881902BAEF00CA311F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
-		451D2B891902BAEF00CA311F /* FastRent-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "FastRent-Info.plist"; sourceTree = "<group>"; };
 		451D2B8A1902BAEF00CA311F /* FastRent-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "FastRent-Prefix.pch"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		451D2B8B1902BAEF00CA311F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		451D2B9A1902BDB100CA311F /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -241,6 +239,7 @@
 		4523F120192EC30E00B422FA /* RentSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RentSearchBar.m; sourceTree = "<group>"; };
 		4523F129192EF25400B422FA /* BaiduSuggestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaiduSuggestion.h; sourceTree = "<group>"; };
 		4523F12A192EF25400B422FA /* BaiduSuggestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaiduSuggestion.m; sourceTree = "<group>"; };
+		45252D31197208DB00CB9ECB /* FastRent-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "FastRent-Info.plist"; sourceTree = "<group>"; };
 		452577391958714400337312 /* sns_icon_23.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sns_icon_23.png; sourceTree = "<group>"; };
 		4525773B1958716400337312 /* sns_icon_23@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sns_icon_23@2x.png"; sourceTree = "<group>"; };
 		4525773D1958718500337312 /* sns_icon_24@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sns_icon_24@2x.png"; sourceTree = "<group>"; };
@@ -476,11 +475,11 @@
 		451D2B321902B69D00CA311F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				45252D31197208DB00CB9ECB /* FastRent-Info.plist */,
 				45E207DC19211E8200C49A94 /* Fonts */,
 				45B1FC791905848B007EBB02 /* zh-Hans.lproj */,
 				451D2B571902B74500CA311F /* Config */,
 				451D2B581902B74500CA311F /* Images */,
-				451D2B891902BAEF00CA311F /* FastRent-Info.plist */,
 				451D2B8A1902BAEF00CA311F /* FastRent-Prefix.pch */,
 				451D2B8B1902BAEF00CA311F /* Images.xcassets */,
 				451D2B9A1902BDB100CA311F /* main.m */,
@@ -892,7 +891,6 @@
 				45E207CE191A6FDF00C49A94 /* btn_close_normal@2x.png in Resources */,
 				453C5948194DEA7900A0EB54 /* iTunesArtwork.png in Resources */,
 				4521F0BA19548B7700BC3EEC /* sns_icon_21.png in Resources */,
-				45B1FC7C19058517007EBB02 /* Localizable.strings in Resources */,
 				453C5954194DEC4B00A0EB54 /* AppIcon40x40@2x.png in Resources */,
 				4525773E1958718500337312 /* sns_icon_24@2x.png in Resources */,
 				4521F0BB19548B7700BC3EEC /* sns_icon_21@2x.png in Resources */,
@@ -1103,7 +1101,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: chengfei heng (P67ES2Y4EK)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: chengfei heng (P67ES2Y4EK)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1122,7 +1121,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-all_load";
-				PROVISIONING_PROFILE = "39B29EFC-8053-4009-8218-1BA2AEAEFC95";
+				PROVISIONING_PROFILE = "1AFC5F84-2660-4937-9805-B27DF8B729FE";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv7 armv7s i386";
 			};
@@ -1145,7 +1144,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: chengfei heng (UET7CC5T8C)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: chengfei heng (UET7CC5T8C)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1158,7 +1158,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-all_load";
-				PROVISIONING_PROFILE = "39B29EFC-8053-4009-8218-1BA2AEAEFC95";
+				PROVISIONING_PROFILE = "6A0A7375-17B9-4B85-AE46-E9C268573661";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "armv7 armv7s i386";
@@ -1171,8 +1171,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: chengfei heng (UET7CC5T8C)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: chengfei heng (UET7CC5T8C)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Classes",
@@ -1193,7 +1193,7 @@
 				);
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = FastRent;
-				PROVISIONING_PROFILE = "39B29EFC-8053-4009-8218-1BA2AEAEFC95";
+				PROVISIONING_PROFILE = "6A0A7375-17B9-4B85-AE46-E9C268573661";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1204,8 +1204,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: chengfei heng (UET7CC5T8C)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: chengfei heng (P67ES2Y4EK)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Classes",
@@ -1226,7 +1226,7 @@
 				);
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = FastRent;
-				PROVISIONING_PROFILE = "39B29EFC-8053-4009-8218-1BA2AEAEFC95";
+				PROVISIONING_PROFILE = "6A0A7375-17B9-4B85-AE46-E9C268573661";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -1315,8 +1315,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: chengfei heng (P67ES2Y4EK)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: chengfei heng (P67ES2Y4EK)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Classes",
@@ -1337,7 +1337,7 @@
 				);
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = FastRent;
-				PROVISIONING_PROFILE = "39B29EFC-8053-4009-8218-1BA2AEAEFC95";
+				PROVISIONING_PROFILE = "1AFC5F84-2660-4937-9805-B27DF8B729FE";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Distribution;
@@ -1371,7 +1371,7 @@
 				45C4A9A5195A6C13007BC625 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Distribution;
 		};
 		459B8C23186498DE006C794E /* Build configuration list for PBXNativeTarget "FastRent" */ = {
 			isa = XCConfigurationList;
@@ -1381,7 +1381,7 @@
 				45C4A9A6195A6C13007BC625 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Distribution;
 		};
 		459B8C26186498DE006C794E /* Build configuration list for PBXNativeTarget "FastRentTests" */ = {
 			isa = XCConfigurationList;
@@ -1391,7 +1391,7 @@
 				45C4A9A7195A6C13007BC625 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Distribution;
 		};
 /* End XCConfigurationList section */
 	};
