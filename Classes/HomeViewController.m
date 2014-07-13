@@ -12,6 +12,7 @@
 #import "WebRequest.h"
 #import "MoreViewController.h"
 #import "MobClick.h"
+#import "LTUpdate.h"
 
 @interface HomeViewController ()
 {
@@ -36,7 +37,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-     
+    
+
+    //自动升级
+    [self chkUpdate];
+
+    
     BOOL isLocation = [CLLocationManager locationServicesEnabled];
     if (isLocation) {
         locationManager=[CLLocationManager new];
@@ -55,6 +61,15 @@
   
 }
 
+-(void)chkUpdate{
+    //检测版本
+    [[LTUpdate shared] update:LTUpdateNow
+                     complete:^(BOOL isNewVersionAvailable, LTUpdateVersionDetails *versionDetails) {
+                         if (isNewVersionAvailable) {
+                             [[LTUpdate shared] alertLatestVersion:LTUpdateOption | LTUpdateSkip];
+                         }
+                     }];
+}
 //设置导航颜色
 -(void)setTitle:(NSString *)title
 {
