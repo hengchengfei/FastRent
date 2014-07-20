@@ -85,7 +85,10 @@
     
     //时间
     publishTime = [[UILabel alloc]initWithFrame:CGRectZero];
-    NSString *time=[@"发布时间：" stringByAppendingString:[rent publishTime]];
+    if (rent.publishTime==nil) {
+       rent.publishTime=@"";
+    }
+    NSString *time = [NSString stringWithFormat:@"发布时间：%@",rent.publishTime ];
     UIFont *font =[UIFont fontWithName:@"Arial" size:11.0];
     CGSize sizeTime =MB_TEXTSIZE(time, font);
     
