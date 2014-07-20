@@ -364,7 +364,7 @@
         rentCell.houseArea.text=@"面积未知";
     }else{
         NSString *area=[NSString stringWithFormat:@"%d",rent.houseArea.intValue];
-        rentCell.houseArea.text=[area stringByAppendingString:rent.houseAreaUnit];
+        rentCell.houseArea.text=[NSString stringWithFormat:@"%@%@",area,rent.houseAreaUnit];
     }
     
     return rentCell;
