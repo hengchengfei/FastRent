@@ -36,7 +36,11 @@
 
 -(void)setAttribute:(Rent *) rent
 {
-    self.rentMoney.text=[rent.rentMoney.stringValue stringByAppendingString:@"元"];
+    if (rent.rentMoney!=NULL) {
+        NSString *money=[NSString stringWithFormat:@"%@元", rent.rentMoney.stringValue];
+            self.rentMoney.text=money;
+    }
+
     
     self.rentType.text=rent.rentType;
         self.agencyType.text=rent.agencyType;
