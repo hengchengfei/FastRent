@@ -2,7 +2,10 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:SimulatorLocationTest.gpx">
+      location = "group:testLocation1.gpx">
+   </FileRef>
+   <FileRef
+      location = "group:testLocation2.gpx">
    </FileRef>
    <FileRef
       location = "group:FastRent.xcodeproj">

@@ -121,7 +121,16 @@
 
 - (void)showInView:(UIView *)view
 {
-    [[UIApplication sharedApplication].delegate.window.rootViewController.view addSubview:self];
+    BOOL isAdded=NO;
+    for (UIView *v in view.subviews) {
+        if ([v isKindOfClass:[LXActivity class]]) {
+            isAdded=YES;
+            break;
+        }
+    }
+    if (isAdded==NO) {
+            [view addSubview:self];
+    }
 }
 
 #pragma mark - Praviate method

@@ -23,10 +23,14 @@
 #import "PullDownButton.h"
 #import "Toast+UIView.h"
 #import "MobClick.h"
-
 //左边距大小
 #define kLeftOrigon 5.0
 
+typedef enum {
+    StartLocation,//开始定位
+    LocationError,//定位失败
+    LocationSuccess//定位成功
+}LoadingType;
 
 @interface NearbyViewController ()
 {
@@ -38,7 +42,7 @@
     SelectionViewController *selectionController;
     WYPopoverController *popoverController;
     
-    
+    UIImageView *_loadingImageView;
     
     Rents *allRents;
     
@@ -77,15 +81,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    hudLoading=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hudLoading.labelText=@"加载中";
-    [hudLoading show:YES];
-    
-    //导航栏设置
-    [self setTitle:self.navTitle];
-    [self setNavLeftButton];
-    
+
     //View样式设置
     [self initStyle];
     
@@ -94,12 +90,30 @@
         return;
     }
     
+    [self loadingImage];
+    
     //打开地图定位
     [self openMapLocation];
     
     
 }
 
+
+-(void)loadingImage{
+    _loadingImageView=[[UIImageView  alloc]initWithFrame:self.view.frame];
+    _loadingImageView.frame=CGRectMake(0, 0, 200, 225);
+    _loadingImageView.center =CGPointMake(self.view.center.x, self.view.center.y-50);
+    _loadingImageView.animationImages=[NSArray arrayWithObjects:
+                                       [UIImage imageNamed:@"LoadingImage_01.png"],
+                                       [UIImage imageNamed:@"LoadingImage_02.png"],
+                                       nil];
+    _loadingImageView.animationDuration=0.5;
+    _loadingImageView.animationRepeatCount=0;
+    [_loadingImageView startAnimating];
+    [self.view addSubview:_loadingImageView];
+    
+    
+}
 #pragma mark View样式设置
 -(void)initStyle{
     [self.view setBackgroundColor:[UIColor whiteColor]];
@@ -145,9 +159,11 @@
     if (!isConnectionNetwork) {
         //View中间添加刷新按钮
         //hudLoading.labelText=@"网络连接失败";
+        [self setTitle:LocationError subTitle:nil];
         [hudLoading hide:YES] ;
         //hudLoading.labelText=@"加载中";
         [self addLoadingFaile];
+        //self.navigationItem.rightBarButtonItem.enabled=NO;
         //      MBProgressHUD * hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
         //        hud.labelFont=[UIFont systemFontOfSize:14];
         //        hud.labelText=@"网络连接失败";
@@ -163,6 +179,7 @@
         
         return NO;
     }
+   //  self.navigationItem.rightBarButtonItem.enabled=YES;
     return YES;
 }
 
@@ -171,6 +188,9 @@
 #pragma mark 开启地图功能
 -(void)openMapLocation
 {
+    //导航栏设置
+    [self setTitle:StartLocation subTitle:nil];
+    [self setRightButton:@"重新定位"];
     
     if (![CLLocationManager locationServicesEnabled]) {
         [self openGPSTips];
@@ -179,7 +199,7 @@
         locationManager.delegate=self;
         locationManager.desiredAccuracy=kCLLocationAccuracyBest;
         [locationManager setPausesLocationUpdatesAutomatically:YES];
- 
+        
         locationManager.distanceFilter=500.0f;//当位置超过多少米时更新
         [locationManager startUpdatingLocation];
     }
@@ -188,16 +208,22 @@
 
 -(void)addLoadingFaile
 {
+    //先判断有没有
+    for (UIView *view in self.view.subviews) {
+        if ([view isKindOfClass:[UIButton class]] && view.tag==1) {
+            return;
+        }
+    }
+
     UIImage *image=[UIImage imageNamed:@"failView1.png"];
-    CGSize size=self.view.frame.size;
     CGSize imageSize=CGSizeMake(150, 150);
-    CGRect rect=CGRectMake(size.width/2-imageSize.width/2, size.height/2-imageSize.height/2-44
-                           , imageSize.width, imageSize.height);
-    
+
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setBackgroundImage:image forState:UIControlStateNormal];
-    button.frame=rect;
+    button.frame=CGRectMake(0, 0, imageSize.width, imageSize.height);
+    button.center=CGPointMake(self.view.center.x, self.view.center.y-60);
     [button addTarget:self action:@selector(didClickRefresh:) forControlEvents:UIControlEventTouchUpInside];
+    button.tag=1;
     
     [self.view insertSubview:button aboveSubview:self.tableView];
     //    UIImageView *view=[[UIImageView alloc]initWithImage:image];
@@ -244,12 +270,14 @@
 #pragma mark 网络连接后刷新
 -(void)didClickRefresh:(id)sender
 {
-    [sender removeFromSuperview];
     if ([self checkInternet]) {
+        [sender removeFromSuperview];//删除错误画面
+        
         //打开地图定位
         [self openMapLocation];
         
-        [hudLoading hide:NO];
+        //[hudLoading hide:NO];
+        [_loadingImageView removeFromSuperview];
     }
     
 }
@@ -257,37 +285,96 @@
 
 #pragma mark -
 #pragma mark 设置导航栏上的标题和左侧按钮样式
--(void)setTitle:(NSString *)title
+-(void)setTitle:(LoadingType )loadingType  subTitle:(NSString *)subTitle
 {
-    UIFont *font = [UIFont systemFontOfSize:kNav_TitleSize];
+    
+    UIFont *font = [[UIFont alloc]init];
+    NSString *startLocation = @"正在加载";
+    NSString *locationError=@"定位失败";
+    NSString *title =@"当前位置";
+    
+    if (loadingType==StartLocation  ) {
+        font=[UIFont systemFontOfSize:16.0];
+        title=startLocation;
+    }else if(loadingType==LocationSuccess){
+        font=[UIFont systemFontOfSize:13.0];
+    }else if(loadingType==LocationError){
+        font=[UIFont systemFontOfSize:16.0];
+        title =locationError;
+    }
     
     CGSize titleSize=MB_TEXTSIZE(title, font);
     
-    UILabel *titleLabel=[[UILabel alloc]initWithFrame:CGRectMake(0, 10, titleSize.width, 44)];
+    UILabel *titleLabel=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, titleSize.width , titleSize.height)];
     titleLabel.backgroundColor=[UIColor clearColor];
     titleLabel.text=title;
     titleLabel.font=font;
-    titleLabel.textColor=[UIColor blackColor];
+    titleLabel.textColor=[UIColor whiteColor];
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
-    
-    
     titleLabel.userInteractionEnabled=YES;
-    self.navigationItem.titleView=titleLabel;
+    
+    if (loadingType==StartLocation  ) {
+        CAGradientLayer *gradientLayer = [CAGradientLayer layer];
+        CGPoint p=CGPointMake(titleSize.width, -5);
+        gradientLayer =[self getLoadingView:p];
+        [titleLabel.layer addSublayer:gradientLayer];
+    }
+    
+    
+    //
+    UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0, 0, titleSize.width, titleSize.height)];
+     view.backgroundColor=[UIColor clearColor];
+        [view addSubview:titleLabel];
+    
+    CGFloat maxWidth =titleSize.width;
+    if (subTitle!=nil) {
+        UIFont *font1=[UIFont systemFontOfSize:12.0];
+        CGSize titleSize1=MB_TEXTSIZE(subTitle, font1);
+        UILabel *titleLabel1=[[UILabel alloc]initWithFrame:CGRectMake(0, titleSize.height+2, titleSize1.width, titleSize1.height)];
+        titleLabel1.backgroundColor=[UIColor clearColor];
+        titleLabel1.text=subTitle;
+        titleLabel1.font=font1;
+        titleLabel1.textColor=[UIColor whiteColor];
+        [titleLabel1 setTextAlignment:NSTextAlignmentCenter];
+        if (maxWidth<titleSize1.width) {
+            maxWidth=titleSize1.width;
+        }
+        [view addSubview:titleLabel1];
+        view.frame=CGRectMake(0, 0, maxWidth, titleSize.height + 2 + titleSize1.height);
+    }
+    
+    //将“当前位置”的中心X设置为view的中心X
+    CGPoint centerX = CGPointMake(view.center.x, titleLabel.center.y);
+    titleLabel.center= centerX;
+    
+    self.navigationItem.titleView=view;
     
 }
 
 
--(void)setNavLeftButton
+-(void)setRightButton:(NSString *)text
 {
     UIButton *button=[[UIButton alloc]init];
-    UIImage *back=[UIImage imageNamed:kPNG_BACK];
-    //button.backgroundColor=[UIColor blackColor];
-    button.frame = CGRectMake(0, 0, back.size.width, back.size.height);
-    [button setBackgroundImage:back forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    UIFont *font =[UIFont systemFontOfSize:12.0];
+    CGSize size =MB_TEXTSIZE(text, font);
+    [button setFrame:CGRectMake(0, 0, size.width, size.height)];
+    [button setTitle:text forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    [button.titleLabel setFont:font];
+    [button addTarget:self action:@selector(openMapLocation) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *item=[[UIBarButtonItem alloc]initWithCustomView:button];
-    self.navigationItem.leftBarButtonItem=item;
+    self.navigationItem.rightBarButtonItem=item;
+    
+    //    UIImage *back=[UIImage imageNamed:kPNG_BACK];
+    //    //button.backgroundColor=[UIColor blackColor];
+    //    button.frame = CGRectMake(0, 0, back.size.width, back.size.height);
+    //    [button setBackgroundImage:back forState:UIControlStateNormal];
+    //    [button addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    //
+    //    UIBarButtonItem *item=[[UIBarButtonItem alloc]initWithCustomView:button];
+    //    self.navigationItem.leftBarButtonItem=item;
     
 }
 -(void)back
@@ -310,11 +397,11 @@
     }
     
     //[locationManager startUpdatingLocation];
-  //   [hudLoading show:YES];
-//    
+    //   [hudLoading show:YES];
+    //
     _reloading=YES;
-//    
-//    
+    //
+    //
     __block BOOL isSuccess;
     __block NSString *errMsg;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0) ,^{
@@ -434,17 +521,21 @@
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            [hudLoading hide:NO];
+            //[hudLoading hide:NO];
+            [_loadingImageView removeFromSuperview];
             if (!isSuccess) {
+                [self setTitle:LocationError subTitle:nil];
                 [self.view makeToast:@"无法连接到服务器，请检测网络连接" duration:2.0 position:@"bottom"];
-                        [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
+                [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
                 //self.tableView.hidden=YES;
+                
                 return;
             }
             
             if (_address.formattedAddress==nil) {
+                [self setTitle:LocationError subTitle:nil];
                 [self.view makeToast:@"定位失败(不在中国)" duration:1.0 position:@"bottom"];
-                        [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
+                [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
                 return;
             }
             
@@ -452,14 +543,16 @@
             NSDictionary *dict = @{@"城市": _address.city};
             [MobClick event:@"CityEvent" attributes:dict];
             
-            [self.view makeToast:_address.formattedAddress
+            [self setTitle:LocationSuccess subTitle:_address.location];
+            
+            [self.view makeToast:_address.location
                         duration:2.0
                         position:@"bottom"];
             [self addComboxBox];
             [self setDefaultCity:_address.city];
             [self reloadData];
             
-
+            
             //正确定位后，则停止
             [locationManager stopUpdatingLocation];
         });
@@ -471,7 +564,8 @@
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
     DLog(@"======%@",error);
-    [hudLoading hide:NO];
+    //[hudLoading hide:NO];
+    [_loadingImageView removeFromSuperview];
     switch (error.code) {
         case kCLErrorDenied:
             [self openGPSTips];
@@ -514,15 +608,21 @@
     
     //定位错误，则返回到前一个页面
     view.leftBlock=^{
-        [self.navigationController popViewControllerAnimated:YES];
+        //导航栏设置
+        [self setTitle:LocationError subTitle:nil];
+        //[self.navigationController popViewControllerAnimated:YES];
     };
     
     view.rightBlock=^{
-        [self.navigationController popViewControllerAnimated:YES];
+        //导航栏设置
+        [self setTitle:LocationError subTitle:nil];
+        //[self.navigationController popViewControllerAnimated:YES];
     };
     
     view.dismissBlock=^{
-        [self.navigationController popViewControllerAnimated:YES];
+        //导航栏设置
+        [self setTitle:LocationError subTitle:nil];
+        //[self.navigationController popViewControllerAnimated:YES];
     };
 }
 #pragma mark -
@@ -664,7 +764,8 @@
     [UIApplication sharedApplication].networkActivityIndicatorVisible=YES;
     BOOL isConnected =[WebRequest isConnectionAvailable];
     if (!isConnected) {
-        [hudLoading hide:NO];
+        //[hudLoading hide:NO];
+        [_loadingImageView removeFromSuperview];
         [self warnMessage:@"网络连接失败"];
         [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
         return;
@@ -686,7 +787,7 @@
                 allRents=rents;
             }
         }] ;
-
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
             if (!isSuccess) {
@@ -697,7 +798,7 @@
             }
             
             [hudLoading hide:YES];
-           // self.tableView.hidden=NO;
+            // self.tableView.hidden=NO;
             [self.tableView reloadData];
             
             //定位到第一行
@@ -739,10 +840,10 @@
 {
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     NearbyViewCell *cell = (NearbyViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-    
-    DetailViewController *destinct = segue.destinationViewController;
+    //NSString *aa= [segue identifier];
+    UINavigationController *nav = segue.destinationViewController;
+    DetailViewController *destinct = [nav.childViewControllers objectAtIndex:0];
     destinct.id= [NSNumber numberWithInt:[cell.id.text intValue]];
-    
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
 }
@@ -823,7 +924,18 @@
         
         [self loadedMoreDatas];
         return;
+    }else{
+        //        NearbyViewCell *cell=(NearbyViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        //        UIStoryboard *st = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+        //        DetailViewController *cc=[st instantiateViewControllerWithIdentifier:@"DetailController"];
+        //        cc.id= [NSNumber numberWithInt:[cell.id.text intValue]];
+        //
+        //        UINavigationController *nav=[[UINavigationController alloc]initWithRootViewController:cc];
+        //        nav.navigationBar.barTintColor = selectedItemTitleColor;
+        //        [self presentViewController:nav animated:YES completion:nil];
     }
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
 }
 
@@ -838,15 +950,15 @@
 }
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (cell ==moreCell && [self isAutoLoadMore]) {
-        moreCell.textLabel.text=@"正在加载...";
-        [self loadedMoreDatas];
-    }
+    //if (cell ==moreCell && [self isAutoLoadMore]) {
+    //    moreCell.textLabel.text=@"正在加载...";
+    //    [self loadedMoreDatas];
+    //}
 }
 
 -(void)loadedMoreDatas
 {
-            [UIApplication sharedApplication].networkActivityIndicatorVisible=YES;
+    [UIApplication sharedApplication].networkActivityIndicatorVisible=YES;
     BOOL isConnected = [WebRequest isConnectionAvailable];
     if (!isConnected) {
         MBProgressHUD *hd =[MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -856,7 +968,7 @@
         
         [hd hide:YES afterDelay:2.0];
         
-                [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
+        [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
         return;
     }
     
@@ -890,7 +1002,7 @@
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
-                    [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
+            [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
             if (moreIndexpath.count>0) {
                 //插入数据
                 [self.tableView insertRowsAtIndexPaths:moreIndexpath withRowAnimation:UITableViewRowAnimationFade];
@@ -924,14 +1036,101 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [MobClick beginLogPageView:@"附近列表页面"];
+    
 }
 
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
     [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
-    [MobClick endLogPageView:@"附近列表页面"];
     
+}
+
+#pragma mark 导航栏上添加旋转动画
+-(CAGradientLayer *) getLoadingView:(CGPoint)orgin{
+    
+    //声明加载view的动画路径
+    UIBezierPath *pacmanOpenPath;
+    
+    CGFloat radius = 5.0f;
+    CGPoint arcCenter = CGPointMake(radius, radius);
+    
+    //定制一段圆弧
+    pacmanOpenPath = [UIBezierPath bezierPathWithArcCenter:arcCenter
+                      
+                                                    radius:radius
+                      
+                                                startAngle: 0
+                      
+                                                  endAngle: 3 * M_PI / 2
+                      
+                                                 clockwise:YES];
+    
+    //生成color数组
+    NSMutableArray *colors = nil;
+    if (colors == nil) {
+        colors = [[NSMutableArray alloc] initWithCapacity:3];
+        UIColor *color = nil;
+        color = [UIColor whiteColor];
+        [colors addObject:(id)[color CGColor]];
+        color = [UIColor grayColor];
+        [colors addObject:(id)[color CGColor]];
+    }
+    
+    
+    //CAGradientLayer 通过指定颜色，一个开始的点，一个结束的点和梯度类型使你能够简单的在层上绘制一个梯度，效果就是颜色渐变
+    CAGradientLayer *gradientLayer = [CAGradientLayer layer];
+    
+    //在指定的color中绘制渐变层
+    [gradientLayer setColors:colors];
+    gradientLayer.frame = CGRectMake(orgin.x, orgin.y, 30, 30);
+    
+    //在 (20, 20, 100, 100) 位置绘制一个颜色渐变的层
+    //[self.view.layer addSublayer:gradientLayer];
+    
+    //CAShapeLayer 通过创建一个核心图像路径，并且分配给CAShaperLayer的path属性，从而为需要的形状指定路径。 可以指定填充路径之外的颜色，路径内的颜色，绘制路径，线宽，是否圆角等等
+    CAShapeLayer *shapeLayer = [CAShapeLayer layer];
+    
+    shapeLayer.fillColor = [UIColor clearColor].CGColor;
+    
+    shapeLayer.fillMode = kCAFillRuleEvenOdd;
+    
+    shapeLayer.path = pacmanOpenPath.CGPath;
+    
+    shapeLayer.strokeColor = [UIColor yellowColor].CGColor;
+    
+    shapeLayer.lineWidth = 2.0f;
+    
+    shapeLayer.lineJoin = kCALineJoinRound;
+    
+    
+    //当你使用时，奇数的值被绘制，然后偶数的值不被绘制。例如，如果你指定5，10，15，20，笔画将会有5个单元被绘制，接下来10不被绘制，15被绘制，20不被绘制。这种模式可以使用你喜欢的间隙来指定。请记住：奇数等于绘制而偶数不绘制。这些单元是被放在了一个放置NSNumber对象的NSArray的数组中，如果你在NSSArray中放置其他东西，会带来一些异常的效果。
+    //    [shapeLayer setLineDashPattern:
+    //    [NSArray arrayWithObjects:[NSNumber numberWithInt:20], [NSNumber numberWithInt:15],
+    //     nil]];
+    
+    
+    shapeLayer.lineCap = kCALineCapRound;
+    
+    shapeLayer.frame = CGRectMake(10, 10, 10, 10);
+    
+    //所有继承于CALayer的核心动画层都有一个属性叫做mask.这个属性能够使你给层的所有内容做遮罩，除了层面罩中已经有的部分，它允许仅仅形状层绘制的部分显示那部分的图像。  我们将shapeLayer作为这个遮罩，显示出来的效果就是一个有着渐变填充色的圆弧
+    gradientLayer.mask = shapeLayer;
+    
+    
+    //最重要的显示内容已经有了，接下来就是让图层动起来，所以加一个旋转动画
+    CABasicAnimation *spinAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+    spinAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    spinAnimation.fromValue = [NSNumber numberWithInt:0];
+    spinAnimation.toValue = [NSNumber numberWithFloat:2 * M_PI];
+    spinAnimation.duration = 2;
+    spinAnimation.repeatCount = HUGE_VALF;
+    
+    [shapeLayer addAnimation:spinAnimation forKey:@"shapeRotateAnimation"];
+    
+    //现在圆弧就能够旋转了，但是我们发现渐变色是固定的位置，感觉就像是固定的背景色，为了达到一种动态的渐变，所以给gradientLayer也加上旋转动画效果，这样就是一段旋转的有着渐变效果的圆弧
+    [gradientLayer addAnimation:spinAnimation forKey:@"GradientRotateAniamtion"];
+    
+    return gradientLayer;
 }
 @end

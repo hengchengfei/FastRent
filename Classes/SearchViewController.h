@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import "MALTabBarChinldVIewControllerDelegate.h"
 
 @interface SearchViewController : UITableViewController<UISearchBarDelegate,UISearchDisplayDelegate,CLLocationManagerDelegate>
 
+@property (nonatomic, assign) id<MALTabBarChinldVIewControllerDelegate>delegate;
 
 @end

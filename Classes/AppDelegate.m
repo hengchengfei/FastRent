@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "MobClick.h"
 #import "LTUpdate.h"
+#import "MALTabBarViewController.h"
 
 @implementation AppDelegate
 
@@ -39,6 +40,37 @@
         [[UIToolbar appearance] setBackgroundColor:IOS7_Nav_Color];
     }
 
+    
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    // Override point for customization after application launch.
+    NSMutableArray *itemsArray = [[NSMutableArray alloc] init];
+    NSArray *controllerArray = [NSArray arrayWithObjects:@"NearbyNavigation",@"searchController",@"favoriteController",@"favoriteController",nil];//类名数组
+    NSArray *titleArray = [NSArray arrayWithObjects:@"附近",@"全城",@"我的",@"更多",nil];//item标题数组
+    NSArray *normalImageArray = [NSArray arrayWithObjects:@"TABLocation.png",@"TABSearch.png",@"TABUserCenter.png",@"TABMore.png", nil];//item 正常状态下的背景图片
+    NSArray *selectedImageArray = [NSArray arrayWithObjects:@"TABLocation_selected.png",@"TABSearch_selected.png", @"TABUserCenter_selected.png",@"TABMore_selected.png",nil];//item被选中时的图片名称
+    
+    for (int i = 0; i< controllerArray.count; i++) {
+        
+        MALTabBarItemModel *itemModel = [[MALTabBarItemModel alloc] init];
+        itemModel.controllerName = controllerArray[i];
+        itemModel.itemTitle = titleArray[i];
+        itemModel.itemImageName = normalImageArray[i];
+        itemModel.selectedItemImageName = selectedImageArray[i];
+        [itemsArray addObject:itemModel];
+    }
+    
+    
+    MALTabBarViewController *tabBarController = [[MALTabBarViewController alloc] initWithItemModels:itemsArray defaultSelectedIndex:0];
+    [tabBarController setTabBarBgImage:kPNG_TAB_Background];//设置tabBar的背景图片
+    self.window.rootViewController = tabBarController;
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    
+    
+    
+    
+    
     
 //    self.window=[[UIWindow alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
 //    NSUserDefaults *userDefaults =[NSUserDefaults standardUserDefaults];

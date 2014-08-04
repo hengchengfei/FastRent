@@ -87,7 +87,7 @@
     CGSize size =MB_TEXTSIZE(@"导航", font);
     [button setFrame:CGRectMake(0,0,size.width,size.height)];
     //[button setBackgroundColor:[UIColor blackColor]];
-    [button setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     [button setTitle:@"导航" forState:UIControlStateNormal];
     [button.titleLabel setFont:font];

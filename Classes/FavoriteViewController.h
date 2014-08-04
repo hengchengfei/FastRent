@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "DetailViewController.h"
+#import "MALTabBarChinldVIewControllerDelegate.h"
 
 @interface FavoriteViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,DetailDataDelegate>
 
+@property (nonatomic, assign) id<MALTabBarChinldVIewControllerDelegate>delegate;
 @property(nonatomic,retain)IBOutlet UITableView *tableView;
 
 -(IBAction)edit:(id)sender;

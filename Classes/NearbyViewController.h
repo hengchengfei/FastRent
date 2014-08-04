@@ -13,11 +13,15 @@
 #import "UIImageView+WebCache.h"
 #import "EGORefreshTableHeaderView.h"
 #import "SelectionViewController.h"
+#import "MALTabBarChinldVIewControllerDelegate.h"
 
 @interface NearbyViewController : UIViewController<UITableViewDelegate,UITableViewDataSource, CLLocationManagerDelegate,NSURLConnectionDataDelegate,EGORefreshTableHeaderDelegate,SelectionViewControllerDelegate >
 {
     CLLocationManager *locationManager;
 }
+
+@property (nonatomic, assign) id<MALTabBarChinldVIewControllerDelegate>delegate;
+
 @property(nonatomic,retain)IBOutlet UITableView *tableView;
 
 @property(nonatomic,retain)NSString *navTitle;

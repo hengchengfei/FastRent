@@ -21,7 +21,9 @@
 #else
 #define DLog(...)
 #endif
- 
+
+
+#define selectedItemTitleColor  [UIColor colorWithRed:30.0/255.0 green:197.0/255.0 blue:183.0/255.0 alpha:1.0] // item被选中时标题的颜色
 
 #pragma mark 第三方app参数
 #define __TencentAppId__ @"101127138"
@@ -29,8 +31,8 @@
 #define __UmAppKey__ @"5396d7ab56240bc86b007e6e"
 
 #pragma mark 导航栏图片
-#define kPNG_BACK @"barButtonBack.png"
-#define kPNG_Share @"barButtonShare.png"
+#define kPNG_BACK @"NAVBack.png"
+#define kPNG_Share @"NAVShare.png"
 #define kPNG_Edit @"barButtonEdit.png"
 
 #pragma mark 加载默认画面
@@ -39,10 +41,11 @@
 #define kPNG_Loading_250 @"loading250&187.png"
 
 #pragma mark 详细页面图片
-#define kPNG_Favorite @"barButtonFavorite.png"
-#define kPNG_Favorited @"barButtonFavorited.png"
+#define kPNG_Favorite @"NAVFavorite_off.png"
+#define kPNG_Favorited @"NAVFavorite_on.png"
 #define kPNG_Phone @"barButtonPhone.png"
 #define kPNG_Message @"barButtonMessage.png"
+#define kPNG_TAB_Background @"TABBackground.png"
 
 #pragma mark 系统参数
 #define ISOS7 [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0

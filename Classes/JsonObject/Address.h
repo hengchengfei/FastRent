@@ -23,5 +23,6 @@
 @property(nonatomic,retain)NSString *street;
 @property(nonatomic,retain)NSString *streetNumber;
 @property(nonatomic,retain)NSString *success;
+@property(nonatomic,retain)NSString *location;
 
 @end

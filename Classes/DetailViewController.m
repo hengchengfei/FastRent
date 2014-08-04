@@ -165,7 +165,7 @@
     [toolbar setBarStyle:UIBarStyleDefault];
     [toolbar setTranslucent:YES];
     toolbar.autoresizingMask=UIViewAutoresizingFlexibleWidth;
-    
+    [toolbar setBackgroundImage:[UIImage imageNamed:@"TABBackground.png"] forToolbarPosition:0 barMetrics:0];
     
     UIFont *systemFont =[UIFont systemFontOfSize:13];
     //联系人
@@ -182,7 +182,7 @@
     contacterLabel.textAlignment=NSTextAlignmentLeft;
     [contacterLabel setText:contacter];
     contacterLabel.backgroundColor=[UIColor clearColor];
-    contacterLabel.textColor=[UIColor blackColor];
+    contacterLabel.textColor=selectedItemTitleColor;
     
     //联系人电话
     NSString *tel=_rent.contacterPhoneDisplay;
@@ -400,12 +400,12 @@
     if (isExisted) {
         UIImage *back=[UIImage imageNamed:kPNG_Favorited];
         [button setBackgroundImage:back forState:UIControlStateNormal];
-        button.frame = CGRectMake(0, 0, back.size.width, back.size.height);
+        button.frame = CGRectMake(0, 0, 23, 23);
     }else{
         
         UIImage *back=[UIImage imageNamed:kPNG_Favorite];
         [button setBackgroundImage:back forState:UIControlStateNormal];
-        button.frame = CGRectMake(0, 0, back.size.width, back.size.height);
+        button.frame = CGRectMake(0, 0, 23, 23);
     }
     [button addTarget:self action:@selector(favoriteButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *item=[[UIBarButtonItem alloc]initWithCustomView:button];
@@ -431,6 +431,8 @@
     
     
     LXActivity *lxActivity = [[LXActivity alloc] initWithTitle:@"分享到" delegate:self cancelButtonTitle:@"取消" ShareButtonTitles:shareButtonTitleArray withShareButtonImagesName:shareButtonImageNameArray];
+    
+    
     [lxActivity showInView:self.view];
 }
 
@@ -687,7 +689,7 @@
     titleLabel.backgroundColor=[UIColor clearColor];
     titleLabel.text=title;
     titleLabel.font=font;
-    titleLabel.textColor=[UIColor blackColor];
+    titleLabel.textColor=[UIColor whiteColor];
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
     
     
@@ -711,7 +713,9 @@
 -(void)back
 {
     [self.delegate addItemViewController:self disFinishEnteringItem:self.isFavorited];
-    [self.navigationController popViewControllerAnimated:YES];
+    //[self.navigationController popViewControllerAnimated:YES];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(IBAction)favoriteButtonClicked:(id *)sender
@@ -962,5 +966,14 @@
     [super viewDidDisappear:animated];
     [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
     [MobClick endLogPageView:@"详细页面(附近)"];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+ 
+}
+
+-(void)hiddenTabbar{
+    
 }
 @end
