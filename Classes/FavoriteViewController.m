@@ -46,7 +46,7 @@
     [super viewDidLoad];
     
     [self setTitle:@"我的收藏"];
-    [self setNavLeftButton];
+    //[self setNavLeftButton];
     [self setNavRightButton];
     
     _removeList = [[Rents alloc]init];
@@ -82,9 +82,11 @@
     
     
     //
-    [self loadFavoriteDatas];
+
     
 }
+
+
 
 
 #pragma mark -
@@ -99,7 +101,7 @@
     titleLabel.backgroundColor=[UIColor clearColor];
     titleLabel.text=title;
     titleLabel.font=font;
-    titleLabel.textColor=[UIColor blackColor];
+    titleLabel.textColor=[UIColor whiteColor];
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
     
     
@@ -307,7 +309,13 @@
         _detailViewController.delegate =self;
         _detailViewController.isFavorited=YES;//默认是收藏的
         
-        [self.navigationController pushViewController:_detailViewController animated:YES];
+        UINavigationController *nav=[[UINavigationController alloc]initWithRootViewController:_detailViewController];
+        if (ISOS7) {
+            [nav.navigationBar setBarTintColor:selectedItemTitleColor];
+        }else{
+            [nav.navigationBar setTintColor:selectedItemTitleColor];
+        }
+        [self.navigationController presentViewController:nav animated:YES completion:nil];
     }
     
     //修改工具栏上按钮显示
@@ -545,17 +553,13 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    [MobClick beginLogPageView:@"收藏页面"];
-}
 
--(void)viewDidDisappear:(BOOL)animated
+-(void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidDisappear:animated];
-    [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
-    [MobClick endLogPageView:@"收藏页面"];
+    [super viewWillAppear:animated];
+    
+    [self loadFavoriteDatas];
+    
 }
 
 @end

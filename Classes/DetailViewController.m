@@ -182,7 +182,7 @@
     contacterLabel.textAlignment=NSTextAlignmentLeft;
     [contacterLabel setText:contacter];
     contacterLabel.backgroundColor=[UIColor clearColor];
-    contacterLabel.textColor=selectedItemTitleColor;
+    contacterLabel.textColor=[UIColor blackColor];
     
     //联系人电话
     NSString *tel=_rent.contacterPhoneDisplay;
@@ -193,7 +193,7 @@
     telLabel.textAlignment=NSTextAlignmentLeft;
     [telLabel setText:tel];
     telLabel.backgroundColor=[UIColor clearColor];
-    telLabel.textColor=[UIColor grayColor];
+    telLabel.textColor=[UIColor blackColor];
     
     UIView *view =[[UIView alloc]initWithFrame:CGRectMake(0, 0, 100, 44)];
     [view addSubview:contacterLabel];
@@ -206,9 +206,9 @@
     spaceItem.width=100;
     
     //电话
-    UIImage *image=[UIImage imageNamed:kPNG_Phone];
+    UIImage *image=[UIImage imageNamed:@"TOOLTel.png"];
     UIImageView *telImageView=[[UIImageView alloc]initWithImage:image];
-    telImageView.frame=CGRectMake(0,5, image.size.width,image.size.height);
+    telImageView.frame=CGRectMake(0,0, image.size.width,image.size.height);
     //telImageView.contentMode=UIViewContentModeScaleAspectFit;
     
     UILabel *telPhoneDesc=[[UILabel alloc]init];
@@ -219,9 +219,9 @@
     telPhoneDesc.backgroundColor=[UIColor clearColor];
     telPhoneDesc.textColor=[UIColor blackColor];
     
-    UIView *viewPhone =[[UIView alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
+    UIView *viewPhone =[[UIView alloc]initWithFrame:CGRectMake(0, 0, image.size.width,image.size.height)];
     [viewPhone addSubview:telImageView];
-    [viewPhone addSubview:telPhoneDesc];
+    //[viewPhone addSubview:telPhoneDesc];
     
     //加入手势，item无action方法
     UITapGestureRecognizer *telGesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(openTelphone:)];
@@ -232,9 +232,9 @@
     
     
     //短信
-    UIImage *imageTxt=[UIImage imageNamed:kPNG_Message];
+    UIImage *imageTxt=[UIImage imageNamed:@"TOOLMessage.png"];
     UIImageView *textImageView=[[UIImageView alloc]initWithImage:imageTxt];
-    textImageView.frame=CGRectMake(0,5, imageTxt.size.width, imageTxt.size.height);
+    textImageView.frame=CGRectMake(0,0, imageTxt.size.width, imageTxt.size.height);
     textImageView.contentMode=UIViewContentModeCenter;
     UILabel *textMsgDesc=[[UILabel alloc]init];
     textMsgDesc.frame=CGRectMake(0,25, 50, 19);
@@ -244,9 +244,9 @@
     textMsgDesc.backgroundColor=[UIColor clearColor];
     textMsgDesc.textColor=[UIColor blackColor];
     
-    UIView *viewText =[[UIView alloc]initWithFrame:CGRectMake(55, 0, 44, 44)];
+    UIView *viewText =[[UIView alloc]initWithFrame:CGRectMake(55, 0, imageTxt.size.width, imageTxt.size.height)];
     [viewText addSubview:textImageView];
-    [viewText addSubview:textMsgDesc];
+    //[viewText addSubview:textMsgDesc];
     //加入手势，item无action方法
     UITapGestureRecognizer *textGesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(openTextMsg:)];
     viewText.userInteractionEnabled=YES;

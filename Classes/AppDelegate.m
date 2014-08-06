@@ -15,6 +15,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    //是否自动加载更多
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    id isAutoload = [defaults objectForKey:kIsAutoLoadMore];
+    if (isAutoload==nil && isAutoLoad) {
+        [defaults setBool:YES forKey:kIsAutoLoadMore];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+    }
+    
+    
     //显示状态栏，因为在plist中启动时，隐藏了状态栏
     [[UIApplication sharedApplication]setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     
@@ -22,7 +32,7 @@
     [MobClick setCrashReportEnabled:YES];
     [MobClick setLogEnabled:NO];
     [MobClick startWithAppkey:__UmAppKey__ reportPolicy:BATCH channelId:nil];
-
+    
     //微博
     [WeiboSDK enableDebugMode:NO];
     [WeiboSDK registerApp:__WeiboAppKey__];
@@ -35,20 +45,20 @@
         //设置导航背景色为IOS7风格
         [[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc]init] forBarMetrics:UIBarMetricsDefault];
         [[UINavigationBar appearance] setBackgroundColor:IOS7_Nav_Color];
-    
+        
         [[UIToolbar appearance] setBackgroundImage:[[UIImage alloc]init] forToolbarPosition:UIBarPositionBottom barMetrics:UIBarMetricsDefault];
         [[UIToolbar appearance] setBackgroundColor:IOS7_Nav_Color];
     }
-
+    
     
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     NSMutableArray *itemsArray = [[NSMutableArray alloc] init];
-    NSArray *controllerArray = [NSArray arrayWithObjects:@"NearbyNavigation",@"searchController",@"favoriteController",@"favoriteController",nil];//类名数组
-    NSArray *titleArray = [NSArray arrayWithObjects:@"附近",@"全城",@"我的",@"更多",nil];//item标题数组
-    NSArray *normalImageArray = [NSArray arrayWithObjects:@"TABLocation.png",@"TABSearch.png",@"TABUserCenter.png",@"TABMore.png", nil];//item 正常状态下的背景图片
-    NSArray *selectedImageArray = [NSArray arrayWithObjects:@"TABLocation_selected.png",@"TABSearch_selected.png", @"TABUserCenter_selected.png",@"TABMore_selected.png",nil];//item被选中时的图片名称
+    NSArray *controllerArray = [NSArray arrayWithObjects:@"NearbyNavigation",@"allCityController",@"favoriteNavigation",@"moreNavigation",nil];//类名数组
+    NSArray *titleArray = [NSArray arrayWithObjects:@"附近",@"全城",@"收藏",@"更多",nil];//item标题数组
+    NSArray *normalImageArray = [NSArray arrayWithObjects:@"TABLocation.png",@"TABSearch.png",@"TABFavorite.png",@"TABMore.png", nil];//item 正常状态下的背景图片
+    NSArray *selectedImageArray = [NSArray arrayWithObjects:@"TABLocation_selected.png",@"TABSearch_selected.png", @"TABFavorite_selected.png",@"TABMore_selected.png",nil];//item被选中时的图片名称
     
     for (int i = 0; i< controllerArray.count; i++) {
         
@@ -72,16 +82,16 @@
     
     
     
-//    self.window=[[UIWindow alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
-//    NSUserDefaults *userDefaults =[NSUserDefaults standardUserDefaults];
-//    NSString *launchedKey = @"isFirstLaunched";
-//    if ([userDefaults boolForKey:launchedKey]==NO) {
-//        [userDefaults setBool:YES forKey:launchedKey];
-//        [self showGuideView];
-//    }else{
-//        [self gotoMainStoryboard];
-//    }
-//    [userDefaults synchronize];
+    //    self.window=[[UIWindow alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
+    //    NSUserDefaults *userDefaults =[NSUserDefaults standardUserDefaults];
+    //    NSString *launchedKey = @"isFirstLaunched";
+    //    if ([userDefaults boolForKey:launchedKey]==NO) {
+    //        [userDefaults setBool:YES forKey:launchedKey];
+    //        [self showGuideView];
+    //    }else{
+    //        [self gotoMainStoryboard];
+    //    }
+    //    [userDefaults synchronize];
     
     
     
@@ -148,30 +158,30 @@
 {
     DLog(@"%s",__FUNCTION__);
     
-//    if ([response isKindOfClass:WBSendMessageToWeiboResponse.class])
-//    {
-//        NSString *title = @"发送结果";
-//        NSString *message = [NSString stringWithFormat:@"响应状态: %d\n响应UserInfo数据: %@\n原请求UserInfo数据: %@",(int)response.statusCode, response.userInfo, response.requestUserInfo];
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-//                                                        message:message
-//                                                       delegate:nil
-//                                              cancelButtonTitle:@"确定"
-//                                              otherButtonTitles:nil];
-// 
-//    }
-//    else if ([response isKindOfClass:WBAuthorizeResponse.class])
-//    {
-//        NSString *title = @"认证结果";
-//        NSString *message = [NSString stringWithFormat:@"响应状态: %d\nresponse.userId: %@\nresponse.accessToken: %@\n响应UserInfo数据: %@\n原请求UserInfo数据: %@",(int)response.statusCode,[(WBAuthorizeResponse *)response userID], [(WBAuthorizeResponse *)response accessToken], response.userInfo, response.requestUserInfo];
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-//                                                        message:message
-//                                                       delegate:nil
-//                                              cancelButtonTitle:@"确定"
-//                                              otherButtonTitles:nil];
-//        
-//       NSString * wbtoken = [(WBAuthorizeResponse *)response accessToken];
-//   
-//    }
+    //    if ([response isKindOfClass:WBSendMessageToWeiboResponse.class])
+    //    {
+    //        NSString *title = @"发送结果";
+    //        NSString *message = [NSString stringWithFormat:@"响应状态: %d\n响应UserInfo数据: %@\n原请求UserInfo数据: %@",(int)response.statusCode, response.userInfo, response.requestUserInfo];
+    //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+    //                                                        message:message
+    //                                                       delegate:nil
+    //                                              cancelButtonTitle:@"确定"
+    //                                              otherButtonTitles:nil];
+    //
+    //    }
+    //    else if ([response isKindOfClass:WBAuthorizeResponse.class])
+    //    {
+    //        NSString *title = @"认证结果";
+    //        NSString *message = [NSString stringWithFormat:@"响应状态: %d\nresponse.userId: %@\nresponse.accessToken: %@\n响应UserInfo数据: %@\n原请求UserInfo数据: %@",(int)response.statusCode,[(WBAuthorizeResponse *)response userID], [(WBAuthorizeResponse *)response accessToken], response.userInfo, response.requestUserInfo];
+    //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+    //                                                        message:message
+    //                                                       delegate:nil
+    //                                              cancelButtonTitle:@"确定"
+    //                                              otherButtonTitles:nil];
+    //
+    //       NSString * wbtoken = [(WBAuthorizeResponse *)response accessToken];
+    //
+    //    }
 }
 
 #pragma mark QQ
@@ -250,7 +260,7 @@
     //
     UIStoryboard *sb=[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     UIViewController *vc=[sb instantiateInitialViewController];
-//    UIViewController *vc=[sb instantiateViewControllerWithIdentifier:@"tabar"];
+    //    UIViewController *vc=[sb instantiateViewControllerWithIdentifier:@"tabar"];
     [self.window setRootViewController:vc];
     [self.window makeKeyAndVisible];
 }

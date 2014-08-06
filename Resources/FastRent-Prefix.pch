@@ -22,6 +22,8 @@
 #define DLog(...)
 #endif
 
+//是否自动加载数据
+#define isAutoLoad YES
 
 #define selectedItemTitleColor  [UIColor colorWithRed:30.0/255.0 green:197.0/255.0 blue:183.0/255.0 alpha:1.0] // item被选中时标题的颜色
 

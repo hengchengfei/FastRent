@@ -94,8 +94,8 @@ typedef enum {
     
     //打开地图定位
     [self openMapLocation];
-    
-    
+
+
 }
 
 
@@ -950,10 +950,10 @@ typedef enum {
 }
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-    //if (cell ==moreCell && [self isAutoLoadMore]) {
-    //    moreCell.textLabel.text=@"正在加载...";
-    //    [self loadedMoreDatas];
-    //}
+    if (cell ==moreCell && [self isAutoLoadMore]) {
+      moreCell.textLabel.text=@"正在加载...";
+      [self loadedMoreDatas];
+    }
 }
 
 -(void)loadedMoreDatas

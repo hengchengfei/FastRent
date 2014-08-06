@@ -53,9 +53,7 @@
     //不显示底部的cell
     self.tableView.tableFooterView=[[UIView alloc] initWithFrame:CGRectZero];
     
-    //设置为自动加载
-    [self setDefaultLoadMore];
-  
+
 }
 
 -(void)chkUpdate{
@@ -178,15 +176,6 @@
    
 }
 
-#pragma mark 是否自动加载更多
--(void)setDefaultLoadMore{
-    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
-    id isAutoload = [defaults objectForKey:kIsAutoLoadMore];
-    if (isAutoload==nil) {
-        [defaults setBool:YES forKey:kIsAutoLoadMore];
-        [[NSUserDefaults standardUserDefaults]synchronize];
-    }
-}
 
 -(void)viewDidAppear:(BOOL)animated
 {

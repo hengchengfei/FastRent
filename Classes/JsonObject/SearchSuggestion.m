@@ -6,9 +6,9 @@
 //  Copyright (c) 2014年 cf. All rights reserved.
 //
 
-#import "BaiduSuggestion.h"
+#import "SearchSuggestion.h"
 
-@implementation BaiduSuggestion
+@implementation SearchSuggestion
 
 
 @end

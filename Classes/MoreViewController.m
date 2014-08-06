@@ -39,8 +39,8 @@
     [super viewDidLoad];
     
     //导航栏设置
-    [self setTitle:@"设置"];
-    [self setNavLeftButton];
+    [self setTitle:@"更多"];
+    //[self setNavLeftButton];
     [self initStyle];
     
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
@@ -60,7 +60,7 @@
     titleLabel.backgroundColor=[UIColor clearColor];
     titleLabel.text=title;
     titleLabel.font=font;
-    titleLabel.textColor=[UIColor blackColor];
+    titleLabel.textColor=[UIColor whiteColor];
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
     
     

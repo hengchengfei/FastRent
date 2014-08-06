@@ -58,7 +58,7 @@
     titleLabel.backgroundColor=[UIColor clearColor];
     titleLabel.text=title;
     titleLabel.font=font;
-    titleLabel.textColor=[UIColor blackColor];
+    titleLabel.textColor=[UIColor whiteColor];
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
     
     

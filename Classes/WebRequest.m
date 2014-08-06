@@ -27,27 +27,27 @@
 +(BOOL)isConnectionAvailable
 {
     BOOL isExistenceNetwork =YES;
-
+    
     //网络状态
     BOOL reachable=[[Reachability reachabilityForInternetConnection] isReachable];
     if (!reachable) {
         return NO;
     }
     
-//    Reachability *reach = [Reachability reachabilityWithHostname:[self getHost]];
-//    switch ([reach currentReachabilityStatus]) {
-//        case NotReachable:
-//            isExistenceNetwork=NO;
-//            break;
-//        case ReachableViaWiFi:
-//            isExistenceNetwork=YES;
-//            break;
-//        case ReachableViaWWAN:
-//            isExistenceNetwork=YES;
-//            break;
-//        default:
-//            break;
-//    }
+    //    Reachability *reach = [Reachability reachabilityWithHostname:[self getHost]];
+    //    switch ([reach currentReachabilityStatus]) {
+    //        case NotReachable:
+    //            isExistenceNetwork=NO;
+    //            break;
+    //        case ReachableViaWiFi:
+    //            isExistenceNetwork=YES;
+    //            break;
+    //        case ReachableViaWWAN:
+    //            isExistenceNetwork=YES;
+    //            break;
+    //        default:
+    //            break;
+    //    }
     
     return isExistenceNetwork;
 }
@@ -156,9 +156,9 @@
 +(void)findRent:(NSNumber *)id  onCompletion:(void (^)(Rent *,NSError *))onCompletion
 {
     NSString *url=[self getUrlByKey:@"findRent"];
-        url=[url stringByReplacingOccurrencesOfString:@"{version}" withString:[self getVersion]];
+    url=[url stringByReplacingOccurrencesOfString:@"{version}" withString:[self getVersion]];
     url=[url stringByReplacingOccurrencesOfString:@"{id}" withString:id.stringValue];
-
+    
     NSDictionary *dict= [self request:url ];
     if ([dict objectForKey:NSLocalizedDescriptionKey]!=nil) {
         NSError *err =[NSError errorWithDomain:WebErrorDomain code:FWConnectFailed userInfo:dict];
@@ -172,7 +172,7 @@
 +(void)findComboxs:(void (^)(RentComboxs *, NSError *))onCompletion
 {
     NSString *url= [self getUrlByKey:@"findComboxs"];
-        url=[url stringByReplacingOccurrencesOfString:@"{version}" withString:[self getVersion]];
+    url=[url stringByReplacingOccurrencesOfString:@"{version}" withString:[self getVersion]];
     NSDictionary *dict= [self request:url];
     
     if ([dict objectForKey:NSLocalizedDescriptionKey]!=nil) {
@@ -187,7 +187,7 @@
 +(void)findByIds:(NSString *)ids onCompletion:(void (^)(Rents *, NSError *))onCompletion
 {
     NSString *url =[self getUrlByKey:@"findByIds"];
-        url=[url stringByReplacingOccurrencesOfString:@"{version}" withString:[self getVersion]];
+    url=[url stringByReplacingOccurrencesOfString:@"{version}" withString:[self getVersion]];
     url=[url stringByReplacingOccurrencesOfString:@"{ids}" withString:ids];
     NSDictionary *dict =[self request:url];
     if ([dict objectForKey:NSLocalizedDescriptionKey]!=nil) {
@@ -202,7 +202,7 @@
 +(void)findAddress:(float)latitude longitude:(float)longitude onCompletion:(void (^)(Address *,NSError *))onCompletion
 {
     NSString *url=[self getUrlByKey:@"findAddress"];
-        url=[url stringByReplacingOccurrencesOfString:@"{version}" withString:[self getVersion]];
+    url=[url stringByReplacingOccurrencesOfString:@"{version}" withString:[self getVersion]];
     url=[url stringByReplacingOccurrencesOfString:@"{latitude}" withString:[NSString stringWithFormat:@"%f",latitude]];
     url=[url stringByReplacingOccurrencesOfString:@"{longitude}" withString:[NSString stringWithFormat:@"%f",longitude]];
     
@@ -216,35 +216,38 @@
     }
 }
 
-+(NSData *)findBaiduSuggestion:(NSString *)region query:(NSString *)query
++(void)findByKey:(NSString *)city key:(NSString *)key onCompletion:(void (^)(NSDictionary *, NSError *))onCompletion
 {
-    NSString *region1=[region stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSString *query1=[query stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *url=[self getUrlByKey:@"findByKey"];
+    url=[url stringByReplacingOccurrencesOfString:@"{version}" withString:[self getVersion]];
+    url=[url stringByReplacingOccurrencesOfString:@"{city}" withString:city];
+    url=[url stringByReplacingOccurrencesOfString:@"{key}" withString:key];
     
-    NSString *s=[NSString stringWithFormat:@"http://api.map.baidu.com/place/v2/suggestion?query=%@&region=%@&output=json&ak=sZV1vg2XANz1Dxbjp2M8B2bk",query1,region1];
-    
-    NSURL *url =[NSURL URLWithString:s];
-    NSData *data=[NSData dataWithContentsOfURL:url];
-    
-    return data;
+    NSDictionary *dict=[self request:url];
+    if ([dict objectForKey:NSLocalizedDescriptionKey]!=nil) {
+        NSError *err=[NSError errorWithDomain:WebErrorDomain code:FWTimeoutFailed userInfo:dict];
+        onCompletion(nil,err);
+    }else{
+        onCompletion(dict,nil);
+    }
 }
 
 +(void)findSearchString:(NSString *)city
            searchString:(NSString *)searchString
                      id:(NSNumber *)id
-                 typeId:(NSNumber *)typeId
-                priceId:(NSNumber *)priceId
-               sourceId:(NSNumber *)sourceId
-           onCompletion:(void (^)(Rents *, NSError *))onCompletion
+typeId:(NSNumber *)typeId
+priceId:(NSNumber *)priceId
+sourceId:(NSNumber *)sourceId
+onCompletion:(void (^)(Rents *, NSError *))onCompletion
 {
     NSString *url=[self getUrlByKey:@"findSearchString"];
-        url=[url stringByReplacingOccurrencesOfString:@"{version}" withString:[self getVersion]];
+    url=[url stringByReplacingOccurrencesOfString:@"{version}" withString:[self getVersion]];
     url=[url stringByReplacingOccurrencesOfString:@"{city}" withString:city];
     url=[url stringByReplacingOccurrencesOfString:@"{searchString}" withString:searchString];
     if(id==nil){
         url=[url stringByReplacingOccurrencesOfString:@"{id}" withString:@""];
     }else{
-         url=[url stringByReplacingOccurrencesOfString:@"{id}" withString:[id stringValue]];
+        url=[url stringByReplacingOccurrencesOfString:@"{id}" withString:[id stringValue]];
     }
     if(typeId==nil){
         url=[url stringByReplacingOccurrencesOfString:@"{typeId}" withString:@""];
@@ -270,17 +273,17 @@
         Rents *rents = [[Rents alloc]initWithDictionary:dict];
         onCompletion(rents,nil);
     }
-
+    
 }
 
 +(void)feedback:(NSString *)contacter content:(NSString *)content device:(NSString *)device complete:(void (^)(NSData *,NSError *))complete
 {
     NSString *url=[self getUrlByKey:@"feedback"];
-        url=[url stringByReplacingOccurrencesOfString:@"{version}" withString:[self getVersion]];
+    url=[url stringByReplacingOccurrencesOfString:@"{version}" withString:[self getVersion]];
     url=[url stringByReplacingOccurrencesOfString:@"{contacter}" withString:contacter];
     url=[url stringByReplacingOccurrencesOfString:@"{content}" withString:content];
     url=[url stringByReplacingOccurrencesOfString:@"{device}" withString:device];
-
+    
     
     DLog(@"%@",url);
     
@@ -294,7 +297,7 @@
     NSError *error1;
     
     NSHTTPURLResponse *response;
-
+    
     NSData *data= [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error1];
     NSInteger statusCode= response.statusCode;
     if (statusCode==200 || statusCode==206) {
@@ -317,33 +320,33 @@
 //+(void)chkupdate:(void (^)(NSData *, NSError *))complete
 //{
 //    NSString *url=[self getUrlByKey:@"chkupdate"];
-// 
+//
 //    url=[url stringByReplacingOccurrencesOfString:@"{version}" withString:[self getVersion]];
 //    DLog(url);
-//    
+//
 //    NSMutableURLRequest *request=[[NSMutableURLRequest alloc]init];
 //    [request setURL:[NSURL URLWithString:url]];
 //    [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
 //    [request setTimeoutInterval:30];
 //    [request setHTTPShouldHandleCookies:false];
 //    [request setHTTPMethod:@"GET"];
-//    
-//    
+//
+//
 //    NSError *error1;
-//    
+//
 //    NSHTTPURLResponse *response;
-//    
+//
 //    NSData *data= [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error1];
 //    NSInteger statusCode= response.statusCode;
 //    if (statusCode==200 || statusCode==206) {
-//        
+//
 //    }else{
 //        NSDictionary *dict = [NSDictionary dictionaryWithObject:@"数据取得失败" forKey:NSLocalizedDescriptionKey];
 //        error1=[NSError errorWithDomain:WebErrorDomain code:statusCode userInfo:dict];
 //    }
 //
-//    
+//
 //    complete(data,error1);
-//    
+//
 //}
 @end

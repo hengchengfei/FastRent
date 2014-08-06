@@ -9,7 +9,7 @@
 #import "SearchViewController.h"
 #import "RentSearchBar.h"
 #import "WebRequest.h"
-#import "BaiduSuggestion.h"
+#import "SearchSuggestion.h"
 #import "CityViewController.h"
 #import "MBProgressHUD.h"
 #import "DXAlertView/DXAlertView.h"
@@ -18,8 +18,8 @@
 
 @interface SearchViewController ()
 {
-    //    NSMutableArray *_baiduDatasource;
-    //    NSMutableArray *_datasource;
+    NSMutableArray *_searchDatasource;
+      //  NSMutableArray *_datasource;
     //    NSMutableArray *database;
     //
     UISearchBar *_searchBar;
@@ -71,11 +71,6 @@
 {
     [super viewDidLoad];
     
-    
-    //打开地图定位
-    [self openMapLocation];
-    [self setNavLeftButton];
-    
     city=[self getSearchCity];
     if (city) {
         [self setTitle:city];
@@ -83,12 +78,12 @@
         [self setTitle:@"选择城市"];
     }
     
+  //  UITapGestureRecognizer *tap=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tap:)];
+   // [self.tableView.backgroundView addGestureRecognizer:tap];
     
     
     self.tableView.tableFooterView=[[UIView alloc]initWithFrame:CGRectZero];
     
-    
-    // _baiduDatasource=[[NSMutableArray alloc]init];
     
     _searchBar=[[UISearchBar alloc]init];
     _searchBar.frame=CGRectMake(0, 0, self.tableView.bounds.size.width, 0);
@@ -108,45 +103,13 @@
     
     searchDisplayController =[[UISearchDisplayController alloc]initWithSearchBar:_searchBar contentsController:self];
     //[searchDisplayController.searchResultsTableView setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.8]];
-//    [searchDisplayController.searchResultsTableView setHidden:YES];
-//    [searchDisplayController.searchResultsTableView  setAlpha:0.0];
-    //searchDisplayController.searchResultsDelegate=self;
-    //searchDisplayController.searchResultsDataSource=self;
-    //searchDisplayController.delegate=self;
+    //    [searchDisplayController.searchResultsTableView setHidden:YES];
+    //    [searchDisplayController.searchResultsTableView  setAlpha:0.0];
+    searchDisplayController.searchResultsDelegate=self;
+    searchDisplayController.searchResultsDataSource=self;
+    searchDisplayController.delegate=self;
+    _searchDatasource=[[NSMutableArray alloc]init];
     
-    
-}
-
-#pragma mark 开启地图功能
--(void)openMapLocation
-{
-    if (![CLLocationManager locationServicesEnabled]) {
-        [self openGPSTips];
-    }else{
-        //        locationManager=[CLLocationManager new];
-        //        locationManager.delegate=self;
-        //        locationManager.desiredAccuracy=kCLLocationAccuracyBest;
-        //        locationManager.distanceFilter=100.0f;//当位置超过多少米时更新
-        //        [locationManager startUpdatingLocation];
-    }
-}
-
--(void)openGPSTips{
-    DXAlertView *view=[[DXAlertView alloc]initWithTitle:@"当前定位服务不可用" contentText:@"请到“设置->隐私->定位服务”中开启定位" leftButtonTitle:nil rightButtonTitle:@"确定"];
-    [view show];
-    
-    //定位错误，则返回到前一个页面
-    view.leftBlock=^{
-        [self.navigationController popViewControllerAnimated:YES];
-    };
-    
-    view.rightBlock=^{
-        [self.navigationController popViewControllerAnimated:YES];
-    };
-    
-    view.dismissBlock=^{
-        [self.navigationController popViewControllerAnimated:YES];
-    };
 }
 
 -(void)setTitle:(NSString *)title
@@ -163,12 +126,12 @@
     UILabel *label =[[UILabel alloc]initWithFrame:CGRectMake(0, 0,btnFrame.size.width-25, 44)];
     label.font=[UIFont systemFontOfSize:14.0];;
     label.text=title;
-    label.textColor=[UIColor blackColor];
+    label.textColor=[UIColor whiteColor];
     label.backgroundColor=[UIColor clearColor];
     label.textAlignment=NSTextAlignmentCenter;
     
     //添加图片
-    UIImage *image =[UIImage imageNamed:@"buttonDown.png"];
+    UIImage *image =[self imageWithOverlayColor:[UIImage imageNamed:@"buttonDown.png"] color:[UIColor whiteColor]];
     UIImageView *imageview = [[UIImageView alloc]initWithImage:image];
     
     imageview.backgroundColor=[UIColor clearColor];
@@ -184,23 +147,6 @@
     
 }
 
--(void)setNavLeftButton
-{
-    UIButton *button=[[UIButton alloc]init];
-    UIImage *back=[UIImage imageNamed:kPNG_BACK];
-    button.frame = CGRectMake(0, 0, back.size.width, back.size.height);
-    [button setBackgroundImage:back forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *item=[[UIBarButtonItem alloc]initWithCustomView:button];
-    self.navigationItem.leftBarButtonItem=item;
-    
-}
-
--(void)back
-{
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 -(void)presentCityController:(id)sender
 {
@@ -228,10 +174,10 @@
 {
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
     
-//    NSDictionary *dict=[defaults dictionaryRepresentation];
-//    DLog(@"=====%@",dict);
+    //    NSDictionary *dict=[defaults dictionaryRepresentation];
+    //    DLog(@"=====%@",dict);
     
-   city =  [defaults stringForKey:kLastSearch_City];
+    city =  [defaults stringForKey:kLastSearch_City];
     if (city!=nil) {
         return city;
     }else{
@@ -250,74 +196,68 @@
 #pragma mark - Search bar delegate
 
 #pragma mark 隐藏背景表格
- -(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
-{
-    [controller.searchResultsTableView setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.8]];
-    [controller.searchResultsTableView setRowHeight:800];
-    [controller.searchResultsTableView setScrollEnabled:NO];
-    
-    UITableView *view =searchDisplayController.searchResultsTableView;
-    [view removeFromSuperview];
-//    for (UIView *subview in view.subviews) {
-//        if ([subview class]==[UILabel class]) {
-//            [subview removeFromSuperview];
-//            return NO;
-//        }
-//    }
-    return NO;
-}
+//-(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+//{
+//    [controller.searchResultsTableView setBackgroundColor:[UIColor colorWithWhite:0.0 alpha:0.8]];
+//    [controller.searchResultsTableView setRowHeight:800];
+//    [controller.searchResultsTableView setScrollEnabled:NO];
+//    
+//    UITableView *view =searchDisplayController.searchResultsTableView;
+//    [view removeFromSuperview];
+//    //    for (UIView *subview in view.subviews) {
+//    //        if ([subview class]==[UILabel class]) {
+//    //            [subview removeFromSuperview];
+//    //            return NO;
+//    //        }
+//    //    }
+//    return NO;
+//}
 
--(void)searchDisplayController:(UISearchDisplayController *)controller didHideSearchResultsTableView:(UITableView *)tableView
-{
-    
-}
+//-(void)searchDisplayController:(UISearchDisplayController *)controller didHideSearchResultsTableView:(UITableView *)tableView
+//{
+//    
+//}
 
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     [searchDisplayController.searchResultsTableView setHidden:YES];
     [searchDisplayController.searchResultsTableView  setAlpha:0.0];
-    //    if (!hasDefaultCity) {
-    //        DXAlertView *alert=[[DXAlertView alloc]initWithTitle:@"提示" contentText:@"请先选择城市" leftButtonTitle:nil rightButtonTitle:@"确定"];
-    //        [alert show];
-    //        return;
-    //    }
-    //    if (0==searchText.length) {
-    //        return;
-    //    }
+    //     if (!hasDefaultCity) {
+    //            DXAlertView *alert=[[DXAlertView alloc]initWithTitle:@"提示" contentText:@"请先选择城市" leftButtonTitle:nil rightButtonTitle:@"确定"];
+    //            [alert show];
+    //            return;
+    //       }
+    if (0==searchText.length) {
+        return;
+    }
     
-    //    [_baiduDatasource removeAllObjects];
+    [_searchDatasource removeAllObjects];
     
-    //    NSData *data=[WebRequest findBaiduSuggestion:city query:searchText];
-    //    if(data==nil)
-    //        return;
-    //
-    //    NSError *error;
-    //    NSDictionary *suggestion= [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error];
-    //    NSArray *result=[suggestion objectForKey:@"result"];
-    //    if (error!=nil || result.count<=0   ) {
-    //        return;
-    //    }
-    //    for (int i=0; i<result.count; i++) {
-    //        BaiduSuggestion *bs=[BaiduSuggestion new];
-    //        NSDictionary *d1=[result objectAtIndex:i];
-    //
-    //        bs.name=[d1 objectForKey:@"name"];
-    //        bs.city=[d1 objectForKey:@"city"];
-    //        bs.district=[d1 objectForKey:@"district"];
-    //        bs.business=[d1 objectForKey:@"business"];
-    //        bs.cityid=[d1 objectForKey:@"cityid"];
-    //
-    //        [_baiduDatasource addObject:bs];
-    //    }
+    [WebRequest findByKey:city key:searchText onCompletion:^(NSDictionary *dict, NSError *err) {
+        if (err!=nil || dict==nil || dict.count<=0) {
+            return;
+        }
+        NSArray *result=[dict objectForKey:@"datas"];
+        for (int i=0; i<result.count; i++) {
+            SearchSuggestion *bs=[SearchSuggestion new];
+            NSDictionary *d1=[result objectAtIndex:i];
+            
+            bs.key=[d1 objectForKey:@"key"];
+            bs.count=[d1 objectForKey:@"count"];
+            
+            [_searchDatasource addObject:bs];
+        }
+        
+    }];
+ 
     
     
-    
-    //[self.tableView reloadData];
+    [self.tableView reloadData];
 }
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     [searchBar resignFirstResponder];
-
+    
     NSString *text= searchBar.text;
     if (text.length<=0) {
         return;
@@ -330,7 +270,7 @@
         return;
     }
     
-   BOOL isConnected = [WebRequest isConnectionAvailable];
+    BOOL isConnected = [WebRequest isConnectionAvailable];
     if (!isConnected) {
         MBProgressHUD *hd =[MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hd.mode=MBProgressHUDModeText;
@@ -355,7 +295,7 @@
 -(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
     [searchBar resignFirstResponder];
-
+    
 }
 
 
@@ -367,12 +307,12 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 0;
+    return _searchDatasource.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -382,44 +322,48 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if(cell==nil){
         cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-        
     }
+    
+    SearchSuggestion *ss= [_searchDatasource objectAtIndex:indexPath.row];
+    NSString *text =[NSString stringWithFormat:@"%@ %d条",ss.key,[ss.count integerValue]];
+    cell.textLabel.text=text;
+    
     return cell;
 }
 
 
 -(void)reloadData:(NSString *)searchText{
- 
+    
     [UIApplication sharedApplication].networkActivityIndicatorVisible=YES;
     
     __block Rents *_allSearchRents;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [WebRequest findSearchString:city searchString:searchText id:nil typeId:nil priceId:nil sourceId:nil  onCompletion:^(Rents *allRents, NSError *error) {
-        if (error==nil) {
-            _allSearchRents = allRents;
-        }
+            if (error==nil) {
+                _allSearchRents = allRents;
+            }
         } ];
         
-       dispatch_async(dispatch_get_main_queue(), ^{
-           [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
-           [hud hide:YES];
-           if (_allSearchRents.rents.count<=0) {
-               MBProgressHUD *hudMsg=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
-               hudMsg.mode=MBProgressHUDModeText;
-               hudMsg.labelText=@"没有数据";
-               [hudMsg hide:YES afterDelay:2.0];
-               
-           }else{
-               //[self searchBarCancelButtonClicked:_searchBar];
-               
-               searchResultController = [self.storyboard instantiateViewControllerWithIdentifier:@"SearchResultController"];
-               searchResultController.city=city;
-               searchResultController.searchText=searchText;
-               searchResultController.datasource=_allSearchRents;
-               [self.navigationController pushViewController:searchResultController animated:YES];
-           }
-       });
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
+            [hud hide:YES];
+            if (_allSearchRents.rents.count<=0) {
+                MBProgressHUD *hudMsg=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                hudMsg.mode=MBProgressHUDModeText;
+                hudMsg.labelText=@"没有数据";
+                [hudMsg hide:YES afterDelay:2.0];
+                
+            }else{
+                //[self searchBarCancelButtonClicked:_searchBar];
+                
+                searchResultController = [self.storyboard instantiateViewControllerWithIdentifier:@"SearchResultController"];
+                searchResultController.city=city;
+                searchResultController.searchText=searchText;
+                searchResultController.datasource=_allSearchRents;
+                [self.navigationController pushViewController:searchResultController animated:YES];
+            }
+        });
     });
 }
 

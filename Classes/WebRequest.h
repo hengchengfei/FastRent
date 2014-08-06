@@ -37,7 +37,7 @@
 
 +(void)findAddress:(float)latitude longitude:(float)longitude onCompletion:(void (^)(Address *,NSError *))onCompletion;
 
-+(NSData *)findBaiduSuggestion:(NSString *)region query:(NSString *)query;
++(void)findByKey:(NSString *)city key:(NSString *)key onCompletion:(void(^)(NSDictionary *,NSError *))onCompletion;
 
 +(void)findSearchString:(NSString *)city searchString:(NSString *)searchString id:(NSNumber *)id typeId:(NSNumber *)typeId priceId:(NSNumber *)priceId sourceId:(NSNumber *)sourceId onCompletion:(void(^)(Rents *allRents,NSError *error))onCompletion;
 

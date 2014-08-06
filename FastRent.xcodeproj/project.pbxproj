@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		4502D41218F4364C000F586F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4502D41118F4364C000F586F /* CoreGraphics.framework */; };
+		4517F32E199277110068C2F1 /* GLOBALArrowDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 4517F32C199277110068C2F1 /* GLOBALArrowDown.png */; };
+		4517F32F199277110068C2F1 /* GLOBALArrowDown@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4517F32D199277110068C2F1 /* GLOBALArrowDown@2x.png */; };
+		4517F332199278790068C2F1 /* AllCityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4517F331199278790068C2F1 /* AllCityViewController.m */; };
+		4517F33619927A5C0068C2F1 /* SearchAllCityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4517F33419927A5C0068C2F1 /* SearchAllCityViewController.m */; };
+		4517F33719927A5C0068C2F1 /* SearchAllCityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4517F33519927A5C0068C2F1 /* SearchAllCityViewController.xib */; };
 		45190A531935DDD600C9088F /* SelectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 45190A521935DDD600C9088F /* SelectionViewCell.m */; };
 		45190A571935EB3000C9088F /* PullDownButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45190A561935EB3000C9088F /* PullDownButton.m */; };
 		4519EBB91940ACE10059AB83 /* SearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4519EBB81940ACE10059AB83 /* SearchResultViewController.m */; };
@@ -52,7 +57,7 @@
 		4523E0B91932E4AB0060F208 /* city.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4523E0B81932E4AB0060F208 /* city.plist */; };
 		4523E0BE193330420060F208 /* CityLocationViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4523E0BD193330420060F208 /* CityLocationViewCell.m */; };
 		4523F121192EC30E00B422FA /* RentSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 4523F120192EC30E00B422FA /* RentSearchBar.m */; };
-		4523F12B192EF25400B422FA /* BaiduSuggestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 4523F12A192EF25400B422FA /* BaiduSuggestion.m */; };
+		4523F12B192EF25400B422FA /* SearchSuggestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 4523F12A192EF25400B422FA /* SearchSuggestion.m */; };
 		4525773A1958714400337312 /* sns_icon_23.png in Resources */ = {isa = PBXBuildFile; fileRef = 452577391958714400337312 /* sns_icon_23.png */; };
 		4525773C1958716400337312 /* sns_icon_23@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4525773B1958716400337312 /* sns_icon_23@2x.png */; };
 		4525773E1958718500337312 /* sns_icon_24@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4525773D1958718500337312 /* sns_icon_24@2x.png */; };
@@ -115,6 +120,14 @@
 		453C5993194DED7A00A0EB54 /* location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 453C5975194DED7A00A0EB54 /* location@2x.png */; };
 		453C5994194DED7A00A0EB54 /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = 453C5976194DED7A00A0EB54 /* search.png */; };
 		453C5995194DED7A00A0EB54 /* search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 453C5977194DED7A00A0EB54 /* search@2x.png */; };
+		4549795E1991D77D006C3404 /* NAVFavorite_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 4549795A1991D77D006C3404 /* NAVFavorite_off.png */; };
+		4549795F1991D77D006C3404 /* TABFavorite_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 4549795B1991D77D006C3404 /* TABFavorite_selected.png */; };
+		454979601991D77D006C3404 /* TABFavorite.png in Resources */ = {isa = PBXBuildFile; fileRef = 4549795C1991D77D006C3404 /* TABFavorite.png */; };
+		454979611991D77D006C3404 /* TABFavorite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4549795D1991D77D006C3404 /* TABFavorite@2x.png */; };
+		454979641991FA81006C3404 /* TOOLTel.png in Resources */ = {isa = PBXBuildFile; fileRef = 454979621991FA81006C3404 /* TOOLTel.png */; };
+		454979651991FA81006C3404 /* TOOLTel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 454979631991FA81006C3404 /* TOOLTel@2x.png */; };
+		454979681991FE2D006C3404 /* TOOLMessage.png in Resources */ = {isa = PBXBuildFile; fileRef = 454979661991FE2D006C3404 /* TOOLMessage.png */; };
+		454979691991FE2D006C3404 /* TOOLMessage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 454979671991FE2D006C3404 /* TOOLMessage@2x.png */; };
 		456104EA18F6EE6200C12C05 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 456104E918F6EE6200C12C05 /* ImageIO.framework */; };
 		459B8BFB186498DE006C794E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 459B8BFA186498DE006C794E /* Foundation.framework */; };
 		459B8BFF186498DE006C794E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 459B8BFE186498DE006C794E /* UIKit.framework */; };
@@ -198,6 +211,13 @@
 
 /* Begin PBXFileReference section */
 		4502D41118F4364C000F586F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		4517F32C199277110068C2F1 /* GLOBALArrowDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GLOBALArrowDown.png; sourceTree = "<group>"; };
+		4517F32D199277110068C2F1 /* GLOBALArrowDown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GLOBALArrowDown@2x.png"; sourceTree = "<group>"; };
+		4517F330199278790068C2F1 /* AllCityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllCityViewController.h; sourceTree = "<group>"; };
+		4517F331199278790068C2F1 /* AllCityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllCityViewController.m; sourceTree = "<group>"; };
+		4517F33319927A5C0068C2F1 /* SearchAllCityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchAllCityViewController.h; sourceTree = "<group>"; };
+		4517F33419927A5C0068C2F1 /* SearchAllCityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchAllCityViewController.m; sourceTree = "<group>"; };
+		4517F33519927A5C0068C2F1 /* SearchAllCityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchAllCityViewController.xib; sourceTree = "<group>"; };
 		45190A511935DDD600C9088F /* SelectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectionViewCell.h; sourceTree = "<group>"; };
 		45190A521935DDD600C9088F /* SelectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectionViewCell.m; sourceTree = "<group>"; };
 		45190A551935EB3000C9088F /* PullDownButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PullDownButton.h; sourceTree = "<group>"; };
@@ -274,8 +294,8 @@
 		4523E0BD193330420060F208 /* CityLocationViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityLocationViewCell.m; sourceTree = "<group>"; };
 		4523F11F192EC30E00B422FA /* RentSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RentSearchBar.h; sourceTree = "<group>"; };
 		4523F120192EC30E00B422FA /* RentSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RentSearchBar.m; sourceTree = "<group>"; };
-		4523F129192EF25400B422FA /* BaiduSuggestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaiduSuggestion.h; sourceTree = "<group>"; };
-		4523F12A192EF25400B422FA /* BaiduSuggestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaiduSuggestion.m; sourceTree = "<group>"; };
+		4523F129192EF25400B422FA /* SearchSuggestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchSuggestion.h; sourceTree = "<group>"; };
+		4523F12A192EF25400B422FA /* SearchSuggestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchSuggestion.m; sourceTree = "<group>"; };
 		45252D31197208DB00CB9ECB /* FastRent-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "FastRent-Info.plist"; sourceTree = "<group>"; };
 		452577391958714400337312 /* sns_icon_23.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sns_icon_23.png; sourceTree = "<group>"; };
 		4525773B1958716400337312 /* sns_icon_23@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sns_icon_23@2x.png"; sourceTree = "<group>"; };
@@ -340,6 +360,14 @@
 		453C5975194DED7A00A0EB54 /* location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "location@2x.png"; sourceTree = "<group>"; };
 		453C5976194DED7A00A0EB54 /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
 		453C5977194DED7A00A0EB54 /* search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search@2x.png"; sourceTree = "<group>"; };
+		4549795A1991D77D006C3404 /* NAVFavorite_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NAVFavorite_off.png; sourceTree = "<group>"; };
+		4549795B1991D77D006C3404 /* TABFavorite_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TABFavorite_selected.png; sourceTree = "<group>"; };
+		4549795C1991D77D006C3404 /* TABFavorite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TABFavorite.png; sourceTree = "<group>"; };
+		4549795D1991D77D006C3404 /* TABFavorite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TABFavorite@2x.png"; sourceTree = "<group>"; };
+		454979621991FA81006C3404 /* TOOLTel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TOOLTel.png; sourceTree = "<group>"; };
+		454979631991FA81006C3404 /* TOOLTel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TOOLTel@2x.png"; sourceTree = "<group>"; };
+		454979661991FE2D006C3404 /* TOOLMessage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TOOLMessage.png; sourceTree = "<group>"; };
+		454979671991FE2D006C3404 /* TOOLMessage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TOOLMessage@2x.png"; sourceTree = "<group>"; };
 		456104E918F6EE6200C12C05 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		459B8BF7186498DE006C794E /* FastRent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FastRent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		459B8BFA186498DE006C794E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -504,6 +532,11 @@
 				451D2A8F190238C000CA311F /* NearbyViewController.m */,
 				451D2A9F190238C000CA311F /* DetailViewController.h */,
 				451D2AA0190238C000CA311F /* DetailViewController.m */,
+				4517F33319927A5C0068C2F1 /* SearchAllCityViewController.h */,
+				4517F33419927A5C0068C2F1 /* SearchAllCityViewController.m */,
+				4517F33519927A5C0068C2F1 /* SearchAllCityViewController.xib */,
+				4517F330199278790068C2F1 /* AllCityViewController.h */,
+				4517F331199278790068C2F1 /* AllCityViewController.m */,
 				45220303192DF9AB001C775B /* SearchViewController.h */,
 				45220304192DF9AB001C775B /* SearchViewController.m */,
 				4519EBB71940ACE10059AB83 /* SearchResultViewController.h */,
@@ -617,8 +650,8 @@
 				451D2BA61902C3DF00CA311F /* Rents.m */,
 				4521F31F1929EC0500102BF5 /* Address.h */,
 				4521F3201929EC0500102BF5 /* Address.m */,
-				4523F129192EF25400B422FA /* BaiduSuggestion.h */,
-				4523F12A192EF25400B422FA /* BaiduSuggestion.m */,
+				4523F129192EF25400B422FA /* SearchSuggestion.h */,
+				4523F12A192EF25400B422FA /* SearchSuggestion.m */,
 			);
 			path = JsonObject;
 			sourceTree = "<group>";
@@ -842,6 +875,16 @@
 		45BC9BF91982AD94008BDADC /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				4517F32C199277110068C2F1 /* GLOBALArrowDown.png */,
+				4517F32D199277110068C2F1 /* GLOBALArrowDown@2x.png */,
+				454979661991FE2D006C3404 /* TOOLMessage.png */,
+				454979671991FE2D006C3404 /* TOOLMessage@2x.png */,
+				454979621991FA81006C3404 /* TOOLTel.png */,
+				454979631991FA81006C3404 /* TOOLTel@2x.png */,
+				4549795A1991D77D006C3404 /* NAVFavorite_off.png */,
+				4549795B1991D77D006C3404 /* TABFavorite_selected.png */,
+				4549795C1991D77D006C3404 /* TABFavorite.png */,
+				4549795D1991D77D006C3404 /* TABFavorite@2x.png */,
 				45A76016198F281700B04F3C /* LoadingImage_01.png */,
 				45A76017198F281700B04F3C /* LoadingImage_02.png */,
 				45BE6E6D198BA1B900CA1EA5 /* TABMore_selected.png */,
@@ -1030,12 +1073,14 @@
 				45257740195871B500337312 /* sns_icon_24.png in Resources */,
 				453C5938194DEA7900A0EB54 /* loading320&200.png in Resources */,
 				453C5935194DEA7900A0EB54 /* loading100&100.png in Resources */,
+				454979691991FE2D006C3404 /* TOOLMessage@2x.png in Resources */,
 				45F31FAD194FBA3F0026BE32 /* buttonDown.png in Resources */,
 				45E207D0191A6FDF00C49A94 /* btn_close_selected@2x.png in Resources */,
 				453C5943194DEA7900A0EB54 /* AppIcon60x60@2x.png in Resources */,
 				45D2317D19507C03007E67DC /* homeSettings.png in Resources */,
 				4521F0B919548B7700BC3EEC /* sns_icon_22@2x.png in Resources */,
 				453C593F194DEA7900A0EB54 /* AppIcon50x50@2x.png in Resources */,
+				454979611991D77D006C3404 /* TABFavorite@2x.png in Resources */,
 				45BE6E64198B9A6200CA1EA5 /* TABLocation@2x.png in Resources */,
 				453C5988194DED7A00A0EB54 /* barButtonPhone@2x.png in Resources */,
 				45E207CE191A6FDF00C49A94 /* btn_close_normal@2x.png in Resources */,
@@ -1050,6 +1095,7 @@
 				4521F0BB19548B7700BC3EEC /* sns_icon_21@2x.png in Resources */,
 				453C597F194DED7A00A0EB54 /* barButtonEdit.png in Resources */,
 				45BED46C195CF15B00EFC07F /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
+				4517F33719927A5C0068C2F1 /* SearchAllCityViewController.xib in Resources */,
 				452577441958720900337312 /* sns_icon_25@2x.png in Resources */,
 				453C5949194DEA7900A0EB54 /* iTunesArtwork@2x.png in Resources */,
 				45D2317E19507C03007E67DC /* homeSettings@2x.png in Resources */,
@@ -1059,11 +1105,13 @@
 				45BE6E72198BA1B900CA1EA5 /* TABMore_selected@2x.png in Resources */,
 				45BE6E4A198B78E800CA1EA5 /* NAVFavorite_off@2x.png in Resources */,
 				45BE6E5A198B957A00CA1EA5 /* TABSearch_selected@2x.png in Resources */,
+				454979641991FA81006C3404 /* TOOLTel.png in Resources */,
 				45BE6E74198BA1B900CA1EA5 /* TABMore@2x.png in Resources */,
 				45A76019198F281700B04F3C /* LoadingImage_02.png in Resources */,
 				45BE6E4B198B78E800CA1EA5 /* NAVFavorite_on.png in Resources */,
 				453C598B194DED7A00A0EB54 /* barButtonUp.png in Resources */,
 				4521F0B819548B7700BC3EEC /* sns_icon_22.png in Resources */,
+				454979681991FE2D006C3404 /* TOOLMessage.png in Resources */,
 				45BE6E48198B78E800CA1EA5 /* NAVBack@2x.png in Resources */,
 				45E207CD191A6FDF00C49A94 /* btn_close_normal.png in Resources */,
 				453C5946194DEA7900A0EB54 /* AppIcon76x76.png in Resources */,
@@ -1079,6 +1127,7 @@
 				453C5945194DEA7900A0EB54 /* AppIcon72x72@2x.png in Resources */,
 				453C5991194DED7A00A0EB54 /* favorite@2x.png in Resources */,
 				453C598A194DED7A00A0EB54 /* barButtonShare@2x.png in Resources */,
+				454979651991FA81006C3404 /* TOOLTel@2x.png in Resources */,
 				45BE6E63198B9A6200CA1EA5 /* TABLocation.png in Resources */,
 				45BE6E5B198B957A00CA1EA5 /* TABSearch.png in Resources */,
 				4525773A1958714400337312 /* sns_icon_23.png in Resources */,
@@ -1088,6 +1137,8 @@
 				453C595A194DECAD00A0EB54 /* launch@R4.png in Resources */,
 				453C5940194DEA7900A0EB54 /* AppIcon57x57.png in Resources */,
 				453C597D194DED7A00A0EB54 /* barButtonBack.png in Resources */,
+				454979601991D77D006C3404 /* TABFavorite.png in Resources */,
+				4549795E1991D77D006C3404 /* NAVFavorite_off.png in Resources */,
 				453C5986194DED7A00A0EB54 /* barButtonMessage@2x.png in Resources */,
 				453C598C194DED7A00A0EB54 /* barButtonUp@2x.png in Resources */,
 				45BE6E5C198B957A00CA1EA5 /* TABSearch@2x.png in Resources */,
@@ -1102,6 +1153,7 @@
 				4523E0B91932E4AB0060F208 /* city.plist in Resources */,
 				453C5984194DED7A00A0EB54 /* barButtonFavorited@2x.png in Resources */,
 				451D2B911902BAEF00CA311F /* Images.xcassets in Resources */,
+				4517F32E199277110068C2F1 /* GLOBALArrowDown.png in Resources */,
 				45E207DE19211E8200C49A94 /* FZHT.TTF in Resources */,
 				45A76018198F281700B04F3C /* LoadingImage_01.png in Resources */,
 				453C5994194DED7A00A0EB54 /* search.png in Resources */,
@@ -1109,6 +1161,7 @@
 				453C5951194DEC4B00A0EB54 /* AppIcon29x29.png in Resources */,
 				453C5985194DED7A00A0EB54 /* barButtonMessage.png in Resources */,
 				45BE6E4E198B78E800CA1EA5 /* NAVShare_pressed@2x.png in Resources */,
+				4549795F1991D77D006C3404 /* TABFavorite_selected.png in Resources */,
 				453C5987194DED7A00A0EB54 /* barButtonPhone.png in Resources */,
 				453C5941194DEA7900A0EB54 /* AppIcon57x57@2x.png in Resources */,
 				45BE6E47198B78E800CA1EA5 /* NAVBack.png in Resources */,
@@ -1129,6 +1182,7 @@
 				453C5952194DEC4B00A0EB54 /* AppIcon29x29@2x.png in Resources */,
 				453C5953194DEC4B00A0EB54 /* AppIcon40x40.png in Resources */,
 				45C8569B195C6510004ACC0F /* WeiboSDK.bundle in Resources */,
+				4517F32F199277110068C2F1 /* GLOBALArrowDown@2x.png in Resources */,
 				453C5992194DED7A00A0EB54 /* location.png in Resources */,
 				45BE6E6B198BA1A000CA1EA5 /* TABUserCenter.png in Resources */,
 				451D2B841902B80600CA311F /* WebUrl.plist in Resources */,
@@ -1191,7 +1245,7 @@
 				45213A821947D0160005DE4F /* FeedbackViewController.m in Sources */,
 				45A8590E198796F700581029 /* MALTabBarItem.m in Sources */,
 				4523E0BE193330420060F208 /* CityLocationViewCell.m in Sources */,
-				4523F12B192EF25400B422FA /* BaiduSuggestion.m in Sources */,
+				4523F12B192EF25400B422FA /* SearchSuggestion.m in Sources */,
 				451D2BA71902C3DF00CA311F /* Image.m in Sources */,
 				4523E0B71932E2220060F208 /* CityViewController.m in Sources */,
 				4521C4E61935ABA900E28187 /* SelectionViewController.m in Sources */,
@@ -1199,6 +1253,7 @@
 				4521F3211929EC0500102BF5 /* Address.m in Sources */,
 				451D2AC8190238C000CA311F /* AppDelegate.m in Sources */,
 				4521F31C1928F49A00102BF5 /* DetailImagesViewCell.m in Sources */,
+				4517F33619927A5C0068C2F1 /* SearchAllCityViewController.m in Sources */,
 				451D2B0519023ADC00CA311F /* NearbyViewCell.m in Sources */,
 				451D2AD0190238C000CA311F /* DetailPriceViewCell.m in Sources */,
 				45A8590D198796F700581029 /* MALTabBar.m in Sources */,
@@ -1220,6 +1275,7 @@
 				45213527194B49AC00283178 /* FeedbackViewCell.m in Sources */,
 				45E207D6191BC5CD00C49A94 /* PagePhotosView.m in Sources */,
 				45A8590F198796F700581029 /* MALTabBarItemModel.m in Sources */,
+				4517F332199278790068C2F1 /* AllCityViewController.m in Sources */,
 				451D2BA91902C3DF00CA311F /* RentCombox.m in Sources */,
 				45190A571935EB3000C9088F /* PullDownButton.m in Sources */,
 				451D2AE8190238C000CA311F /* NearbyViewController.m in Sources */,

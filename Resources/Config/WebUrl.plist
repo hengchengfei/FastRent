@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>findByKey</key>
+	<string>/findByKey.json?city={city}&amp;key={key}&amp;version={version}</string>
 	<key>feedback</key>
 	<string>/feedback.json?version={version}&amp;contacter={contacter}&amp;content={content}&amp;device={device}</string>
 	<key>findSearchString</key>
