@@ -126,9 +126,10 @@
 -(void)setNavRightButton
 {
     UIButton *button=[[UIButton alloc]init];
-    UIImage *back=[UIImage imageNamed:kPNG_Edit];
+    UIImage *back=[UIImage imageNamed:@"NAVEdit.png"];
     button.frame = CGRectMake(0, 0, back.size.width, back.size.height);
     [button setBackgroundImage:back forState:UIControlStateNormal];
+    [button setBackgroundImage:[UIImage imageNamed:@"NAVEdit_pressed.png"] forState:UIControlStateHighlighted];
     [button addTarget:self action:@selector(edit:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *item=[[UIBarButtonItem alloc]initWithCustomView:button];
     
@@ -154,10 +155,10 @@
     UIButton *button =(UIButton *) item.customView;
     [button setBackgroundImage:nil forState:UIControlStateNormal];
     [button setTitle:title forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     
-    UIFont *font=[UIFont systemFontOfSize:15.0];
+    UIFont *font=[UIFont systemFontOfSize:16.0];
     CGSize size= MB_TEXTSIZE(title, font);
     button.titleLabel.font=font;
     button.frame = CGRectMake(0, 0, size.width, size.height);
@@ -191,7 +192,7 @@
     
     MBProgressHUD *hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText=@"加载中";
-    hud.dimBackground=YES;
+    hud.dimBackground=NO;
     [hud show:YES];
     
     __block BOOL isSuccess = NO;

@@ -11,8 +11,6 @@
 		4517F32E199277110068C2F1 /* GLOBALArrowDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 4517F32C199277110068C2F1 /* GLOBALArrowDown.png */; };
 		4517F32F199277110068C2F1 /* GLOBALArrowDown@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4517F32D199277110068C2F1 /* GLOBALArrowDown@2x.png */; };
 		4517F332199278790068C2F1 /* AllCityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4517F331199278790068C2F1 /* AllCityViewController.m */; };
-		4517F33619927A5C0068C2F1 /* SearchAllCityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4517F33419927A5C0068C2F1 /* SearchAllCityViewController.m */; };
-		4517F33719927A5C0068C2F1 /* SearchAllCityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4517F33519927A5C0068C2F1 /* SearchAllCityViewController.xib */; };
 		45190A531935DDD600C9088F /* SelectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 45190A521935DDD600C9088F /* SelectionViewCell.m */; };
 		45190A571935EB3000C9088F /* PullDownButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45190A561935EB3000C9088F /* PullDownButton.m */; };
 		4519EBB91940ACE10059AB83 /* SearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4519EBB81940ACE10059AB83 /* SearchResultViewController.m */; };
@@ -70,6 +68,11 @@
 		452577551958886200337312 /* libz.1.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 452577541958886200337312 /* libz.1.1.3.dylib */; };
 		45257757195888A600337312 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 45257756195888A600337312 /* libsqlite3.dylib */; };
 		452696D8195B134F004A100F /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 452696D6195B134F004A100F /* libMobClickLibrary.a */; };
+		45284B581993C571000C5737 /* searchAddbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 45284B541993C571000C5737 /* searchAddbutton.png */; };
+		45284B591993C571000C5737 /* searchAddbutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45284B551993C571000C5737 /* searchAddbutton@2x.png */; };
+		45284B5A1993C571000C5737 /* searchLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 45284B561993C571000C5737 /* searchLogo.png */; };
+		45284B5B1993C571000C5737 /* searchLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45284B571993C571000C5737 /* searchLogo@2x.png */; };
+		45284B5E1993C648000C5737 /* SearchTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 45284B5D1993C648000C5737 /* SearchTableCell.m */; };
 		453306D218EC63FE00DB4C08 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 453306D118EC63FE00DB4C08 /* Security.framework */; };
 		453C5935194DEA7900A0EB54 /* loading100&100.png in Resources */ = {isa = PBXBuildFile; fileRef = 453C591B194DEA7900A0EB54 /* loading100&100.png */; };
 		453C5936194DEA7900A0EB54 /* loading250&187.png in Resources */ = {isa = PBXBuildFile; fileRef = 453C591C194DEA7900A0EB54 /* loading250&187.png */; };
@@ -137,6 +140,13 @@
 		459DF15D1956ADAC00F30511 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 459DF15A1956ADAC00F30511 /* libWeChatSDK.a */; };
 		45A76018198F281700B04F3C /* LoadingImage_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 45A76016198F281700B04F3C /* LoadingImage_01.png */; };
 		45A76019198F281700B04F3C /* LoadingImage_02.png in Resources */ = {isa = PBXBuildFile; fileRef = 45A76017198F281700B04F3C /* LoadingImage_02.png */; };
+		45A7773719934EBE00921675 /* GLOBALRefresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 45A7773619934EBE00921675 /* GLOBALRefresh.png */; };
+		45A77739199356BD00921675 /* GLOBALRefresh_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 45A77738199356BD00921675 /* GLOBALRefresh_pressed.png */; };
+		45A7773C19935B9A00921675 /* NAVEdit.png in Resources */ = {isa = PBXBuildFile; fileRef = 45A7773A19935B9A00921675 /* NAVEdit.png */; };
+		45A7773D19935B9A00921675 /* NAVEdit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45A7773B19935B9A00921675 /* NAVEdit@2x.png */; };
+		45A7774019935C8000921675 /* NAVEdit_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 45A7773E19935C8000921675 /* NAVEdit_pressed.png */; };
+		45A7774119935C8000921675 /* NAVEdit_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 45A7773F19935C8000921675 /* NAVEdit_pressed@2x.png */; };
+		45A777441993779D00921675 /* SearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A777431993779C00921675 /* SearchTableViewController.m */; };
 		45A8590D198796F700581029 /* MALTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A85905198796F700581029 /* MALTabBar.m */; };
 		45A8590E198796F700581029 /* MALTabBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A85908198796F700581029 /* MALTabBarItem.m */; };
 		45A8590F198796F700581029 /* MALTabBarItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A8590A198796F700581029 /* MALTabBarItemModel.m */; };
@@ -215,9 +225,6 @@
 		4517F32D199277110068C2F1 /* GLOBALArrowDown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GLOBALArrowDown@2x.png"; sourceTree = "<group>"; };
 		4517F330199278790068C2F1 /* AllCityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllCityViewController.h; sourceTree = "<group>"; };
 		4517F331199278790068C2F1 /* AllCityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllCityViewController.m; sourceTree = "<group>"; };
-		4517F33319927A5C0068C2F1 /* SearchAllCityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchAllCityViewController.h; sourceTree = "<group>"; };
-		4517F33419927A5C0068C2F1 /* SearchAllCityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchAllCityViewController.m; sourceTree = "<group>"; };
-		4517F33519927A5C0068C2F1 /* SearchAllCityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchAllCityViewController.xib; sourceTree = "<group>"; };
 		45190A511935DDD600C9088F /* SelectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectionViewCell.h; sourceTree = "<group>"; };
 		45190A521935DDD600C9088F /* SelectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectionViewCell.m; sourceTree = "<group>"; };
 		45190A551935EB3000C9088F /* PullDownButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PullDownButton.h; sourceTree = "<group>"; };
@@ -310,6 +317,12 @@
 		45257756195888A600337312 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		452696D6195B134F004A100F /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
 		452696D7195B134F004A100F /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
+		45284B541993C571000C5737 /* searchAddbutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = searchAddbutton.png; sourceTree = "<group>"; };
+		45284B551993C571000C5737 /* searchAddbutton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "searchAddbutton@2x.png"; sourceTree = "<group>"; };
+		45284B561993C571000C5737 /* searchLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = searchLogo.png; sourceTree = "<group>"; };
+		45284B571993C571000C5737 /* searchLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "searchLogo@2x.png"; sourceTree = "<group>"; };
+		45284B5C1993C648000C5737 /* SearchTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchTableCell.h; sourceTree = "<group>"; };
+		45284B5D1993C648000C5737 /* SearchTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchTableCell.m; sourceTree = "<group>"; };
 		453306D118EC63FE00DB4C08 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		453C591B194DEA7900A0EB54 /* loading100&100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading100&100.png"; sourceTree = "<group>"; };
 		453C591C194DEA7900A0EB54 /* loading250&187.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "loading250&187.png"; sourceTree = "<group>"; };
@@ -379,6 +392,14 @@
 		459DF15C1956ADAC00F30511 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		45A76016198F281700B04F3C /* LoadingImage_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LoadingImage_01.png; sourceTree = "<group>"; };
 		45A76017198F281700B04F3C /* LoadingImage_02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LoadingImage_02.png; sourceTree = "<group>"; };
+		45A7773619934EBE00921675 /* GLOBALRefresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GLOBALRefresh.png; sourceTree = "<group>"; };
+		45A77738199356BD00921675 /* GLOBALRefresh_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GLOBALRefresh_pressed.png; sourceTree = "<group>"; };
+		45A7773A19935B9A00921675 /* NAVEdit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NAVEdit.png; sourceTree = "<group>"; };
+		45A7773B19935B9A00921675 /* NAVEdit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NAVEdit@2x.png"; sourceTree = "<group>"; };
+		45A7773E19935C8000921675 /* NAVEdit_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NAVEdit_pressed.png; sourceTree = "<group>"; };
+		45A7773F19935C8000921675 /* NAVEdit_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NAVEdit_pressed@2x.png"; sourceTree = "<group>"; };
+		45A777421993779C00921675 /* SearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchTableViewController.h; sourceTree = "<group>"; };
+		45A777431993779C00921675 /* SearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchTableViewController.m; sourceTree = "<group>"; };
 		45A85904198796F700581029 /* MALTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MALTabBar.h; sourceTree = "<group>"; };
 		45A85905198796F700581029 /* MALTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MALTabBar.m; sourceTree = "<group>"; };
 		45A85906198796F700581029 /* MALTabBarChinldVIewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MALTabBarChinldVIewControllerDelegate.h; sourceTree = "<group>"; };
@@ -532,11 +553,12 @@
 				451D2A8F190238C000CA311F /* NearbyViewController.m */,
 				451D2A9F190238C000CA311F /* DetailViewController.h */,
 				451D2AA0190238C000CA311F /* DetailViewController.m */,
-				4517F33319927A5C0068C2F1 /* SearchAllCityViewController.h */,
-				4517F33419927A5C0068C2F1 /* SearchAllCityViewController.m */,
-				4517F33519927A5C0068C2F1 /* SearchAllCityViewController.xib */,
 				4517F330199278790068C2F1 /* AllCityViewController.h */,
 				4517F331199278790068C2F1 /* AllCityViewController.m */,
+				45A777421993779C00921675 /* SearchTableViewController.h */,
+				45A777431993779C00921675 /* SearchTableViewController.m */,
+				45284B5C1993C648000C5737 /* SearchTableCell.h */,
+				45284B5D1993C648000C5737 /* SearchTableCell.m */,
 				45220303192DF9AB001C775B /* SearchViewController.h */,
 				45220304192DF9AB001C775B /* SearchViewController.m */,
 				4519EBB71940ACE10059AB83 /* SearchResultViewController.h */,
@@ -875,6 +897,16 @@
 		45BC9BF91982AD94008BDADC /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				45284B541993C571000C5737 /* searchAddbutton.png */,
+				45284B551993C571000C5737 /* searchAddbutton@2x.png */,
+				45284B561993C571000C5737 /* searchLogo.png */,
+				45284B571993C571000C5737 /* searchLogo@2x.png */,
+				45A7773E19935C8000921675 /* NAVEdit_pressed.png */,
+				45A7773F19935C8000921675 /* NAVEdit_pressed@2x.png */,
+				45A7773A19935B9A00921675 /* NAVEdit.png */,
+				45A7773B19935B9A00921675 /* NAVEdit@2x.png */,
+				45A77738199356BD00921675 /* GLOBALRefresh_pressed.png */,
+				45A7773619934EBE00921675 /* GLOBALRefresh.png */,
 				4517F32C199277110068C2F1 /* GLOBALArrowDown.png */,
 				4517F32D199277110068C2F1 /* GLOBALArrowDown@2x.png */,
 				454979661991FE2D006C3404 /* TOOLMessage.png */,
@@ -1095,7 +1127,6 @@
 				4521F0BB19548B7700BC3EEC /* sns_icon_21@2x.png in Resources */,
 				453C597F194DED7A00A0EB54 /* barButtonEdit.png in Resources */,
 				45BED46C195CF15B00EFC07F /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
-				4517F33719927A5C0068C2F1 /* SearchAllCityViewController.xib in Resources */,
 				452577441958720900337312 /* sns_icon_25@2x.png in Resources */,
 				453C5949194DEA7900A0EB54 /* iTunesArtwork@2x.png in Resources */,
 				45D2317E19507C03007E67DC /* homeSettings@2x.png in Resources */,
@@ -1117,17 +1148,22 @@
 				453C5946194DEA7900A0EB54 /* AppIcon76x76.png in Resources */,
 				45E207CF191A6FDF00C49A94 /* btn_close_selected.png in Resources */,
 				453C5937194DEA7900A0EB54 /* loading300&150.png in Resources */,
+				45A7774119935C8000921675 /* NAVEdit_pressed@2x.png in Resources */,
 				45BE6E69198BA1A000CA1EA5 /* TABUserCenter_selected.png in Resources */,
 				45D2318519508B56007E67DC /* house.png in Resources */,
 				45BE6E62198B9A6200CA1EA5 /* TABLocation_selected@2x.png in Resources */,
+				45A7774019935C8000921675 /* NAVEdit_pressed.png in Resources */,
 				45BE6E46198B78E800CA1EA5 /* NAVBack_pressed@2x.png in Resources */,
 				45BE6E45198B78E800CA1EA5 /* NAVBack_pressed.png in Resources */,
 				453C5936194DEA7900A0EB54 /* loading250&187.png in Resources */,
 				45BE6E4C198B78E800CA1EA5 /* NAVFavorite_on@2x.png in Resources */,
 				453C5945194DEA7900A0EB54 /* AppIcon72x72@2x.png in Resources */,
 				453C5991194DED7A00A0EB54 /* favorite@2x.png in Resources */,
+				45284B591993C571000C5737 /* searchAddbutton@2x.png in Resources */,
 				453C598A194DED7A00A0EB54 /* barButtonShare@2x.png in Resources */,
+				45A77739199356BD00921675 /* GLOBALRefresh_pressed.png in Resources */,
 				454979651991FA81006C3404 /* TOOLTel@2x.png in Resources */,
+				45A7773719934EBE00921675 /* GLOBALRefresh.png in Resources */,
 				45BE6E63198B9A6200CA1EA5 /* TABLocation.png in Resources */,
 				45BE6E5B198B957A00CA1EA5 /* TABSearch.png in Resources */,
 				4525773A1958714400337312 /* sns_icon_23.png in Resources */,
@@ -1136,10 +1172,12 @@
 				453C5995194DED7A00A0EB54 /* search@2x.png in Resources */,
 				453C595A194DECAD00A0EB54 /* launch@R4.png in Resources */,
 				453C5940194DEA7900A0EB54 /* AppIcon57x57.png in Resources */,
+				45A7773C19935B9A00921675 /* NAVEdit.png in Resources */,
 				453C597D194DED7A00A0EB54 /* barButtonBack.png in Resources */,
 				454979601991D77D006C3404 /* TABFavorite.png in Resources */,
 				4549795E1991D77D006C3404 /* NAVFavorite_off.png in Resources */,
 				453C5986194DED7A00A0EB54 /* barButtonMessage@2x.png in Resources */,
+				45284B5A1993C571000C5737 /* searchLogo.png in Resources */,
 				453C598C194DED7A00A0EB54 /* barButtonUp@2x.png in Resources */,
 				45BE6E5C198B957A00CA1EA5 /* TABSearch@2x.png in Resources */,
 				453C5980194DED7A00A0EB54 /* barButtonEdit@2x.png in Resources */,
@@ -1156,6 +1194,7 @@
 				4517F32E199277110068C2F1 /* GLOBALArrowDown.png in Resources */,
 				45E207DE19211E8200C49A94 /* FZHT.TTF in Resources */,
 				45A76018198F281700B04F3C /* LoadingImage_01.png in Resources */,
+				45284B581993C571000C5737 /* searchAddbutton.png in Resources */,
 				453C5994194DED7A00A0EB54 /* search.png in Resources */,
 				45BE6E54198B8DDE00CA1EA5 /* TABBackground.png in Resources */,
 				453C5951194DEC4B00A0EB54 /* AppIcon29x29.png in Resources */,
@@ -1169,6 +1208,7 @@
 				45257742195871F600337312 /* sns_icon_25.png in Resources */,
 				453C5993194DED7A00A0EB54 /* location@2x.png in Resources */,
 				453C5944194DEA7900A0EB54 /* AppIcon72x72.png in Resources */,
+				45A7773D19935B9A00921675 /* NAVEdit@2x.png in Resources */,
 				453C5939194DEA7900A0EB54 /* loading320&320.png in Resources */,
 				453C598F194DED7A00A0EB54 /* failView3.png in Resources */,
 				453C595B194DECAD00A0EB54 /* launch@2x.png in Resources */,
@@ -1178,6 +1218,7 @@
 				453C597E194DED7A00A0EB54 /* barButtonBack@2x.png in Resources */,
 				45BE6E73198BA1B900CA1EA5 /* TABMore.png in Resources */,
 				453C5982194DED7A00A0EB54 /* barButtonFavorite@2x.png in Resources */,
+				45284B5B1993C571000C5737 /* searchLogo@2x.png in Resources */,
 				45BE6E49198B78E800CA1EA5 /* NAVFavorite_off.png in Resources */,
 				453C5952194DEC4B00A0EB54 /* AppIcon29x29@2x.png in Resources */,
 				453C5953194DEC4B00A0EB54 /* AppIcon40x40.png in Resources */,
@@ -1245,6 +1286,7 @@
 				45213A821947D0160005DE4F /* FeedbackViewController.m in Sources */,
 				45A8590E198796F700581029 /* MALTabBarItem.m in Sources */,
 				4523E0BE193330420060F208 /* CityLocationViewCell.m in Sources */,
+				45A777441993779D00921675 /* SearchTableViewController.m in Sources */,
 				4523F12B192EF25400B422FA /* SearchSuggestion.m in Sources */,
 				451D2BA71902C3DF00CA311F /* Image.m in Sources */,
 				4523E0B71932E2220060F208 /* CityViewController.m in Sources */,
@@ -1253,7 +1295,7 @@
 				4521F3211929EC0500102BF5 /* Address.m in Sources */,
 				451D2AC8190238C000CA311F /* AppDelegate.m in Sources */,
 				4521F31C1928F49A00102BF5 /* DetailImagesViewCell.m in Sources */,
-				4517F33619927A5C0068C2F1 /* SearchAllCityViewController.m in Sources */,
+				45284B5E1993C648000C5737 /* SearchTableCell.m in Sources */,
 				451D2B0519023ADC00CA311F /* NearbyViewCell.m in Sources */,
 				451D2AD0190238C000CA311F /* DetailPriceViewCell.m in Sources */,
 				45A8590D198796F700581029 /* MALTabBar.m in Sources */,

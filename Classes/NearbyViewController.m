@@ -215,17 +215,28 @@ typedef enum {
         }
     }
 
-    UIImage *image=[UIImage imageNamed:@"failView1.png"];
-    CGSize imageSize=CGSizeMake(150, 150);
+    UIImage *image=[UIImage imageNamed:@"GLOBALRefresh.png"];
+    UIImage *image2=[UIImage imageNamed:@"GLOBALRefresh_pressed.png"];
 
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setBackgroundImage:image forState:UIControlStateNormal];
-    button.frame=CGRectMake(0, 0, imageSize.width, imageSize.height);
+    [button setBackgroundImage:image2 forState:UIControlStateHighlighted];
+    
+    button.frame=CGRectMake(0, 0, image.size.width, image.size.height);
     button.center=CGPointMake(self.view.center.x, self.view.center.y-60);
     [button addTarget:self action:@selector(didClickRefresh:) forControlEvents:UIControlEventTouchUpInside];
     button.tag=1;
     
+    UILabel *refreshText=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, image2.size.width, image2.size.height)];
+    refreshText.center=CGPointMake(self.view.center.x, self.view.center.y-65+image.size.height);
+    refreshText.textColor=[UIColor blackColor];
+    refreshText.font=[UIFont systemFontOfSize:15.0];
+    refreshText.text=@"点击屏幕，重新加载";
+    refreshText.tag=100;
     [self.view insertSubview:button aboveSubview:self.tableView];
+    [self.view insertSubview:refreshText aboveSubview:self.tableView];
+    
+    
     //    UIImageView *view=[[UIImageView alloc]initWithImage:image];
     //    view.frame=rect;
     
@@ -272,6 +283,13 @@ typedef enum {
 {
     if ([self checkInternet]) {
         [sender removeFromSuperview];//删除错误画面
+        
+        for (UIView *view in self.view.subviews) {
+            if([view isKindOfClass:[UILabel class]] && view.tag==100){
+                [view removeFromSuperview];
+                break;
+            }
+        }
         
         //打开地图定位
         [self openMapLocation];
@@ -525,6 +543,7 @@ typedef enum {
             [_loadingImageView removeFromSuperview];
             if (!isSuccess) {
                 [self setTitle:LocationError subTitle:nil];
+                [self addLoadingFaile];
                 [self.view makeToast:@"无法连接到服务器，请检测网络连接" duration:2.0 position:@"bottom"];
                 [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
                 //self.tableView.hidden=YES;
@@ -534,6 +553,7 @@ typedef enum {
             
             if (_address.formattedAddress==nil) {
                 [self setTitle:LocationError subTitle:nil];
+                [self addLoadingFaile];
                 [self.view makeToast:@"定位失败(不在中国)" duration:1.0 position:@"bottom"];
                 [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
                 return;

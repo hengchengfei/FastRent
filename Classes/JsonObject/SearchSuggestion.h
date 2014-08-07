@@ -11,6 +11,6 @@
 @interface SearchSuggestion : NSObject
 
 @property(nonatomic,retain)NSString *key;
-@property(nonatomic,weak)NSNumber *count;
+@property(nonatomic,retain)NSNumber *count;//一定要设置为retain，否则在table cell再次显示时会冲掉
 
 @end

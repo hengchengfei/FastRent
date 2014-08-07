@@ -97,7 +97,7 @@
     titleLabel.backgroundColor=[UIColor clearColor];
     titleLabel.text=title;
     titleLabel.font=font;
-    titleLabel.textColor=[UIColor blackColor];
+    titleLabel.textColor=[UIColor whiteColor];
     [titleLabel setTextAlignment:NSTextAlignmentCenter];
     
     
@@ -120,7 +120,7 @@
 
 -(void)back
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)initData{
@@ -488,7 +488,7 @@
         self.callback(city);
     }
     
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)viewDidAppear:(BOOL)animated
