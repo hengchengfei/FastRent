@@ -15,6 +15,7 @@
 @end
 @interface SearchTableViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 
+@property(nonatomic,retain) id<SearchTableDelegate> delegate;
 @property(nonatomic,retain)NSMutableArray *datasource;
 
 @end

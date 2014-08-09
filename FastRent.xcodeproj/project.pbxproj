@@ -13,7 +13,6 @@
 		4517F332199278790068C2F1 /* AllCityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4517F331199278790068C2F1 /* AllCityViewController.m */; };
 		45190A531935DDD600C9088F /* SelectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 45190A521935DDD600C9088F /* SelectionViewCell.m */; };
 		45190A571935EB3000C9088F /* PullDownButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 45190A561935EB3000C9088F /* PullDownButton.m */; };
-		4519EBB91940ACE10059AB83 /* SearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4519EBB81940ACE10059AB83 /* SearchResultViewController.m */; };
 		451A2BD718FED3210071F597 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 451A2BD618FED3210071F597 /* QuartzCore.framework */; };
 		451D2AC8190238C000CA311F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 451D2A5E190238C000CA311F /* AppDelegate.m */; };
 		451D2ACD190238C000CA311F /* DetailContentViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 451D2A65190238C000CA311F /* DetailContentViewCell.m */; };
@@ -50,7 +49,6 @@
 		4521F31C1928F49A00102BF5 /* DetailImagesViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4521F31B1928F49A00102BF5 /* DetailImagesViewCell.m */; };
 		4521F3211929EC0500102BF5 /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = 4521F3201929EC0500102BF5 /* Address.m */; };
 		4521F323192A508300102BF5 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4521F322192A508300102BF5 /* CoreText.framework */; };
-		45220305192DF9AB001C775B /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45220304192DF9AB001C775B /* SearchViewController.m */; };
 		4523E0B71932E2220060F208 /* CityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4523E0B61932E2220060F208 /* CityViewController.m */; };
 		4523E0B91932E4AB0060F208 /* city.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4523E0B81932E4AB0060F208 /* city.plist */; };
 		4523E0BE193330420060F208 /* CityLocationViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4523E0BD193330420060F208 /* CityLocationViewCell.m */; };
@@ -132,6 +130,7 @@
 		454979681991FE2D006C3404 /* TOOLMessage.png in Resources */ = {isa = PBXBuildFile; fileRef = 454979661991FE2D006C3404 /* TOOLMessage.png */; };
 		454979691991FE2D006C3404 /* TOOLMessage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 454979671991FE2D006C3404 /* TOOLMessage@2x.png */; };
 		456104EA18F6EE6200C12C05 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 456104E918F6EE6200C12C05 /* ImageIO.framework */; };
+		456CFCCE19968B7F00C2D3ED /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 45B1FC7E19058517007EBB02 /* Localizable.strings */; };
 		459B8BFB186498DE006C794E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 459B8BFA186498DE006C794E /* Foundation.framework */; };
 		459B8BFF186498DE006C794E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 459B8BFE186498DE006C794E /* UIKit.framework */; };
 		459B8C14186498DE006C794E /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 459B8C13186498DE006C794E /* XCTest.framework */; };
@@ -229,8 +228,6 @@
 		45190A521935DDD600C9088F /* SelectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectionViewCell.m; sourceTree = "<group>"; };
 		45190A551935EB3000C9088F /* PullDownButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PullDownButton.h; sourceTree = "<group>"; };
 		45190A561935EB3000C9088F /* PullDownButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PullDownButton.m; sourceTree = "<group>"; };
-		4519EBB71940ACE10059AB83 /* SearchResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultViewController.h; sourceTree = "<group>"; };
-		4519EBB81940ACE10059AB83 /* SearchResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultViewController.m; sourceTree = "<group>"; };
 		451A2BD618FED3210071F597 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		451D2A5D190238C000CA311F /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		451D2A5E190238C000CA311F /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -292,8 +289,6 @@
 		4521F31F1929EC0500102BF5 /* Address.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Address.h; sourceTree = "<group>"; };
 		4521F3201929EC0500102BF5 /* Address.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Address.m; sourceTree = "<group>"; };
 		4521F322192A508300102BF5 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
-		45220303192DF9AB001C775B /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
-		45220304192DF9AB001C775B /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SearchViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4523E0B51932E2220060F208 /* CityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityViewController.h; sourceTree = "<group>"; };
 		4523E0B61932E2220060F208 /* CityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityViewController.m; sourceTree = "<group>"; };
 		4523E0B81932E4AB0060F208 /* city.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = city.plist; sourceTree = "<group>"; };
@@ -559,10 +554,6 @@
 				45A777431993779C00921675 /* SearchTableViewController.m */,
 				45284B5C1993C648000C5737 /* SearchTableCell.h */,
 				45284B5D1993C648000C5737 /* SearchTableCell.m */,
-				45220303192DF9AB001C775B /* SearchViewController.h */,
-				45220304192DF9AB001C775B /* SearchViewController.m */,
-				4519EBB71940ACE10059AB83 /* SearchResultViewController.h */,
-				4519EBB81940ACE10059AB83 /* SearchResultViewController.m */,
 				4523E0B51932E2220060F208 /* CityViewController.h */,
 				4523E0B61932E2220060F208 /* CityViewController.m */,
 				4521C4E41935ABA900E28187 /* SelectionViewController.h */,
@@ -1147,6 +1138,7 @@
 				45E207CD191A6FDF00C49A94 /* btn_close_normal.png in Resources */,
 				453C5946194DEA7900A0EB54 /* AppIcon76x76.png in Resources */,
 				45E207CF191A6FDF00C49A94 /* btn_close_selected.png in Resources */,
+				456CFCCE19968B7F00C2D3ED /* Localizable.strings in Resources */,
 				453C5937194DEA7900A0EB54 /* loading300&150.png in Resources */,
 				45A7774119935C8000921675 /* NAVEdit_pressed@2x.png in Resources */,
 				45BE6E69198BA1A000CA1EA5 /* TABUserCenter_selected.png in Resources */,
@@ -1303,12 +1295,10 @@
 				451D2B01190238C000CA311F /* WebRequest.m in Sources */,
 				451D2BAB1902C3DF00CA311F /* Rents.m in Sources */,
 				451D2AEF190238C000CA311F /* DetailViewController.m in Sources */,
-				45220305192DF9AB001C775B /* SearchViewController.m in Sources */,
 				45213A891947FBE90005DE4F /* UIPlaceHolderTextView.m in Sources */,
 				45E207D1191A6FDF00C49A94 /* DXAlertView.m in Sources */,
 				45190A531935DDD600C9088F /* SelectionViewCell.m in Sources */,
 				451D2ACF190238C000CA311F /* DetailMapViewCell.m in Sources */,
-				4519EBB91940ACE10059AB83 /* SearchResultViewController.m in Sources */,
 				451D2AD8190238C000CA311F /* HomeViewController.m in Sources */,
 				4523F121192EC30E00B422FA /* RentSearchBar.m in Sources */,
 				451D2B9B1902BDB100CA311F /* main.m in Sources */,
@@ -1477,7 +1467,7 @@
 				);
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = FastRent;
-				PROVISIONING_PROFILE = "6A0A7375-17B9-4B85-AE46-E9C268573661";
+				PROVISIONING_PROFILE = "E946187B-CD19-477B-A621-6B9552890E1E";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1510,7 +1500,7 @@
 				);
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = FastRent;
-				PROVISIONING_PROFILE = "6A0A7375-17B9-4B85-AE46-E9C268573661";
+				PROVISIONING_PROFILE = "E946187B-CD19-477B-A621-6B9552890E1E";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

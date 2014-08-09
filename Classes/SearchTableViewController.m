@@ -62,6 +62,13 @@
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    SearchTableCell *cell=(SearchTableCell *)[tableView cellForRowAtIndexPath:indexPath];
+    NSString *text=cell.titleLabel.text;
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self.delegate didSelectedSearch:text];
+}
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     [[[UIApplication sharedApplication]keyWindow] endEditing:YES];

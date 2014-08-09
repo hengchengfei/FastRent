@@ -13,8 +13,12 @@
 
 @implementation AppDelegate
 
+
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //自动更新版本检测
+    [self chkUpdate];
     
     //是否自动加载更多
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
@@ -275,6 +279,21 @@
     if ((int)scrollView.contentOffset.x%320==0) {
         _pageControl.currentPage=(int)scrollView.contentOffset.x/320;
     }
+}
+
+-(void)chkUpdate{
+    //检测版本
+    [[LTUpdate shared] update:LTUpdateNow
+                     complete:^(BOOL isNewVersionAvailable, LTUpdateVersionDetails *versionDetails) {
+                         //*// [TIP] Remove the first slash to toggle block comments if you'd like to use MBAlertView.
+                         if (isNewVersionAvailable) {
+                             //                             DLog(@"New version %@ released on %@.", versionDetails.version, versionDetails.releaseDate);
+                             //                             DLog(@"The app is about %@", humanReadableFileSize(versionDetails.fileSizeBytes));
+                             //                             DLog(@"Release notes:\n%@", versionDetails.releaseNotes);
+                             //[[LTUpdate shared] alertLatestVersion:LTUpdateOption | LTUpdateSkip];
+                             [[LTUpdate shared] alertLatestVersion:LTUpdateOption | LTUpdateSkip];
+                         }
+                     }];
 }
 
 @end

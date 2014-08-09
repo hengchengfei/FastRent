@@ -301,9 +301,9 @@ static long _appStoreID;
     if (alertOptions & LTUpdateForce) {
         
     } else {
-        if (alertOptions & LTUpdateSkip) {
-            [alertView addButtonWithTitle:LTI18N(@"Skip This Version")];
-        }
+//        if (alertOptions & LTUpdateSkip) {
+//            [alertView addButtonWithTitle:LTI18N(@"Skip This Version")];
+//        }
         [alertView addButtonWithTitle:LTI18N(@"Remind Me Later")];
     }
 

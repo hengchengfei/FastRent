@@ -40,7 +40,7 @@
     self.tableView.dataSource=self;
     self.tableView.tableHeaderView=[[UIView alloc]initWithFrame:CGRectZero];
     self.tableView.tableFooterView=[[UIView alloc]initWithFrame:CGRectZero];
-    self.tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
+    //self.tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
     self.tableView.scrollEnabled=NO;
     
     //self.tableView.frame=self.view.frame;
@@ -109,12 +109,12 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return 2;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *cell0=@"AboutIconCell";
-    NSString *cell1=@"AboutAuthorCell";
+   // NSString *cell1=@"AboutAuthorCell";
     NSString *cell2=@"AboutCopyrightCell";
     
     NSInteger row=indexPath.row;
@@ -126,13 +126,16 @@
         return cell;
         
     }else if(row==1){
-        UITableViewCell *cell=[self.tableView dequeueReusableCellWithIdentifier:cell1];
-        cell.selectionStyle=UITableViewCellSelectionStyleNone;
-        return cell;
-    }else if(row==2){
+//        UITableViewCell *cell=[self.tableView dequeueReusableCellWithIdentifier:cell1];
+//        cell.selectionStyle=UITableViewCellSelectionStyleNone;
+//        return cell;
         UITableViewCell *cell=[self.tableView dequeueReusableCellWithIdentifier:cell2];
         cell.selectionStyle=UITableViewCellSelectionStyleNone;
         return cell;
+    }else if(row==2){
+//        UITableViewCell *cell=[self.tableView dequeueReusableCellWithIdentifier:cell2];
+//        cell.selectionStyle=UITableViewCellSelectionStyleNone;
+//        return cell;
     }
     
     return nil;
@@ -144,12 +147,12 @@
     if (row==0) {
         return 134.0;
     }else if(row==1){
-        return 86.0;
-    }else if(row==2){
+        //return 86.0;
         if (ISOS7) {
-            return self.tableView.frame.size.height-220-20.0;
+            return self.tableView.frame.size.height-134;
         }
-        return self.tableView.frame.size.height-220;
+        return self.tableView.frame.size.height-134;
+        
     }
     
     return 0;

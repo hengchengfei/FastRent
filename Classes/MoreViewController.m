@@ -90,14 +90,14 @@
 #pragma mark View样式设置
 -(void)initStyle{
     [self.view setBackgroundColor:[UIColor whiteColor]];
-    if (ISOS7) {
-        self.edgesForExtendedLayout=UIRectEdgeNone;
-        self.extendedLayoutIncludesOpaqueBars=NO;
-        self.modalPresentationCapturesStatusBarAppearance=NO;
-        //self.navigationItem.leftBarButtonItem.title=@"";
-        self.tabBarController.tabBar.translucent=NO;
-        self.automaticallyAdjustsScrollViewInsets=NO;
-    }
+//    if (ISOS7) {
+//        self.edgesForExtendedLayout=UIRectEdgeNone;
+//        self.extendedLayoutIncludesOpaqueBars=NO;
+//        self.modalPresentationCapturesStatusBarAppearance=NO;
+//        //self.navigationItem.leftBarButtonItem.title=@"";
+//        self.tabBarController.tabBar.translucent=NO;
+//        self.automaticallyAdjustsScrollViewInsets=NO;
+//    }
     
 }
 

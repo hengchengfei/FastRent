@@ -23,6 +23,7 @@
 #import "PullDownButton.h"
 #import "Toast+UIView.h"
 #import "MobClick.h"
+
 //左边距大小
 #define kLeftOrigon 5.0
 
@@ -99,6 +100,8 @@ typedef enum {
 }
 
 
+
+
 -(void)loadingImage{
     _loadingImageView=[[UIImageView  alloc]initWithFrame:self.view.frame];
     _loadingImageView.frame=CGRectMake(0, 0, 200, 225);
@@ -131,9 +134,9 @@ typedef enum {
     self.tableView.dataSource=self;
     [self.tableView setBackgroundColor:[UIColor clearColor]];
     
-    if(ISOS7){
-        self.tableView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);//分割线的位置
-    }
+//    if(ISOS7){
+//        self.tableView.separatorInset=UIEdgeInsetsMake(0, 0, 0, 0);//分割线的位置（Storyboard中设置了）
+//    }
     
     
     
@@ -147,9 +150,11 @@ typedef enum {
     //更多
     moreCell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
     moreCell.textLabel.textAlignment = NSTextAlignmentCenter;
-    moreCell.textLabel.text=@"更多";
     moreCell.textLabel.textColor=[UIColor grayColor];
     moreCell.textLabel.font=[UIFont fontWithName:moreCell.textLabel.font.fontName size:12];
+    moreCell.separatorInset =UIEdgeInsetsMake(0, 7, 0, 0);
+    
+    [self moreCellDefault];
 }
 
 #pragma mark 检测网络连接
@@ -654,6 +659,7 @@ typedef enum {
     button.titleArray=titleDatasource;
     button.idArray=idDatasource;
     
+    [self moreCellDefault];
     [button addTarget:self action:@selector(loadPullDownDatas:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:button];
@@ -1029,9 +1035,9 @@ typedef enum {
             }
             
             if(moreIndexpath.count <10){
-                moreCell.textLabel.text =@"没有更多信息了";
+                [self moreCellNo];
             }else{
-                moreCell.textLabel.text =@"更多";
+                [self moreCellDefault];
             }
             
         });
@@ -1041,6 +1047,14 @@ typedef enum {
     
 }
 
+#pragma mark 更多单元格的显示
+-(void)moreCellDefault{
+    moreCell.textLabel.text=@"更多";
+}
+
+-(void)moreCellNo{
+    moreCell.textLabel.text=@"没有更多消息了";
+}
 
 #pragma mark 是否自动加载更多
 -(BOOL)isAutoLoadMore{
