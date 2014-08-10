@@ -35,7 +35,7 @@
     CGFloat _latitude;
     CGFloat _longitude;
     NSString *_address;
-    
+        UIImageView *_loadingImageView;
     
     NSMutableDictionary *_heightDictionary;
     
@@ -83,8 +83,10 @@
     //View样式设置
     [self initStyle];
     
+   
     //加载数据
     [self loadData];
+    
     
     
     //QQ
@@ -286,6 +288,85 @@
     }
 }
 
+-(void)addLoadingFaile
+{
+    //先判断有没有
+    for (UIView *view in self.view.subviews) {
+        if ([view isKindOfClass:[UIButton class]] && view.tag==1) {
+            return;
+        }
+    }
+    
+    UIImage *image=[UIImage imageNamed:@"GLOBALRefresh.png"];
+    UIImage *image2=[UIImage imageNamed:@"GLOBALRefresh_pressed.png"];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setBackgroundImage:image forState:UIControlStateNormal];
+    [button setBackgroundImage:image2 forState:UIControlStateHighlighted];
+    
+    button.frame=CGRectMake(0, 0, image.size.width, image.size.height);
+    button.center=CGPointMake(self.view.center.x, self.view.center.y-60);
+    [button addTarget:self action:@selector(didClickRefresh:) forControlEvents:UIControlEventTouchUpInside];
+    button.tag=1;
+    
+    UILabel *refreshText=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, image2.size.width, image2.size.height)];
+    refreshText.center=CGPointMake(self.view.center.x, self.view.center.y-65+image.size.height);
+    refreshText.textColor=[UIColor blackColor];
+    refreshText.font=[UIFont systemFontOfSize:15.0];
+    refreshText.text=@"点击屏幕，重新加载";
+    refreshText.tag=100;
+    [self.view insertSubview:button aboveSubview:self.tableView];
+    [self.view insertSubview:refreshText aboveSubview:self.tableView];
+    
+}
+
+-(void)loadingImage{
+    _loadingImageView=[[UIImageView  alloc]initWithFrame:self.view.frame];
+    _loadingImageView.frame=CGRectMake(0, 0, 200, 225);
+    _loadingImageView.center =CGPointMake(self.view.center.x, self.view.center.y-50);
+    _loadingImageView.animationImages=[NSArray arrayWithObjects:
+                                       [UIImage imageNamed:@"LoadingImage_01.png"],
+                                       [UIImage imageNamed:@"LoadingImage_02.png"],
+                                       nil];
+    _loadingImageView.animationDuration=0.5;
+    _loadingImageView.animationRepeatCount=0;
+    [_loadingImageView startAnimating];
+    [self.view addSubview:_loadingImageView];
+    
+    
+}
+
+#pragma mark 网络连接后刷新
+-(void)didClickRefresh:(id)sender
+{
+    if ([self checkInternet]) {
+        [sender removeFromSuperview];//删除错误画面
+        
+        for (UIView *view in self.view.subviews) {
+            if([view isKindOfClass:[UILabel class]] && view.tag==100){
+                [view removeFromSuperview];
+                break;
+            }
+        }
+ 
+        [_loadingImageView removeFromSuperview];
+        //加载数据
+        [self loadData];
+    }
+    
+}
+
+#pragma mark 检测网络连接
+-(BOOL)checkInternet
+{
+    BOOL isConnectionNetwork =[WebRequest isConnectionAvailable];
+    if (!isConnectionNetwork) {
+        [self addLoadingFaile];
+        return NO;
+    }
+    return YES;
+}
+
 #pragma mark 加载数据
 -(void)loadData{
     
@@ -293,15 +374,17 @@
     
     BOOL isConnected =[WebRequest isConnectionAvailable];
     if (!isConnected) {
-        [self warnMessage:@"网络连接失败"];
+        [self addLoadingFaile];
+        //[self warnMessage:@"网络连接失败"];
         [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
         return;
     }
     
-    MBProgressHUD *hudLoading=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hudLoading.labelText=@"加载中";
-    [hudLoading show:YES];
+//    MBProgressHUD *hudLoading=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//    hudLoading.labelText=@"加载中";
+//    [hudLoading show:YES];
     
+    [self loadingImage];
     __block    BOOL isSuccess;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0) ,^{
         [WebRequest findRent:self.id onCompletion:^(Rent *rent, NSError *error) {
@@ -314,9 +397,10 @@
         }];
         dispatch_async(dispatch_get_main_queue(), ^{
             [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
-            [hudLoading hide:YES];
+            [_loadingImageView removeFromSuperview];
             if (!isSuccess) {
-                [self warnMessage:@"加载失败"];
+                [self addLoadingFaile];
+                //[self warnMessage:@"加载失败"];
                 self.tableView.hidden=YES;
                 return;
             }

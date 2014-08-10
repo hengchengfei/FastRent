@@ -152,7 +152,9 @@ typedef enum {
     moreCell.textLabel.textAlignment = NSTextAlignmentCenter;
     moreCell.textLabel.textColor=[UIColor grayColor];
     moreCell.textLabel.font=[UIFont fontWithName:moreCell.textLabel.font.fontName size:12];
-    moreCell.separatorInset =UIEdgeInsetsMake(0, 7, 0, 0);
+    if(ISOS7){
+            moreCell.separatorInset =UIEdgeInsetsMake(0, 7, 0, 0);
+    }
     
     [self moreCellDefault];
 }
@@ -241,17 +243,6 @@ typedef enum {
     [self.view insertSubview:button aboveSubview:self.tableView];
     [self.view insertSubview:refreshText aboveSubview:self.tableView];
     
-    
-    //    UIImageView *view=[[UIImageView alloc]initWithImage:image];
-    //    view.frame=rect;
-    
-    //    UITapGestureRecognizer *gesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didClickRefresh:)];
-    //    view.userInteractionEnabled=YES;
-    //    [view addGestureRecognizer:gesture];
-    //
-    //
-    //    [self.view insertSubview:view belowSubview:self.tableView];
-    
 }
 
 //-(void)addRefreshButton
@@ -308,12 +299,32 @@ typedef enum {
 
 #pragma mark -
 #pragma mark 设置导航栏上的标题和左侧按钮样式
+//-(void)refreshTitle{
+//    UIView *view =self.navigationItem.titleView;
+//    
+//    CAGradientLayer *gradientLayer = [CAGradientLayer layer];
+//    CGPoint p=CGPointMake(view.frame.size.width, -5);
+//    gradientLayer =[self getLoadingView:p];
+//    [view.layer addSublayer:gradientLayer];
+//
+//}
+//-(void)stopRefreshTitle{
+//    UIView *view =self.navigationItem.titleView;
+//    if (view.layer!=nil && view.layer.sublayers.count>0) {
+//        for (CALayer *layer in view.layer.sublayers) {
+//            [layer removeFromSuperlayer];
+//        }
+//    }
+//
+//}
+
+
 -(void)setTitle:(LoadingType )loadingType  subTitle:(NSString *)subTitle
 {
     
     UIFont *font = [[UIFont alloc]init];
     NSString *startLocation = @"正在加载";
-    NSString *locationError=@"定位失败";
+    NSString *locationError=@"加载失败";
     NSString *title =@"当前位置";
     
     if (loadingType==StartLocation  ) {
@@ -568,7 +579,7 @@ typedef enum {
             NSDictionary *dict = @{@"城市": _address.city};
             [MobClick event:@"CityEvent" attributes:dict];
             
-            [self setTitle:LocationSuccess subTitle:_address.location];
+
             
             [self.view makeToast:_address.location
                         duration:2.0
@@ -715,6 +726,8 @@ typedef enum {
         }
     }
     
+    [self setTitle:StartLocation subTitle:nil];
+    
     [self reloadData];
 }
 
@@ -791,14 +804,15 @@ typedef enum {
     BOOL isConnected =[WebRequest isConnectionAvailable];
     if (!isConnected) {
         //[hudLoading hide:NO];
+        [self setTitle:LocationError subTitle:nil];
         [_loadingImageView removeFromSuperview];
         [self warnMessage:@"网络连接失败"];
         [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
         return;
     }
     
-    [hudLoading show:YES];
-    //self.tableView.hidden=YES;
+    
+    //[hudLoading show:YES];
     
     __block BOOL isSuccess;
     __block NSString *errMsg;
@@ -818,14 +832,18 @@ typedef enum {
             [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
             if (!isSuccess) {
                 [hudLoading hide:YES];
-                [self warnMessage:@"加载失败"];
+                [self setTitle:LocationError subTitle:nil];
+                //[self warnMessage:@"加载失败"];
                 //self.tableView.hidden=YES;
                 return;
             }
             
             [hudLoading hide:YES];
+            [self setTitle:LocationSuccess subTitle:_address.location];
             // self.tableView.hidden=NO;
             [self.tableView reloadData];
+            
+            
             
             //定位到第一行
             if (allRents!=nil && allRents.rents.count>0) {

@@ -13,7 +13,7 @@
 @interface MALTabBarViewController : UIViewController
 
 @property (nonatomic, strong) NSArray *itemsArray;
-@property (nonatomic, weak) MALTabBar *tabBar;
+@property (nonatomic, strong) MALTabBar *tabBar;
 @property (nonatomic, strong) UIView *contentView;
 @property (nonatomic, strong) UIViewController *currentViewController;//当前被选中controller
 @property (nonatomic, assign) id<MALTabBarChinldVIewControllerDelegate>delegate;

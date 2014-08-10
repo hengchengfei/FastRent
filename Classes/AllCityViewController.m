@@ -90,7 +90,10 @@
     moreCell.textLabel.textAlignment = NSTextAlignmentCenter;
     moreCell.textLabel.textColor=selectedItemTitleColor;
     moreCell.textLabel.font=[UIFont fontWithName:moreCell.textLabel.font.fontName size:12];
-    moreCell.separatorInset=UIEdgeInsetsMake(0, 7, 0, 0);
+    if (ISOS7) {
+            moreCell.separatorInset=UIEdgeInsetsMake(0, 7, 0, 0);
+    }
+
     [self moreCellDefault];
 }
 
@@ -105,6 +108,12 @@
 
 #pragma mark Loading Animation
 -(void)addLoadingAnimation{
+    for (UIView *view in self.view.subviews) {
+        if (view.tag==100) {
+            [view removeFromSuperview];
+            break;
+        }
+    }
     _loadingImageView=[[UIImageView  alloc]initWithFrame:self.view.frame];
     _loadingImageView.frame=CGRectMake(0, 0, 200, 225);
     _loadingImageView.center =CGPointMake(self.view.center.x, self.view.center.y);
@@ -114,6 +123,8 @@
                                        nil];
     _loadingImageView.animationDuration=0.5;
     _loadingImageView.animationRepeatCount=0;
+    _loadingImageView.tag=100;
+    
     [_loadingImageView startAnimating];
     [self.view addSubview:_loadingImageView];
     
@@ -147,7 +158,9 @@
             view.hidden=YES;
         }
     }
+    
     isAddedCombox=NO;
+    self.cityButton.hidden=YES;
     self.btnCancel.hidden=NO;
     self.searchTable.hidden=NO;
     self.tableView.hidden=YES;
@@ -164,6 +177,7 @@
             view.hidden=NO;
         }
     }
+    self.cityButton.hidden=NO;
     self.btnCancel.hidden=YES;
     self.searchTable.hidden=YES;
     self.tableView.hidden=NO;
@@ -287,30 +301,47 @@
         return;
     }
     
+    [self addLoadingAnimation];
+    
     _searchDatasource =[[NSMutableArray alloc]init];
     
-    [WebRequest findByKey:city key:text onCompletion:^(NSDictionary *dict, NSError *err) {
-        if (err!=nil || dict==nil || dict.count<=0) {
-            self.searchTable.hidden=YES;
-            return;
-        }
-        NSArray *result=[dict objectForKey:@"datas"];
-        for (int i=0; i<result.count; i++) {
-            SearchSuggestion *bs=[SearchSuggestion new];
-            NSDictionary *d1=[result objectAtIndex:i];
+    __block BOOL success;
+    __block NSDictionary *dictResult;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0) ,^{
+        [WebRequest findByKey:city key:text onCompletion:^(NSDictionary *dict, NSError *err) {
+            if (err!=nil || dict==nil || dict.count<=0) {
+                success =NO;
+            }else{
+                dictResult=dict;
+               success=YES;
+            }
             
-            bs.key=[d1 objectForKey:@"key"];
-            bs.count=[d1 objectForKey:@"count"];
-            
-            [_searchDatasource addObject:bs];
-        }
+        }];
         
-    }];
-    //if (_searchDatasource.count>0) {
-    _searchController.datasource=_searchDatasource;
-    [self.searchTable reloadData];
-    self.searchTable.hidden=NO;
-    //}
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self deleteLoadingAnimation];
+            if (success==NO) {
+                self.searchTable.hidden=YES;
+                return;
+            }
+            NSArray *result=[dictResult objectForKey:@"datas"];
+            for (int i=0; i<result.count; i++) {
+                SearchSuggestion *bs=[SearchSuggestion new];
+                NSDictionary *d1=[result objectAtIndex:i];
+                
+                bs.key=[d1 objectForKey:@"key"];
+                bs.count=[d1 objectForKey:@"count"];
+                
+                [_searchDatasource addObject:bs];
+            }
+            
+            _searchController.datasource=_searchDatasource;
+            [self.searchTable reloadData];
+            self.searchTable.hidden=NO;
+        });
+    });
+    
+ 
     
     
 }
@@ -349,13 +380,16 @@
     
     NSString *text= self.textField.text;
     if (text.length<=0) {
+        [self deleteLoadingAnimation];
         return;
     }
     
     NSString *tmpcity=[self getSearchCity];
     if (tmpcity==nil) {
+                [self deleteLoadingAnimation];
         DXAlertView *alert=[[DXAlertView alloc]initWithTitle:@"提示" contentText:@"请先选择城市" leftButtonTitle:nil rightButtonTitle:@"确定"];
         [alert show];
+
         return;
     }
     
