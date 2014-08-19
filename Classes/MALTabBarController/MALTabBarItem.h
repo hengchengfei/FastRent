@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MALTabBarItemModel.h"
 
-#define itemWH 39 //tabBar里按钮的大小
+#define itemWH 38 //tabBar里按钮的大小
 #define itemTitleColor [UIColor blackColor]    //item里标题默认颜色
 
 #define itemTitleFont [UIFont systemFontOfSize:11]  //item 标题 字体font

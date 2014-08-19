@@ -50,8 +50,8 @@ typedef enum {
     CLGeocoder *_geocoder;
     CGFloat _latitude;
     CGFloat _longitude;
-    //NSString *_address;
-    
+
+    NSString *_city;
     RentComboxs *_comboxsData;
     NSNumber *_distanceId;
     NSNumber *_priceId;
@@ -63,7 +63,7 @@ typedef enum {
     
     Address *_address;
     
-    MBProgressHUD *hudLoading;
+   // MBProgressHUD *hudLoading;
 }
 
 @end
@@ -150,7 +150,7 @@ typedef enum {
     //更多
     moreCell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
     moreCell.textLabel.textAlignment = NSTextAlignmentCenter;
-    moreCell.textLabel.textColor=[UIColor grayColor];
+    moreCell.textLabel.textColor=selectedItemTitleColor;
     moreCell.textLabel.font=[UIFont fontWithName:moreCell.textLabel.font.fontName size:12];
     if(ISOS7){
             moreCell.separatorInset =UIEdgeInsetsMake(0, 7, 0, 0);
@@ -167,7 +167,7 @@ typedef enum {
         //View中间添加刷新按钮
         //hudLoading.labelText=@"网络连接失败";
         [self setTitle:LocationError subTitle:nil];
-        [hudLoading hide:YES] ;
+       // [hudLoading hide:YES] ;
         //hudLoading.labelText=@"加载中";
         [self addLoadingFaile];
         //self.navigationItem.rightBarButtonItem.enabled=NO;
@@ -217,7 +217,7 @@ typedef enum {
 {
     //先判断有没有
     for (UIView *view in self.view.subviews) {
-        if ([view isKindOfClass:[UIButton class]] && view.tag==1) {
+        if ([view isKindOfClass:[UIButton class]] && view.tag==101) {
             return;
         }
     }
@@ -230,19 +230,34 @@ typedef enum {
     [button setBackgroundImage:image2 forState:UIControlStateHighlighted];
     
     button.frame=CGRectMake(0, 0, image.size.width, image.size.height);
-    button.center=CGPointMake(self.view.center.x, self.view.center.y-60);
+    button.center=CGPointMake(self.view.center.x, self.view.center.y-80);
     [button addTarget:self action:@selector(didClickRefresh:) forControlEvents:UIControlEventTouchUpInside];
-    button.tag=1;
+    button.tag=101;
     
-    UILabel *refreshText=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, image2.size.width, image2.size.height)];
-    refreshText.center=CGPointMake(self.view.center.x, self.view.center.y-65+image.size.height);
+    UIFont *font = [UIFont systemFontOfSize:15.0];
+    NSString *text=@"点击屏幕，重新加载";
+    CGSize size=MB_TEXTSIZE(text, font);
+    
+    
+    //button.frame=CGRectMake(0, 0, button.frame.size.width, button.frame.size.height+size.height+30);
+    
+    UILabel *refreshText=[[UILabel alloc]initWithFrame:CGRectMake(0, image.size.height+20, size.width, size.height)];
+    //refreshText.center=CGPointMake(0, image.size.height+40);
     refreshText.textColor=[UIColor blackColor];
-    refreshText.font=[UIFont systemFontOfSize:15.0];
-    refreshText.text=@"点击屏幕，重新加载";
-    refreshText.tag=100;
-    [self.view insertSubview:button aboveSubview:self.tableView];
-    [self.view insertSubview:refreshText aboveSubview:self.tableView];
+    refreshText.font=font;
+    refreshText.text=text;
+    [button addSubview:refreshText];
     
+    [self.view insertSubview:button aboveSubview:self.tableView];
+    
+}
+-(void)removeLoadingFaile{
+    for (UIView *view in self.view.subviews) {
+        if (view.tag==101) {
+            [view removeFromSuperview];
+            break;
+        }
+    }
 }
 
 //-(void)addRefreshButton
@@ -279,13 +294,6 @@ typedef enum {
 {
     if ([self checkInternet]) {
         [sender removeFromSuperview];//删除错误画面
-        
-        for (UIView *view in self.view.subviews) {
-            if([view isKindOfClass:[UILabel class]] && view.tag==100){
-                [view removeFromSuperview];
-                break;
-            }
-        }
         
         //打开地图定位
         [self openMapLocation];
@@ -389,9 +397,9 @@ typedef enum {
 -(void)setRightButton:(NSString *)text
 {
     UIButton *button=[[UIButton alloc]init];
-    UIFont *font =[UIFont systemFontOfSize:12.0];
+    UIFont *font =[UIFont systemFontOfSize:14.0];
     CGSize size =MB_TEXTSIZE(text, font);
-    [button setFrame:CGRectMake(0, 0, size.width, size.height)];
+    [button setFrame:CGRectMake(0, 5, size.width, size.height)];
     [button setTitle:text forState:UIControlStateNormal];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
@@ -426,6 +434,8 @@ typedef enum {
 {
     BOOL isConnected =[WebRequest isConnectionAvailable];
     if (!isConnected) {
+        _reloading=NO;
+        [_refreshTableView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
         [self.view makeToast:@"无法连接到服务器，请检测网络连接" duration:1.0 position:@"bottom"];
         return;
     }
@@ -451,6 +461,7 @@ typedef enum {
         }] ;
         dispatch_async(dispatch_get_main_queue(), ^{
             //完成加载时，将下拉刷新隐藏
+            [self moreCellDefault];
             _reloading=NO;
             [_refreshTableView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
             //[hudLoading hide:YES];
@@ -519,8 +530,8 @@ typedef enum {
     _latitude = coor.latitude;
     _longitude =coor.longitude;
     
-    hudLoading.labelText=@"加载中";
-    [hudLoading show:YES];
+    //hudLoading.labelText=@"加载中";
+    //[hudLoading show:YES];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0) ,^{
         
@@ -549,6 +560,7 @@ typedef enum {
                 }else{
                     isSuccess=YES;
                     _address=address;
+                    _city=_address.city;
                 }
             }];
             
@@ -557,10 +569,15 @@ typedef enum {
         dispatch_async(dispatch_get_main_queue(), ^{
             //[hudLoading hide:NO];
             [_loadingImageView removeFromSuperview];
+            [self removeLoadingFaile];
+            //[hudLoading hide:YES];
             if (!isSuccess) {
                 [self setTitle:LocationError subTitle:nil];
-                [self addLoadingFaile];
-                [self.view makeToast:@"无法连接到服务器，请检测网络连接" duration:2.0 position:@"bottom"];
+                if (self.tableView.hidden) {
+                    [self addLoadingFaile];
+                }else{
+                    [self.view makeToast:@"无法连接到服务器，请检测网络连接" duration:2.0 position:@"bottom"];
+                }
                 [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
                 //self.tableView.hidden=YES;
                 
@@ -569,13 +586,18 @@ typedef enum {
             
             if (_address.formattedAddress==nil) {
                 [self setTitle:LocationError subTitle:nil];
-                [self addLoadingFaile];
-                [self.view makeToast:@"定位失败(不在中国)" duration:1.0 position:@"bottom"];
+                if (self.tableView.hidden) {
+                    [self addLoadingFaile];
+                }else{
+                   [self.view makeToast:@"定位失败(不在中国)" duration:1.0 position:@"bottom"];
+                }
+                
                 [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
                 return;
             }
             
             //记录事件
+            _city=_address.city;
             NSDictionary *dict = @{@"城市": _address.city};
             [MobClick event:@"CityEvent" attributes:dict];
             
@@ -587,7 +609,6 @@ typedef enum {
             [self addComboxBox];
             [self setDefaultCity:_address.city];
             [self reloadData];
-            
             
             //正确定位后，则停止
             [locationManager stopUpdatingLocation];
@@ -694,9 +715,6 @@ typedef enum {
 -(void)popoverHandler:(SelectionViewController *)controller text:(NSString *)text id:(NSNumber *)id
 {
     //记录事件
-    NSDictionary *dict = @{@"text": text,@"id":[id stringValue]};
-    [MobClick event:@"ComboxSelectEvent" attributes:dict];
-    
     [popoverController dismissPopoverAnimated:YES options:WYPopoverAnimationOptionScale];
     
     for(int i=0;i<_comboxsData.rentComboxs.count;i++){
@@ -715,7 +733,7 @@ typedef enum {
         }
     }
     
-    //change pulldown nam
+    //change pulldown name
     PullDownButton *button= controller.fromPullDownButton;
     NSArray *views =  button.subviews;
     for(int i=0;i<views.count;i++){
@@ -788,7 +806,6 @@ typedef enum {
     
     
     [self addPullButton:@"距离" font:font frame:distanceFrame  titleDatasource:distanceTitleDatasource idDatasource:distanceIdDatasource];
-    //btnDistance.tag=0;
     
     [self addPullButton:@"价格" font:font frame:priceFrame titleDatasource:priceTitleDatasource idDatasource:priceIdDatasource];
     
@@ -801,6 +818,7 @@ typedef enum {
 -(void)reloadData
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible=YES;
+               [self removeLoadingFaile];
     BOOL isConnected =[WebRequest isConnectionAvailable];
     if (!isConnected) {
         //[hudLoading hide:NO];
@@ -818,7 +836,9 @@ typedef enum {
     __block NSString *errMsg;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0) ,^{
         // [NSThread sleepForTimeInterval:2.0f];
-        [WebRequest findNearby:_latitude longitude:_longitude city:_address.city distance:_distanceId price:_priceId type:_rentTypeId source:_sourceId lastRentId:nil onCompletion:^(Rents *rents, NSError *error) {
+        isSuccess=YES;
+        if (_city) {
+            [WebRequest findNearby:_latitude longitude:_longitude city:_city distance:_distanceId price:_priceId type:_rentTypeId source:_sourceId lastRentId:nil onCompletion:^(Rents *rents, NSError *error) {
             if (error!=nil) {
                 isSuccess=NO;
                 errMsg=[error.userInfo objectForKey:NSLocalizedDescriptionKey];
@@ -827,23 +847,60 @@ typedef enum {
                 allRents=rents;
             }
         }] ;
+        }
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
-            if (!isSuccess) {
-                [hudLoading hide:YES];
+             if (!isSuccess) {
+                 [self.view makeToast:@"无法连接到服务器，请检测网络连接" duration:2.0 position:@"bottom"];
+                //[hudLoading hide:YES];
                 [self setTitle:LocationError subTitle:nil];
                 //[self warnMessage:@"加载失败"];
                 //self.tableView.hidden=YES;
                 return;
             }
             
-            [hudLoading hide:YES];
+            [self moreCellDefault];
+            //[hudLoading hide:YES];
             [self setTitle:LocationSuccess subTitle:_address.location];
             // self.tableView.hidden=NO;
             [self.tableView reloadData];
             
+            NSNumber *defaultDistanceId=allRents.defaultDistanceId;
             
+            if (defaultDistanceId!=nil) {
+                //设置默认距离
+                NSString *displayName=nil;
+                for(int i=0;i<_comboxsData.rentComboxs.count;i++){
+                    RentCombox *combox=(RentCombox *)[_comboxsData.rentComboxs objectAtIndex:i];
+                    NSInteger type=[[combox type]integerValue];
+                    NSInteger _id=[[combox id]integerValue];
+                    if([defaultDistanceId integerValue] == _id && type==0){
+                        _distanceId=defaultDistanceId;
+                        displayName =combox.name;
+                        break;
+                    }
+                }
+                
+                //更新距离选择框
+                for (UIView *subView in self.view.subviews) {
+                    if ([subView isKindOfClass:[PullDownButton class]]) {
+                        PullDownButton *btn=(PullDownButton *)subView;
+                        for (NSNumber *idd  in btn.idArray) {
+                            if ([defaultDistanceId integerValue]== [idd integerValue]) {
+                                NSArray *views =  btn.subviews;
+                                for(int i=0;i<views.count;i++){
+                                    if([[views objectAtIndex:i] isKindOfClass:[UILabel class]]){
+                                        UILabel *label=(UILabel *)[views objectAtIndex:i];
+                                        label.text=displayName;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             
             //定位到第一行
             if (allRents!=nil && allRents.rents.count>0) {
@@ -855,6 +912,7 @@ typedef enum {
         });
     });
 }
+
 
 /**
  Map
@@ -995,6 +1053,11 @@ typedef enum {
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
     if (cell ==moreCell && [self isAutoLoadMore]) {
+        NSString *display=moreCell.textLabel.text;
+        if ([display compare:@"没有更多消息了"]==0) {
+            return;
+        }
+        
       moreCell.textLabel.text=@"正在加载...";
       [self loadedMoreDatas];
     }
@@ -1002,16 +1065,11 @@ typedef enum {
 
 -(void)loadedMoreDatas
 {
+               [self removeLoadingFaile];
     [UIApplication sharedApplication].networkActivityIndicatorVisible=YES;
     BOOL isConnected = [WebRequest isConnectionAvailable];
     if (!isConnected) {
-        MBProgressHUD *hd =[MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hd.mode=MBProgressHUDModeText;
-        hd.labelText=@"网络连接失败";
-        [hd show:YES];
-        
-        [hd hide:YES afterDelay:2.0];
-        
+        [self warnMessage:@"网络连接失败"];
         [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
         return;
     }

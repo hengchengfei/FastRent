@@ -222,6 +222,7 @@
                 [self.view makeToast:@"无收藏信息" duration:1.0 position:@"bottom"];
                 [userDefaults removeObjectForKey:FavoriteIdKey];
             }else{
+                self.navigationItem.rightBarButtonItem.enabled=YES;
                 NSMutableArray *newArray=[[NSMutableArray alloc]init];
                 for (int i=0; i<_allRents.rents.count; i++) {
                     [newArray addObject:[(Rent *)[_allRents.rents objectAtIndex:i] id]];

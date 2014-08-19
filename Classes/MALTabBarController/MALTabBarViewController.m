@@ -76,8 +76,13 @@
     self.tabBar = [MALTabBar getMALTabBarWithItemModels:self.itemsArray defaultSelectedIndex:defauletSelectedIndex];
     
     if (_tabBarBgImageName) {
-        
-        [self.tabBar setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:_tabBarBgImageName]]];
+        CGRect ct = CGRectMake(0, 0, self.tabBar.frame.size.width, self.tabBar.frame.size.height);
+        UIImageView *bk=[[UIImageView alloc]initWithFrame:ct];
+        [bk setImage:[UIImage imageNamed:_tabBarBgImageName]];
+        [bk setUserInteractionEnabled:NO];
+        [bk setContentMode:UIViewContentModeScaleToFill];
+        [self.tabBar insertSubview:bk atIndex:0];
+       // [self.tabBar setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:_tabBarBgImageName]]];
        // [self.tabBar setBackgroundColor:[UIColor redColor]];
     }
 

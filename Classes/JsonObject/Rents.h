@@ -13,6 +13,7 @@
 
 @property(nonatomic,retain) NSNumber *code;
 @property(nonatomic,retain) NSMutableArray *rents;
+@property(nonatomic,retain) NSNumber *defaultDistanceId;
 
 @end
 

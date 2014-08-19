@@ -9,11 +9,8 @@
 #import "AppDelegate.h"
 #import "MobClick.h"
 #import "LTUpdate.h"
-#import "MALTabBarViewController.h"
 
 @implementation AppDelegate
-
-
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -30,7 +27,7 @@
     
     
     //显示状态栏，因为在plist中启动时，隐藏了状态栏
-    [[UIApplication sharedApplication]setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+    //[[UIApplication sharedApplication]setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     
     //友盟
     [MobClick setCrashReportEnabled:YES];
@@ -74,31 +71,30 @@
         [itemsArray addObject:itemModel];
     }
     
-    
-    MALTabBarViewController *tabBarController = [[MALTabBarViewController alloc] initWithItemModels:itemsArray defaultSelectedIndex:0];
+    tabBarController = [[MALTabBarViewController alloc] initWithItemModels:itemsArray defaultSelectedIndex:0];
     [tabBarController setTabBarBgImage:kPNG_TAB_Background];//设置tabBar的背景图片
-    self.window.rootViewController = tabBarController;
+    
     self.window.backgroundColor = [UIColor whiteColor];
+    
+    
+    //First Install
+    NSString *firstInstallKey = @"IS_FIRST_INSTALL";//1.0.2
+    BOOL isFirstInstall=[defaults boolForKey:firstInstallKey];
+    if (isFirstInstall) {
+        self.window.rootViewController = tabBarController;
+    }else{
+        [defaults setBool:YES forKey:firstInstallKey];
+        [defaults synchronize];
+        
+        IntroductionViewController *root=[[IntroductionViewController alloc]init];
+        [root.view addSubview: [self addScrollView]];
+        
+        self.window.rootViewController=root;
+        
+    }
+    
+    
     [self.window makeKeyAndVisible];
-    
-    
-    
-    
-    
-    
-    //    self.window=[[UIWindow alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
-    //    NSUserDefaults *userDefaults =[NSUserDefaults standardUserDefaults];
-    //    NSString *launchedKey = @"isFirstLaunched";
-    //    if ([userDefaults boolForKey:launchedKey]==NO) {
-    //        [userDefaults setBool:YES forKey:launchedKey];
-    //        [self showGuideView];
-    //    }else{
-    //        [self gotoMainStoryboard];
-    //    }
-    //    [userDefaults synchronize];
-    
-    
-    
     return YES;
 }
 
@@ -161,31 +157,6 @@
 -(void)didReceiveWeiboResponse:(WBBaseResponse *)response
 {
     DLog(@"%s",__FUNCTION__);
-    
-    //    if ([response isKindOfClass:WBSendMessageToWeiboResponse.class])
-    //    {
-    //        NSString *title = @"发送结果";
-    //        NSString *message = [NSString stringWithFormat:@"响应状态: %d\n响应UserInfo数据: %@\n原请求UserInfo数据: %@",(int)response.statusCode, response.userInfo, response.requestUserInfo];
-    //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-    //                                                        message:message
-    //                                                       delegate:nil
-    //                                              cancelButtonTitle:@"确定"
-    //                                              otherButtonTitles:nil];
-    //
-    //    }
-    //    else if ([response isKindOfClass:WBAuthorizeResponse.class])
-    //    {
-    //        NSString *title = @"认证结果";
-    //        NSString *message = [NSString stringWithFormat:@"响应状态: %d\nresponse.userId: %@\nresponse.accessToken: %@\n响应UserInfo数据: %@\n原请求UserInfo数据: %@",(int)response.statusCode,[(WBAuthorizeResponse *)response userID], [(WBAuthorizeResponse *)response accessToken], response.userInfo, response.requestUserInfo];
-    //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-    //                                                        message:message
-    //                                                       delegate:nil
-    //                                              cancelButtonTitle:@"确定"
-    //                                              otherButtonTitles:nil];
-    //
-    //       NSString * wbtoken = [(WBAuthorizeResponse *)response accessToken];
-    //
-    //    }
 }
 
 #pragma mark QQ
@@ -220,69 +191,99 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-
--(void)showGuideView
-{
-    UIScrollView *scro=[[UIScrollView alloc]initWithFrame:self.window.bounds];
-    scro.pagingEnabled=YES;
-    _currentScro=scro;
-    scro.scrollEnabled=YES;
-    scro.bounces=NO;
-    scro.showsHorizontalScrollIndicator=NO;;
-    scro.delegate=self;
-    UIImageView *imgView1=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Guide1.png"]];
-    imgView1.frame=CGRectMake(0, 0, 320, 480);
-    UIImageView *imgView2=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"Guide2.png"]];
-    imgView2.frame=CGRectMake(320, 0, 320, 480);
+-(UIScrollView *)addScrollView{
+    CGRect screen =[[UIScreen mainScreen]bounds];
+    _scrollView =[[UIScrollView alloc]initWithFrame:screen];
+    //CGSize size = scrollView.frame.size;
+    imageCount=3;
+    currentPage=1;
+    _scrollView.backgroundColor=[UIColor clearColor];
+    _scrollView.showsHorizontalScrollIndicator=NO;
+    _scrollView.showsVerticalScrollIndicator=NO;
+    _scrollView.pagingEnabled=YES;
+    _scrollView.delegate=self;
+    //scrollView.autoresizingMask=(UIViewAutoresizingFlexibleHeight)
+    _scrollView.contentSize=CGSizeMake(screen.size.width*imageCount, screen.size.height);
     
-    UIButton *btnEnter= [[UIButton alloc] initWithFrame:CGRectMake(400, 200, 100, 100)];
-    [btnEnter setTitle:@"Enter" forState:UIControlStateNormal];
     
-    //    [imgView2 addSubview:btnEnter];
+    UIImageView *imageview1=[[UIImageView alloc]init];
+    [imageview1 setImage:[UIImage imageNamed:@"Introduction1.jpg"]];
+    imageview1.frame=screen;
+    imageview1.contentMode=UIViewContentModeScaleToFill;
+    imageview1.backgroundColor=[UIColor clearColor];
     
-    [scro addSubview:imgView1];
-    [scro addSubview:imgView2];
-    [scro addSubview:btnEnter];
+    UIImageView *imageview2=[[UIImageView alloc]init];
+    [imageview2 setImage:[UIImage imageNamed:@"Introduction2.jpg"]];
+    imageview2.frame=CGRectMake(screen.size.width, 0, screen.size.width, screen.size.height);
+    imageview2.contentMode=UIViewContentModeScaleToFill;
+    imageview2.backgroundColor=[UIColor clearColor];
     
-    [btnEnter addTarget:self action:@selector(gotoMainStoryboard) forControlEvents:UIControlEventTouchUpInside];
+    UIImageView *imageview3=[[UIImageView alloc]init];
+    [imageview3 setImage:[UIImage imageNamed:@"Introduction3.jpg"]];
+    imageview3.frame=CGRectMake(screen.size.width*2, 0, screen.size.width, screen.size.height);
+    imageview3.contentMode=UIViewContentModeScaleToFill;
+    imageview3.backgroundColor=[UIColor clearColor];
     
-    scro.contentSize=CGSizeMake(320*2, scro.frame.size.height);
-    UIPageControl *page=[[UIPageControl alloc]initWithFrame:CGRectMake(0, 400, 320, 20)];
-    page.numberOfPages=2;
-    _pageControl=page;
-    [page addTarget:self action:@selector(changeCurrentPage:) forControlEvents:UIControlEventValueChanged];
-    page.backgroundColor=[UIColor redColor];
-    page.currentPage=0;
-    [self.window addSubview:scro];
-    [self.window addSubview:page];
+    [_scrollView addSubview:imageview1];
+    [_scrollView addSubview:imageview2];
+    [_scrollView addSubview:imageview3];
+    
+    return _scrollView;
 }
 
--(void) gotoMainStoryboard
+#pragma mark scrollviewDelegate
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    //    NSArray *nibViews =[[NSBundle mainBundle] loadNibNamed:@"Guide" owner:self options:nil];
-    //    [self.window addSubview:[nibViews objectAtIndex:0]];
-    //
-    UIStoryboard *sb=[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    UIViewController *vc=[sb instantiateInitialViewController];
-    //    UIViewController *vc=[sb instantiateViewControllerWithIdentifier:@"tabar"];
-    [self.window setRootViewController:vc];
-    [self.window makeKeyAndVisible];
+    //    DLog(@"%f",scrollView.contentOffset.x);
 }
 
--(void)changeCurrentPage:(UIPageControl *)sender
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    [_currentScro setContentOffset:CGPointMake(sender.currentPage*320, 0)];
+    //先取得当前所在的偏移点
+    currentOffsetX= scrollView.contentOffset.x;
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    if ((int)scrollView.contentOffset.x%320==0) {
-        _pageControl.currentPage=(int)scrollView.contentOffset.x/320;
+    //根据最后松开时所在的x偏移点，判断向左还是向右滑动
+    CGFloat offsetX = scrollView.contentOffset.x;
+    //DLog(@"end:%f",offsetX);
+    NSUInteger nextPage=currentPage;
+    if (offsetX > currentOffsetX) {
+        //right
+        nextPage=currentPage+1;
+    }else if(offsetX < currentOffsetX){
+        nextPage=currentPage-1;
     }
+    
+    if (nextPage<=0) {
+        return;
+    }
+    
+    if (nextPage>imageCount) {
+        self.window.rootViewController=tabBarController;
+        return;
+    }
+    
+    NSNumber *next=[NSNumber numberWithInteger:nextPage];
+    
+    [self performSelectorOnMainThread:@selector(gotoNextPageView:) withObject:next waitUntilDone:NO];
+    //[self gotoNextPageView:nextPage];不起效果
 }
 
+#pragma mark 下一个图
+-(void)gotoNextPageView:(NSNumber *)pageIndex
+{
+    CGRect screen = [[UIScreen mainScreen]bounds];
+    CGPoint x=CGPointMake((pageIndex.intValue-1)*screen.size.width,0);
+    
+    [_scrollView setContentOffset:x animated:YES];
+    
+    currentPage = pageIndex.intValue;
+}
+
+#pragma mark 检测版本
 -(void)chkUpdate{
-    //检测版本
     [[LTUpdate shared] update:LTUpdateNow
                      complete:^(BOOL isNewVersionAvailable, LTUpdateVersionDetails *versionDetails) {
                          //*// [TIP] Remove the first slash to toggle block comments if you'd like to use MBAlertView.

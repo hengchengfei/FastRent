@@ -292,7 +292,7 @@
 {
     //先判断有没有
     for (UIView *view in self.view.subviews) {
-        if ([view isKindOfClass:[UIButton class]] && view.tag==1) {
+        if ([view isKindOfClass:[UIButton class]] && view.tag==101) {
             return;
         }
     }
@@ -305,19 +305,34 @@
     [button setBackgroundImage:image2 forState:UIControlStateHighlighted];
     
     button.frame=CGRectMake(0, 0, image.size.width, image.size.height);
-    button.center=CGPointMake(self.view.center.x, self.view.center.y-60);
+    button.center=CGPointMake(self.view.center.x, self.view.center.y-80);
     [button addTarget:self action:@selector(didClickRefresh:) forControlEvents:UIControlEventTouchUpInside];
-    button.tag=1;
+    button.tag=101;
     
-    UILabel *refreshText=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, image2.size.width, image2.size.height)];
-    refreshText.center=CGPointMake(self.view.center.x, self.view.center.y-65+image.size.height);
+    UIFont *font = [UIFont systemFontOfSize:15.0];
+    NSString *text=@"点击屏幕，重新加载";
+    CGSize size=MB_TEXTSIZE(text, font);
+    
+    
+    //button.frame=CGRectMake(0, 0, button.frame.size.width, button.frame.size.height+size.height+30);
+    
+    UILabel *refreshText=[[UILabel alloc]initWithFrame:CGRectMake(0, image.size.height+20, size.width, size.height)];
+    //refreshText.center=CGPointMake(0, image.size.height+40);
     refreshText.textColor=[UIColor blackColor];
-    refreshText.font=[UIFont systemFontOfSize:15.0];
-    refreshText.text=@"点击屏幕，重新加载";
-    refreshText.tag=100;
-    [self.view insertSubview:button aboveSubview:self.tableView];
-    [self.view insertSubview:refreshText aboveSubview:self.tableView];
+    refreshText.font=font;
+    refreshText.text=text;
+    [button addSubview:refreshText];
     
+    [self.view insertSubview:button aboveSubview:self.tableView];
+    
+}
+-(void)removeLoadingFaile{
+    for (UIView *view in self.view.subviews) {
+        if (view.tag==101) {
+            [view removeFromSuperview];
+            break;
+        }
+    }
 }
 
 -(void)loadingImage{
@@ -341,13 +356,6 @@
 {
     if ([self checkInternet]) {
         [sender removeFromSuperview];//删除错误画面
-        
-        for (UIView *view in self.view.subviews) {
-            if([view isKindOfClass:[UILabel class]] && view.tag==100){
-                [view removeFromSuperview];
-                break;
-            }
-        }
  
         [_loadingImageView removeFromSuperview];
         //加载数据
@@ -397,6 +405,7 @@
         }];
         dispatch_async(dispatch_get_main_queue(), ^{
             [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
+            [self removeLoadingFaile];
             [_loadingImageView removeFromSuperview];
             if (!isSuccess) {
                 [self addLoadingFaile];

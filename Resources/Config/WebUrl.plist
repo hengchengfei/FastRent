@@ -7,7 +7,7 @@
 	<key>feedback</key>
 	<string>/feedback.json?version={version}&amp;contacter={contacter}&amp;content={content}&amp;device={device}</string>
 	<key>findSearchString</key>
-	<string>/findSearchString.json?version={version}&amp;city={city}&amp;searchString={searchString}&amp;id={id}&amp;typeId={typeId}&amp;priceId={priceId}&amp;sourceId={sourceId}&amp;id={id}</string>
+	<string>/findSearchString.json?version={version}&amp;city={city}&amp;searchString={searchString}&amp;typeId={typeId}&amp;priceId={priceId}&amp;sourceId={sourceId}&amp;id={id}</string>
 	<key>findAddress</key>
 	<string>/findAddress.json?version={version}&amp;latitude={latitude}&amp;longitude={longitude}</string>
 	<key>findNearby</key>

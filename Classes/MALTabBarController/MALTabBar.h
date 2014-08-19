@@ -10,7 +10,7 @@
 #import "MALTabBarItem.h"
 
 #define MainScreenBoundsSize [UIScreen mainScreen].bounds.size
-#define tabBarHeight ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0 ? 49 : 79) //tabBar的高度
+#define tabBarHeight ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0 ? 49 : 49) //tabBar的高度
 @protocol MALTabBarDelegate <NSObject>
 
 - (void)selectedItem:(MALTabBarItemModel *)selectedItemModel;

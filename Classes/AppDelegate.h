@@ -11,11 +11,19 @@
 #import <TencentOpenAPI/QQApi.h>
 #import <TencentOpenAPI/TencentOAuth.h>
 #import "WeiboSDK.h"
+#import "IntroductionViewController.h"
+#import "MALTabBarViewController.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate,UIScrollViewDelegate,WXApiDelegate,WeiboSDKDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,UIScrollViewDelegate,WXApiDelegate,WeiboSDKDelegate,UIScrollViewDelegate>
 {
-    UIPageControl *_pageControl;
-    UIScrollView *_currentScro;
+    MALTabBarViewController *tabBarController;
+    
+    UIScrollView *_scrollView;
+    int currentPage;
+    int currentOffsetX;
+    int imageCount;
+    
+
 }
 @property (strong, nonatomic) UIWindow *window;
 
