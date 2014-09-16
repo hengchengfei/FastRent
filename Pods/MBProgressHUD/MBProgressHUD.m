@@ -535,10 +535,11 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
     if (ISOS7) {
         labelSize= [label.text length] > 0 ? [label.text \
                                         sizeWithAttributes:@{NSFontAttributeName:label.font}] : CGSizeZero;
-    }else{
-        labelSize=  [label.text length] > 0 ? [label.text \
-                                               sizeWithFont:label.font  ]: CGSizeZero;
     }
+//    }else{
+//        labelSize=  [label.text length] > 0 ? [label.text \
+//                                               sizeWithFont:label.font  ]: CGSizeZero;
+//    }
 	 
 	labelSize.width = MIN(labelSize.width, maxWidth);
 	totalSize.width = MAX(totalSize.width, labelSize.width);
@@ -557,17 +558,17 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
     //detailsLabelSize=MB_MULTILINE_TEXTSIZE(detailText, detailFont, maxSize, detailsLabel.lineBreakMode);
     
     if (ISOS7) {
-
        detailsLabelSize = [detailText length] > 0 ? [detailText \
                              boundingRectWithSize:maxSize options:(NSStringDrawingUsesLineFragmentOrigin) \
                              attributes:@{NSFontAttributeName:detailFont} context:nil].size : CGSizeZero;
-    }else{
-        detailsLabelSize =[detailText length] > 0 ? [detailText \
-                                                     sizeWithFont:detailFont
-                                                     constrainedToSize:maxSize
-                                                     lineBreakMode:detailsLabel.lineBreakMode] \
-                                                     : CGSizeZero;
     }
+//    }else{
+//        detailsLabelSize =[detailText length] > 0 ? [detailText \
+//                                                     sizeWithFont:detailFont
+//                                                     constrainedToSize:maxSize
+//                                                     lineBreakMode:detailsLabel.lineBreakMode] \
+//                                                     : CGSizeZero;
+//    }
 	//CGSize detailsLabelSize = MB_MULTILINE_TEXTSIZE(detailsLabel.text, detailsLabel.font, maxSize, detailsLabel.lineBreakMode);
 	totalSize.width = MAX(totalSize.width, detailsLabelSize.width);
 	totalSize.height += detailsLabelSize.height;

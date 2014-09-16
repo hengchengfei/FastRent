@@ -18,5 +18,11 @@
 	<string>/findRent.json?version={version}&amp;id={id}</string>
 	<key>findComboxs</key>
 	<string>/findComboxs.json?version={version}</string>
+	<key>getFilterInfo</key>
+	<string>/house/getFilterInfo.json</string>
+	<key>getListNearby</key>
+	<string>/house/getListNearby.json?location={location}&amp;filterparams={filterparams}&amp;page={page}</string>
+	<key>getListSearch</key>
+	<string>/house/getListSearch.json?location={location}&amp;filterparams={filterparams}&amp;page={page}</string>
 </dict>
 </plist>

@@ -22,10 +22,20 @@
 #define DLog(...)
 #endif
 
+
+#define kAppStoreFormat @"https://itunes.apple.com/cn/app/shan-zu/id%ld?mt=8"
+
+#define TypeDistance @0
+#define TypePrice @1
+#define TypeRentType @02
+#define TypeSource @3
+#define TypeHouseType @4
+#define TypeOrder @5
+
 //是否自动加载数据
 #define isAutoLoad YES
 
-#define selectedItemTitleColor  [UIColor colorWithRed:30.0/255.0 green:197.0/255.0 blue:183.0/255.0 alpha:1.0] // item被选中时标题的颜色
+#define appColor  [UIColor colorWithRed:30.0/255.0 green:197.0/255.0 blue:183.0/255.0 alpha:1.0] // item被选中时标题的颜色
 
 #pragma mark 第三方app参数
 #define __TencentAppId__ @"101127138"

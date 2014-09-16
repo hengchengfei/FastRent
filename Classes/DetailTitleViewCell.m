@@ -14,7 +14,7 @@
 {
     Rent *rent;
     UILabel *publishTitle;
-    UILabel *publishTime;
+    UILabel *updateTime;
     UILabel *infoSource;
     
 }
@@ -84,21 +84,21 @@
     [self addSubview:publishTitle];
     
     //时间
-    publishTime = [[UILabel alloc]initWithFrame:CGRectZero];
-    if (rent.publishTime==nil) {
-       rent.publishTime=@"";
+    updateTime = [[UILabel alloc]initWithFrame:CGRectZero];
+    if (rent.updateTime==nil) {
+       rent.updateTime=@"";
     }
-    NSString *time = [NSString stringWithFormat:@"发布时间：%@",rent.publishTime ];
+    NSString *time = [NSString stringWithFormat:@"更新时间：%@",rent.updateTime ];
     UIFont *font =[UIFont fontWithName:@"Arial" size:11.0];
     CGSize sizeTime =MB_TEXTSIZE(time, font);
     
     CGRect rectTime=CGRectMake(Left_X, publishTitle.frame.origin.y +sizeTitle.height+15.0, sizeTime.width, sizeTime.height);
-    publishTime.frame=rectTime;
-    publishTime.text=time;
-    publishTime.font=font;//千万不要把这个设置忘记了
-    [publishTime setTextColor:[UIColor grayColor]];
-    publishTime.alpha=0.5;
-    [self addSubview:publishTime];
+    updateTime.frame=rectTime;
+    updateTime.text=time;
+    updateTime.font=font;//千万不要把这个设置忘记了
+    [updateTime setTextColor:[UIColor grayColor]];
+    updateTime.alpha=0.5;
+    [self addSubview:updateTime];
  
     //来源
     infoSource = [[UILabel alloc]initWithFrame:CGRectZero];
@@ -107,7 +107,7 @@
     CGSize sizeSource =MB_TEXTSIZE(source, fontSource);
     
     CGRect rectSource=CGRectMake(self.frame.size.width-40
-                                 , publishTime.frame.origin.y, sizeSource.width, sizeSource.height);
+                                 , updateTime.frame.origin.y, sizeSource.width, sizeSource.height);
     infoSource.frame=rectSource;
     infoSource.text=source;
     infoSource.font=fontSource;//千万不要把这个设置忘记了

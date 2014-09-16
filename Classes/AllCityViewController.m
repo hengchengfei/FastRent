@@ -21,6 +21,11 @@
 #import "DetailViewController.h"
 #import "WYPopoverController.h"
 
+////////////
+#import "ComboxVo.h"
+#import "FRComboxView.h"
+#import "FRComboxItem.h"
+
 @interface AllCityViewController ()
 {
     NSString *city;
@@ -39,9 +44,15 @@
     NSNumber *_priceId;
     NSNumber *_sourceId;
     
-    Rents *datasource;
+    //Rents *datasource;
     
-    
+    //////////
+    FilterSearchViewController* fcontroller;
+    ComboxVo *_comboxVo;
+    NSMutableDictionary *_locationDictionary;
+    NSMutableDictionary *_paramsDictionary;
+    NSInteger _page;
+    HouseVo *_houseVo;
 }
 @end
 
@@ -88,13 +99,17 @@
     //更多
     moreCell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
     moreCell.textLabel.textAlignment = NSTextAlignmentCenter;
-    moreCell.textLabel.textColor=selectedItemTitleColor;
+    moreCell.textLabel.textColor=appColor;
     moreCell.textLabel.font=[UIFont fontWithName:moreCell.textLabel.font.fontName size:12];
     if (ISOS7) {
-            moreCell.separatorInset=UIEdgeInsetsMake(0, 7, 0, 0);
+        moreCell.separatorInset=UIEdgeInsetsMake(0, 7, 0, 0);
     }
-
+    
     [self moreCellDefault];
+    
+    _locationDictionary =[[NSMutableDictionary alloc]init];
+    _paramsDictionary=[[NSMutableDictionary alloc]init];
+    _page=1;
 }
 
 #pragma mark 更多单元格的显示
@@ -153,12 +168,7 @@
 
 #pragma mark Search Active
 -(void)inActive{
-    for (UIView *view in self.view.subviews) {
-        if ([view isKindOfClass:[PullDownButton class]]) {
-            view.hidden=YES;
-        }
-    }
-    
+    fcontroller.view.hidden=YES;
     isAddedCombox=NO;
     self.cityButton.hidden=YES;
     self.btnCancel.hidden=NO;
@@ -172,11 +182,7 @@
     }];
 }
 -(void)noActive{
-    for (UIView *view in self.view.subviews) {
-        if ([view isKindOfClass:[PullDownButton class]]) {
-            view.hidden=NO;
-        }
-    }
+    fcontroller.view.hidden=NO;
     self.cityButton.hidden=NO;
     self.btnCancel.hidden=YES;
     self.searchTable.hidden=YES;
@@ -237,7 +243,7 @@
     };
     
     UINavigationController *nav=[[UINavigationController alloc]initWithRootViewController:_controller];
-    [nav.navigationBar setBarTintColor:selectedItemTitleColor];
+    [nav.navigationBar setBarTintColor:appColor];
     [self presentViewController:nav animated:YES completion:nil];
     
 }
@@ -313,7 +319,7 @@
                 success =NO;
             }else{
                 dictResult=dict;
-               success=YES;
+                success=YES;
             }
             
         }];
@@ -341,7 +347,7 @@
         });
     });
     
- 
+    
     
     
 }
@@ -376,6 +382,7 @@
 
 -(void)reloadData{
     
+    _page=1;
     [self addLoadingAnimation];
     
     NSString *text= self.textField.text;
@@ -386,62 +393,82 @@
     
     NSString *tmpcity=[self getSearchCity];
     if (tmpcity==nil) {
-                [self deleteLoadingAnimation];
+        [self deleteLoadingAnimation];
         DXAlertView *alert=[[DXAlertView alloc]initWithTitle:@"提示" contentText:@"请先选择城市" leftButtonTitle:nil rightButtonTitle:@"确定"];
         [alert show];
-
+        
         return;
     }
     
-    //    BOOL isConnected = [WebRequest isConnectionAvailable];
-    //    if (!isConnected) {
-    //        MBProgressHUD *hd =[MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    //        hd.mode=MBProgressHUDModeText;
-    //        hd.labelText=@"网络连接失败";
-    //        [hd show:YES];
-    //
-    //        [hd hide:YES afterDelay:2.0];
-    //        return;
-    //    }
-    
-    // __block Rents *_allSearchRents;
+    [_locationDictionary setObject:tmpcity forKey:@"city"];
+    [_paramsDictionary setObject:text forKey:@"key"];
     
     [UIApplication sharedApplication].networkActivityIndicatorVisible=YES;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [WebRequest findSearchString:city searchString:text id:nil typeId:_typeId priceId:_priceId sourceId:_sourceId  onCompletion:^(Rents *allRents, NSError *error) {
-            if (error==nil) {
-                datasource = allRents;
-            }
-        } ];
+        __block BOOL isSuccess;
+        __block NSString *errMsg;
+        if(_comboxVo==nil){
+            [WebRequest getFilterInfo:^(ComboxVo *bo, NSError *error) {
+                if (error!=nil) {
+                    isSuccess=NO;
+                    errMsg=[error.userInfo objectForKey:NSLocalizedDescriptionKey];
+                }else{
+                    isSuccess=YES;
+                    _comboxVo=bo;
+                }
+            }];
+        }else{
+            isSuccess=YES;
+        }
+        if (isSuccess) {
+            [WebRequest getListSearch:_locationDictionary filterparams:_paramsDictionary page:_page complete:^(HouseVo *vo, NSError *error) {
+                if (error!=nil) {
+                    isSuccess=NO;
+                }else{
+                    isSuccess=YES;
+                    _houseVo=vo;
+                }
+            }];
+        }
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
             [self deleteLoadingAnimation];
-            if (datasource.rents.count<=0) {
+            if (!isSuccess) {
                 MBProgressHUD *hudMsg=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
                 hudMsg.mode=MBProgressHUDModeText;
-                hudMsg.labelText=@"没有数据";
+                hudMsg.labelText=@"网络连接失败";
                 [hudMsg hide:YES afterDelay:2.0];
-                [self.tableView reloadData];
             }else{
-                [self addComboxBox];
-                //UIStoryboard *storyboard =[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-                //_searchResultController = [storyboard instantiateViewControllerWithIdentifier:@"SearchResultController"];
-                //_searchResultController.city=city;
-                //_searchResultController.searchText=text;
-                //_searchResultController.datasource=_allSearchRents;
-                
-                [self.tableView reloadData];
+                if (_houseVo.result.datas.count<=0) {
+                    MBProgressHUD *hudMsg=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                    hudMsg.mode=MBProgressHUDModeText;
+                    hudMsg.labelText=@"没有数据";
+                    [hudMsg hide:YES afterDelay:2.0];
+                    [self.tableView reloadData];
+                }else{
+                    [self addCombox];
+                    [self.tableView reloadData];
+                }
             }
+
         });
     });
 }
+
+#pragma 取得下拉框的参数
+-(void)getFilterParams:(NSMutableDictionary *)params
+{
+    _paramsDictionary=params;
+    [self reloadData];
+}
+
 #pragma mark Table操作
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (datasource!=nil && datasource.rents.count>0) {
-        return datasource.rents.count+1;
+    if (_houseVo.result.datas.count>0) {
+        return _houseVo.result.datas.count+1;
     }
     return 0;
 }
@@ -449,12 +476,12 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger row = [indexPath row];
-    if (row ==datasource.rents.count) {
+    if (row ==_houseVo.result.datas.count) {
         return moreCell;
     }
     
     static NSString *RentCellIdentifier =@"NearbyCell";
-    Rent *rent = [datasource.rents objectAtIndex:row];
+    Rent *rent = [_houseVo.result.datas objectAtIndex:row];
     
     NearbyViewCell *rentCell=[tableView dequeueReusableCellWithIdentifier:RentCellIdentifier];
     if (rentCell==nil) {
@@ -490,7 +517,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([indexPath row] == datasource.rents.count) {
+    if ([indexPath row] == _houseVo.result.datas.count) {
         return 40.0f;
     }
     
@@ -510,7 +537,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([indexPath row] == datasource.rents.count) {
+    if ([indexPath row] == _houseVo.result.datas.count) {
         NSString *text=moreCell.textLabel.text;
         
         if ([text compare:@"更多"]!=0) {
@@ -543,31 +570,36 @@
         return;
     }
     
+    _page++;
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        Rent *rent=  [datasource.rents lastObject];
-        
         __block BOOL isSuccess;
-        __block Rents *moreRents;
+        __block HouseVo *moreRents;
         
-        [WebRequest findSearchString:city searchString:self.textField.text id:rent.id typeId:_typeId priceId:_priceId sourceId:_sourceId   onCompletion:^(Rents *newRents, NSError *error) {
-            if (error==nil) {
-                isSuccess=YES;
-                moreRents=newRents;
+        [WebRequest getListSearch:_locationDictionary filterparams:_paramsDictionary page:_page complete:^(HouseVo *vo, NSError *error) {
+                if (error!=nil) {
+                    isSuccess=NO;
+                    _page--;
+                }else{
+                    isSuccess=YES;
+                    moreRents=vo;
+                }
+            }];
+            
+            if (moreRents.result.datas.count>0) {
+                [_houseVo.result.datas addObjectsFromArray:moreRents.result.datas];
             }else{
-                isSuccess=NO;
+                _page--;
             }
-        } ];
+            
+            
+            NSMutableArray *moreIndexpath= [NSMutableArray arrayWithCapacity:moreRents.result.datas.count];
+            for (int i=0; i<moreRents.result.datas.count; i++) {
+                NSIndexPath *path =[NSIndexPath indexPathForRow:[_houseVo.result.datas indexOfObject:[moreRents.result.datas objectAtIndex:i]] inSection:0];
+                [moreIndexpath addObject:path];
+            }
+       
         
-        if (moreRents!=nil && moreRents.rents.count>0) {
-            [datasource.rents addObjectsFromArray:moreRents.rents];
-        }
-        
-        
-        NSMutableArray *moreIndexpath = [NSMutableArray arrayWithCapacity:moreRents.rents.count];
-        for (int i=0; i<moreRents.rents.count; i++) {
-            NSIndexPath *path =[NSIndexPath indexPathForRow:[datasource.rents indexOfObject:[moreRents.rents objectAtIndex:i]] inSection:0];
-            [moreIndexpath addObject:path];
-        }
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if (moreIndexpath.count>0) {
@@ -598,143 +630,18 @@
     return NO;
 }
 
-#pragma mark Combox Action
+
 #pragma mark 添加下拉列表框
--(void)addComboxBox
-{
-    //避免重复添加
-    if (isAddedCombox) {
+-(void)addCombox{
+    if (fcontroller) {
         return;
     }
-    
-    NSMutableArray *  distanceTitleDatasource = [[NSMutableArray alloc]init];
-    NSMutableArray *  distanceIdDatasource=[[NSMutableArray alloc]init];
-    NSMutableArray * priceTitleDatasource = [[NSMutableArray alloc]init];
-    NSMutableArray * priceIdDatasource=[[NSMutableArray alloc]init];
-    NSMutableArray *  sourceTitleDatasource = [[NSMutableArray alloc]init];
-    NSMutableArray *  sourceIdDatasource=[[NSMutableArray alloc]init];
-    
-    [WebRequest findComboxs:^(RentComboxs *bo, NSError *error) {
-        if (error!=nil) {
-            
-        }else{
-            _comboxDatasource=bo;
-        }
-    }];
-    
-    for (int i=0; i<_comboxDatasource.rentComboxs.count; i++) {
-        RentCombox *combox =(RentCombox *)[_comboxDatasource.rentComboxs objectAtIndex:i];
-        NSNumber *datatype=[combox type];
-        switch (datatype.intValue) {
-            case 0:
-                break;
-            case 1:
-            {
-                [priceTitleDatasource addObject:combox.name];
-                [priceIdDatasource addObject:combox.id];
-                break;
-            }
-            case 2:
-            {
-                [distanceTitleDatasource addObject:combox.name];
-                [distanceIdDatasource addObject:combox.id];
-                break;
-            }
-            case 3:
-            {
-                [sourceTitleDatasource addObject:combox.name];
-                [sourceIdDatasource addObject:combox.id];
-                break;
-            }
-            default:
-                break;
-        }
-    }
-    
-    UIFont *font=[UIFont systemFontOfSize:14];
-    CGSize screenSize=[[UIScreen mainScreen]bounds].size;
-    CGFloat x=-1.0;
-    CGFloat y=-self.navView.frame.origin.y+self.navView.frame.size.height;
-    CGFloat width=screenSize.width/3.0;
-    CGFloat height=40.0;
-    
-    CGRect distanceFrame=CGRectMake(x, y, width, height);
-    CGRect priceFrame=CGRectMake(x+width, y, width, height);
-    CGRect sourceFrame=CGRectMake(x+(width*2), y, width, height);
-    
-    
-    [self addPullButton:@"租房类型" font:font frame:distanceFrame  titleDatasource:distanceTitleDatasource idDatasource:distanceIdDatasource];
-    //btnDistance.tag=0;
-    
-    [self addPullButton:@"价格" font:font frame:priceFrame titleDatasource:priceTitleDatasource idDatasource:priceIdDatasource];
-    
-    [self addPullButton:@"来源" font:font frame:sourceFrame titleDatasource:sourceTitleDatasource idDatasource:sourceIdDatasource];
-    
-    isAddedCombox=YES;
+    fcontroller =[[FilterSearchViewController alloc]init];
+    fcontroller.comboxDatasource=_comboxVo;
+    fcontroller.delegate=self;
+    [self.view insertSubview:fcontroller.view aboveSubview:self.tableView];
 }
 
--(void)addPullButton:(NSString *)text font:(UIFont *)font frame:(CGRect)frame titleDatasource:(NSArray *)titleDatasource idDatasource:(NSArray *)idDatasource
-{
-    //addTarget除了传递self之外，不能传递参数，所以最好自定义一个button
-    PullDownButton *button=[[PullDownButton alloc]initWithFrame:frame labelText:text font:font];
-    button.titleArray=titleDatasource;
-    button.idArray=idDatasource;
-    
-    [self moreCellDefault];
-    [button addTarget:self action:@selector(loadPullDownDatas:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.view addSubview:button];
-}
-
--(void)loadPullDownDatas:(PullDownButton *)sender
-{
-    
-    WYPopoverBackgroundView *bkView =[WYPopoverBackgroundView appearance];
-    bkView.outerCornerRadius=0.0;
-    //bkView.outerStrokeColor=[UIColor orangeColor];
-    //bkView.glossShadowColor=[UIColor orangeColor];
-    selectionViewController= [self.storyboard instantiateViewControllerWithIdentifier:@"SelectionController"];
-    selectionViewController.popDelegate=self;
-    selectionViewController.fromPullDownButton=sender;
-    selectionViewController.titleDatasource=sender.titleArray;
-    selectionViewController.idDatasource=sender.idArray;
-    popoverController =[[WYPopoverController alloc]initWithContentViewController:selectionViewController];
-    [popoverController presentPopoverFromRect:sender.bounds inView:sender permittedArrowDirections:WYPopoverArrowDirectionUp animated:YES];
-}
-
--(void)popoverHandler:(SelectionViewController *)controller text:(NSString *)text id:(NSNumber *)id
-{
-    [popoverController dismissPopoverAnimated:YES options:WYPopoverAnimationOptionScale];
-    
-    for(int i=0;i<_comboxDatasource.rentComboxs.count;i++){
-        RentCombox *combox=(RentCombox *)[_comboxDatasource.rentComboxs objectAtIndex:i];
-        NSInteger type=[[combox type]integerValue];
-        NSInteger _id=[[combox id]integerValue];
-        if([id integerValue] == _id){
-            if(type==1){
-                _priceId=id;
-            }else if(type==2){
-                _typeId=id;
-            }else if(type==3){
-                _sourceId=id;
-            }
-            break;
-        }
-    }
-    
-    //change pulldown nam
-    PullDownButton *button= controller.fromPullDownButton;
-    NSArray *views =  button.subviews;
-    for(int i=0;i<views.count;i++){
-        if([[views objectAtIndex:i] isKindOfClass:[UILabel class]]){
-            UILabel *label=(UILabel *)[views objectAtIndex:i];
-            label.text=text;
-            break;
-        }
-    }
-    
-    [self reloadData];
-}
 
 #pragma  mark UITableViewDelegate
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView

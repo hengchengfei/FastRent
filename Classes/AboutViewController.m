@@ -17,6 +17,8 @@
 
 @implementation AboutViewController
 
+
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -33,9 +35,7 @@
     [self setTitle:@"关于"];
     [self setNavLeftButton];
     [self initStyle];
-    
 
-    
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
     self.tableView.tableHeaderView=[[UIView alloc]initWithFrame:CGRectZero];
@@ -133,13 +133,12 @@
         cell.selectionStyle=UITableViewCellSelectionStyleNone;
         return cell;
     }else if(row==2){
-//        UITableViewCell *cell=[self.tableView dequeueReusableCellWithIdentifier:cell2];
-//        cell.selectionStyle=UITableViewCellSelectionStyleNone;
-//        return cell;
+        
     }
     
     return nil;
 }
+
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {

@@ -110,7 +110,7 @@
 {
     MALTabBarItemModel *itemModel = [self.itemArray objectAtIndex:_currentSelectedIndex];
     MALTabBarItem *currentSelecteditem = [self.items objectAtIndex:_currentSelectedIndex];
-    [currentSelecteditem setTitleColor:selectedItemTitleColor forState:(UIControlStateNormal)];
+    [currentSelecteditem setTitleColor:appColor forState:(UIControlStateNormal)];
     if (itemModel.selectedItemImageName != nil) {
         
         [currentSelecteditem setImage:[UIImage imageNamed:itemModel.selectedItemImageName] forState:(UIControlStateNormal)];

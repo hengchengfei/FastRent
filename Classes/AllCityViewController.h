@@ -11,8 +11,9 @@
 #import "SearchSuggestion.h"
 #import "SearchTableViewController.h"
 #import "SelectionViewController.h"
+#import "FilterSearchViewController.h"
 
-@interface AllCityViewController : UIViewController<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,SearchTableDelegate,SelectionViewControllerDelegate>
+@interface AllCityViewController : UIViewController<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,SearchTableDelegate,SelectionViewControllerDelegate,FilterViewControllerDelegate>
 
 @property (nonatomic, assign) id<MALTabBarChinldVIewControllerDelegate>delegate;
 

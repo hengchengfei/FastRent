@@ -8,7 +8,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PullDownButton.h"
 
 @class SelectionViewController;
 
@@ -24,7 +23,6 @@
 @property(nonatomic,retain) id<SelectionViewControllerDelegate> popDelegate;
 @property(nonatomic,retain)NSArray *titleDatasource;
 @property(nonatomic,retain)NSArray *idDatasource;
-@property(nonatomic,retain) PullDownButton *fromPullDownButton;
 @property(nonatomic,retain)IBOutlet UITableView *tableView;
 
 @end

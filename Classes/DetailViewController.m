@@ -1024,9 +1024,6 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    //记录事件
-    [MobClick event:@"MapLocationEvent"];
-    
     NSString *identifier= segue.identifier;
     if ([identifier compare:@"MapSegue"]==0) {
         MapViewController *controller = segue.destinationViewController;
@@ -1051,14 +1048,12 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [MobClick beginLogPageView:@"详细页面(附近)"];
 }
 
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
     [UIApplication sharedApplication].networkActivityIndicatorVisible=NO;
-    [MobClick endLogPageView:@"详细页面(附近)"];
 }
 
 -(void)viewWillAppear:(BOOL)animated

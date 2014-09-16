@@ -206,28 +206,56 @@
     _scrollView.contentSize=CGSizeMake(screen.size.width*imageCount, screen.size.height);
     
     
+    //@2x只与屏幕是否retina有关，与系统分辨率更无关，此处只考虑retina屏幕，所以只定义@2x的图片.retina只会找@2x
+    //另外屏幕的高度影响图片的尺寸大小,image.size是逻辑大小，并非实际大小
+    CGFloat height=screen.size.height*[UIScreen mainScreen].scale;
+    
+    UIImage *image1;
+    UIImage *image2;
+    UIImage *image3;
+    if (height<=960.0f) {//iphone4,4s
+        image1=[UIImage imageNamed:@"IntroductionFirst480.png"];
+        image2=[UIImage imageNamed:@"IntroductionSecond480.png"];
+        image3=[UIImage imageNamed:@"IntroductionThird480.png"];
+    }else if(height>=1136.0f){//iphone5 以上
+        image1=[UIImage imageNamed:@"IntroductionFirst568.png"];
+        image2=[UIImage imageNamed:@"IntroductionSecond568.png"];
+        image3=[UIImage imageNamed:@"IntroductionThird568.png"];
+    }
+    
     UIImageView *imageview1=[[UIImageView alloc]init];
-    [imageview1 setImage:[UIImage imageNamed:@"Introduction1.jpg"]];
+    [imageview1 setImage:image1];
     imageview1.frame=screen;
     imageview1.contentMode=UIViewContentModeScaleToFill;
     imageview1.backgroundColor=[UIColor clearColor];
     
     UIImageView *imageview2=[[UIImageView alloc]init];
-    [imageview2 setImage:[UIImage imageNamed:@"Introduction2.jpg"]];
+    [imageview2 setImage:image2];
     imageview2.frame=CGRectMake(screen.size.width, 0, screen.size.width, screen.size.height);
     imageview2.contentMode=UIViewContentModeScaleToFill;
     imageview2.backgroundColor=[UIColor clearColor];
     
     UIImageView *imageview3=[[UIImageView alloc]init];
-    [imageview3 setImage:[UIImage imageNamed:@"Introduction3.jpg"]];
+    [imageview3 setImage:image3];
     imageview3.frame=CGRectMake(screen.size.width*2, 0, screen.size.width, screen.size.height);
     imageview3.contentMode=UIViewContentModeScaleToFill;
     imageview3.backgroundColor=[UIColor clearColor];
     
+    UIImage *btnImage=[UIImage imageNamed:@"FollowMe.png"];
+    UIImage *btnImagePressed=[UIImage imageNamed:@"FollowMePressed.png"];
+    UIButton *button=[[UIButton alloc]init];
+    CGFloat btnX=screen.size.width*2+screen.size.width/2-btnImage.size.width/2;
+    CGFloat btnY=screen.size.height-200;
+    button.frame=CGRectMake(btnX, btnY, btnImage.size.width, btnImage.size.height);
+    [button setBackgroundImage:btnImage forState:UIControlStateNormal];
+    [button setBackgroundImage:btnImagePressed forState:UIControlStateHighlighted];
+    [button addTarget:self action:@selector(gotoHomePage) forControlEvents:UIControlEventTouchUpInside];
+    
     [_scrollView addSubview:imageview1];
     [_scrollView addSubview:imageview2];
     [_scrollView addSubview:imageview3];
-    
+    [_scrollView addSubview:button];
+
     return _scrollView;
 }
 
@@ -261,7 +289,7 @@
     }
     
     if (nextPage>imageCount) {
-        self.window.rootViewController=tabBarController;
+        //[self gotoHomePage];
         return;
     }
     
@@ -282,6 +310,9 @@
     currentPage = pageIndex.intValue;
 }
 
+-(void)gotoHomePage{
+    self.window.rootViewController=tabBarController;
+}
 #pragma mark 检测版本
 -(void)chkUpdate{
     [[LTUpdate shared] update:LTUpdateNow

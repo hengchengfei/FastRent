@@ -11,11 +11,10 @@
 #import "RentComboxs.h"
 #import "RentCombox.h"
 #import "UIImageView+WebCache.h"
-#import "EGORefreshTableHeaderView.h"
-#import "SelectionViewController.h"
 #import "MALTabBarChinldVIewControllerDelegate.h"
+#import "FilterViewController.h"
 
-@interface NearbyViewController : UIViewController<UITableViewDelegate,UITableViewDataSource, CLLocationManagerDelegate,NSURLConnectionDataDelegate,EGORefreshTableHeaderDelegate,SelectionViewControllerDelegate >
+@interface NearbyViewController : UIViewController<UITableViewDelegate,UITableViewDataSource, CLLocationManagerDelegate,NSURLConnectionDataDelegate,FilterViewControllerDelegate >
 {
     CLLocationManager *locationManager;
 }
@@ -25,9 +24,5 @@
 @property(nonatomic,retain)IBOutlet UITableView *tableView;
 
 @property(nonatomic,retain)NSString *navTitle;
-//开始重新加载时调用的方法
--(void)reloadTableViewDataSource;
 
-//完成加载时调用的方法
--(void)doneLoadingTableViewData;
 @end

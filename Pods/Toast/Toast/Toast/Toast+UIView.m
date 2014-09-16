@@ -234,12 +234,14 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
         NSDictionary *attributes = @{NSFontAttributeName:font, NSParagraphStyleAttributeName:paragraphStyle};
         CGRect boundingRect = [string boundingRectWithSize:constrainedSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil];
         return CGSizeMake(ceilf(boundingRect.size.width), ceilf(boundingRect.size.height));
-    }else if([string respondsToSelector:@selector(sizeWithFont:constrainedToSize:lineBreakMode:)]){
-        return [string
-                sizeWithFont:font
-                constrainedToSize:constrainedSize
-                lineBreakMode:lineBreakMode];
     }
+    //IOS6
+//    else if([string respondsToSelector:@selector(sizeWithFont:constrainedToSize:lineBreakMode:)]){
+//        return [string
+//                sizeWithFont:font
+//                constrainedToSize:constrainedSize
+//                lineBreakMode:lineBreakMode];
+//    }
     
     return CGSizeZero;
 }

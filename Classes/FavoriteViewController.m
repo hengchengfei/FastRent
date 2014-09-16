@@ -313,9 +313,9 @@
         
         UINavigationController *nav=[[UINavigationController alloc]initWithRootViewController:_detailViewController];
         if (ISOS7) {
-            [nav.navigationBar setBarTintColor:selectedItemTitleColor];
+            [nav.navigationBar setBarTintColor:appColor];
         }else{
-            [nav.navigationBar setTintColor:selectedItemTitleColor];
+            [nav.navigationBar setTintColor:appColor];
         }
         [self.navigationController presentViewController:nav animated:YES completion:nil];
     }

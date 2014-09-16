@@ -20,6 +20,8 @@
     FeedbackViewController *feedbackController;
     AboutViewController *aboutController;
     NSString *updateUrl;
+
+        NSString *appStoreURL;
 }
 @end
 
@@ -34,9 +36,16 @@
     return self;
 }
 
+static long _appStoreID;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
+    _appStoreID = [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"APP_STORE_ID"] longValue];
+    appStoreURL = [NSString stringWithFormat:kAppStoreFormat, _appStoreID];
+    
     
     //导航栏设置
     [self setTitle:@"更多"];
@@ -119,7 +128,7 @@
     if (section==0) {
         return 1;
     }else if(section==1){
-        return 3;
+        return 5;
     }
     return 0;
 }
@@ -161,10 +170,11 @@
                 [self chkUpdate];
                 break;
             }
-                //            case 2:
-                //                aboutController=[self.storyboard instantiateViewControllerWithIdentifier:@"AboutController"];
-                //                [self.navigationController pushViewController:aboutController animated:YES];
-                //                break;
+                case 2:
+            {
+                [[UIApplication sharedApplication]openURL:[NSURL URLWithString:appStoreURL]];
+                break;
+            }
             default:
                 break;
         }
